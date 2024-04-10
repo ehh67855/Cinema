@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.CSCI4050.jwt.backend.dtos.CredentialsDto;
 import com.CSCI4050.jwt.backend.dtos.SignUpDto;
+import com.CSCI4050.jwt.backend.dtos.UpdatePasswordDto;
 import com.CSCI4050.jwt.backend.dtos.UserDto;
 import com.CSCI4050.jwt.backend.entites.Adress;
 // import com.CSCI4050.jwt.backend.entites.Adress;
@@ -21,6 +22,8 @@ import com.CSCI4050.jwt.backend.mappers.UserMapper;
 import com.CSCI4050.jwt.backend.repositories.AdressRepository;
 import com.CSCI4050.jwt.backend.repositories.CreditCardRepository;
 import com.CSCI4050.jwt.backend.repositories.UserRepository;
+
+import jakarta.validation.Valid;
 
 import java.nio.CharBuffer;
 import java.util.ArrayList;
@@ -84,6 +87,7 @@ public class UserService {
                 .cardType(userDto.getCardType())
                 .expirationDate(userDto.getCardExpiry())
                 .billingAdress(userDto.getBillingAddr())
+                .cardNumber(userDto.getCardNumber())
                 .build();
             CreditCard savedCreditCard = creditCardRepository.save(creditCard);
             creditCards.add(savedCreditCard);
@@ -123,6 +127,79 @@ public class UserService {
     public User getUser(String login) {
         return userRepository.findByLogin(login)
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+    }
+
+    public UserDto updatePersonalInfo(@Valid SignUpDto user) {
+        User updatedUser = getUser(user.getLogin());
+        updatedUser.setFirstName(user.getFirstName());
+        updatedUser.setLastName(user.getLastName());
+        updatedUser.setPhoneNumber(user.getPhoneNumber());
+        updatedUser.setPromotionsEnabled(user.getIsSubscribed());
+        return userMapper.toUserDto(userRepository.save(updatedUser));
+    }
+
+    public UserDto updateHomeAdress(@Valid SignUpDto user) {
+        User updatedUser = getUser(user.getLogin());
+        
+
+        boolean adressIsPresent = adressRepository.findById(updatedUser.getHomeAddress().getId()).isPresent();
+        if (adressIsPresent) {
+            Adress updatedHomeAdress = adressRepository.findById(updatedUser.getHomeAddress().getId()).get();
+            updatedHomeAdress.setCity(user.getCity());
+            updatedHomeAdress.setZipcode(user.getZipCode());
+            updatedHomeAdress.setState(user.getState());
+            updatedHomeAdress.setStreet(user.getStreet());
+            adressRepository.save(updatedHomeAdress);
+            updatedUser.setHomeAddress(updatedHomeAdress);
+        } else {
+            Adress updatedHomeAdress = Adress.builder()
+                .street(user.getStreet())
+                .city(user.getCity())
+                .state(user.getState())
+                .zipcode(user.getZipCode())
+                .build();
+            updatedUser.setHomeAddress(updatedHomeAdress);
+        }
+
+        
+        return userMapper.toUserDto(userRepository.save(updatedUser));
+    }
+
+    public UserDto updatePassword(@Valid UpdatePasswordDto passwordDto) {
+        User updatedUser = getUser(passwordDto.getLogin());
+        if (passwordEncoder.matches(CharBuffer.wrap(passwordDto.getCurrentPassword()), updatedUser.getPassword())) {
+            updatedUser.setPassword(passwordEncoder.encode(CharBuffer.wrap(passwordDto.getNewPassword())));
+            userRepository.save(updatedUser);
+            return userMapper.toUserDto(userRepository.save(updatedUser));
+        } else {
+            throw new AppException("Invalid password", HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    public UserDto addCard(@Valid SignUpDto user) {
+        User updatedUser = getUser(user.getLogin());
+        if (updatedUser.getCreditCards().size() < 3) {
+            CreditCard newCard = CreditCard.builder()
+                .expirationDate(user.getCardExpiry())
+                .billingAdress(user.getBillingAddr())
+                .cardType(user.getCardType())
+                .cardNumber(user.getCardNumber())
+                .build();
+            ArrayList<CreditCard> creditCards = new ArrayList<>(updatedUser.getCreditCards());
+            creditCards.add(newCard);
+            updatedUser.setCreditCards(creditCards);
+            return userMapper.toUserDto(userRepository.save(updatedUser));
+        }
+        //Should not reach this line
+        throw new AppException("Card maximum has been reached", HttpStatus.UNAUTHORIZED);
+    }
+
+    public UserDto deleteCard(SignUpDto user, Long id) {
+        User updatedUser = getUser(user.getLogin());
+        ArrayList<CreditCard> updatedUserCards = new ArrayList<>(updatedUser.getCreditCards());
+        updatedUserCards.removeIf(card -> card.getId().equals(id));
+        updatedUser.setCreditCards(updatedUserCards);
+        return userMapper.toUserDto(userRepository.save(updatedUser));
     }
 
 }

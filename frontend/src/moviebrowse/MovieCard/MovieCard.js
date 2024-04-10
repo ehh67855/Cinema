@@ -6,7 +6,6 @@ import MovieTrailer from "../../ViewMovie/MovieTrailer/MovieTrailer";
 import { isAuthenticated } from "src/services/BackendService";
 
 
-
 function MovieCard({movie}) {
 
   const canBook = () => {

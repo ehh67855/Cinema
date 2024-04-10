@@ -62,13 +62,9 @@ function MovieDetails() {
           </div>
         ))}
       </div>
-      <a className="btn btn-primary" href="/">Return home</a>
     </div>
   ) : (
-    <>
       <div>Movie not found.</div>
-      <a className="btn btn-primary" href="/">Return home</a>
-    </>
 
   );
 }

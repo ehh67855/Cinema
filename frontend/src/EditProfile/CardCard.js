@@ -1,16 +1,47 @@
 import React from "react";
 import "./CardCard.css"
+import { getLogin , getAuthToken} from "src/services/BackendService";
 
 const CardCard = ({card}) => {
+
+    const deleteCard = () => {
+      try {
+          fetch(`http://localhost:8080/delete-card/${card.id}`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ 
+                login: getLogin(getAuthToken())
+              })
+            })
+            .then(response => {
+              if (response.status === 200) {
+                  return response.json();
+              } else {
+                  alert("Something went wrong");
+                  return null; 
+              }
+          }).then(data => {
+              if (data) {
+                  console.log("Card deleted successfully:", data);
+                  window.location.reload();
+
+              }
+          })
+          .catch(error => {
+              console.error("Error occurred during profile update:", error);
+          })
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     return (
         <div className="cardCard">
-            {/* attributes of a card go here:*/}
             Card Type: {card.cardType} <br/>
             Card Number: {card.cardNumber} <br/>
             Card Expiration Date: {card.expirationDate} <br/>
             Card Billing Address: {card.billingAdress} <br/>
-            {/* Delete button needs implementation */}
-            <button>Delete</button> 
+            <button onClick={deleteCard}>Delete</button> 
         </div>
     );
 }

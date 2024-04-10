@@ -11,7 +11,6 @@ function PersonalInfo({updatePersonalInfo}) {
     const [isSubscribed, setIsSubscribed] = useState(false);
 
     useEffect(()=> {
-        console.log("hello");
         updatePersonalInfo({
             email:email,
             phoneNumber:phoneNumber,
