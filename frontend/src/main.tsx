@@ -10,6 +10,7 @@ import NoPage from './NoPage';
 import Signup from './signup/Signup';
 import EditProfile from './EditProfile/EditProfile';
 import MovieDetails from './ViewMovie/MovieDetails/MovieDetails';
+import BookTickets from './BookTicketsPages/BookTickets';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,6 +23,7 @@ root.render(
       <Route path="/signup" element={<Layout><Signup/></Layout>} />
       <Route path="/edit-profile" element={<Layout><EditProfile/></Layout>} />
       <Route path="/movie/:id" element={<Layout><MovieDetails /></Layout>}/>
+      <Route path="bookTickets" element={<Layout><BookTickets/></Layout>}/>
       <Route path="/*" element={<Layout><NoPage /></Layout>} />
     </Routes>
   </BrowserRouter>

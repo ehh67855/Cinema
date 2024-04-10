@@ -10,6 +10,8 @@ import Seat from "./Movie-Seat-Icon.png";
 const BookTickets = () => {
 
     let chosenSeats = useRef([]);
+    let totalTicketNum = useRef(0);
+
     function handleSubmit() {
         
     }
@@ -46,7 +48,7 @@ const BookTickets = () => {
                             </select>
                         </div>
                         <div className="bkTicksFields1">
-                            <label>Choose number of tickets:</label><input type="number"/>
+                            <label>Choose number of tickets:</label><input ref={totalTicketNum} type="number" min="0" max="16"/>
                         </div>
                     </div>
                     <div className="vertLine"></div>
