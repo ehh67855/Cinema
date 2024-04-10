@@ -1,0 +1,55 @@
+.edit-profile-container {
+  display: flex; /* Ensures the container is a flex container */
+  justify-content: center; /* Centers the form horizontally */
+  align-items: center; /* Centers the form vertically */
+  height: 100vh; /* Full height of the viewport */
+  padding: 20px; /* Adds some padding around the container to ensure it doesn't touch the viewport edges */
+  overflow: auto; /* Enables scrolling if the content overflows */
+}
+
+.edit-profile-form {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%; /* Makes the form responsive */
+  max-width: 500px; /* Maximum width of the form */
+  overflow-y: auto; /* Enables vertical scrolling within the form if the content overflows */
+  max-height: 90vh; /* Maximum height to ensure it doesn't touch the viewport edges */
+  box-sizing: border-box; /* Ensures padding and border are included in the width and height */
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="checkbox"] + label {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.actions button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background-color: #218838;
+}

@@ -1,0 +1,48 @@
+#orderConfirmPage {
+    text-align: center;
+    margin: 50px 0;
+}
+#orderConfirmHdrContainer {
+    display: flex;
+    justify-content: center;
+}
+#orderConfirmHdr {
+    padding: 10px 40px;
+    border: solid;
+}
+#orderPartHdr {
+    margin: 0px;
+}
+#confirmPartHdr {
+    margin: 0px;
+}
+#thankYouMsgContainer {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0px;
+}
+#thankYouMsg {
+    padding: 10px 70px;
+    border: solid;
+}
+#orderDetailsHdr {
+    padding-bottom: 10px;
+    border: solid;
+}
+#orderDetailsContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+#orderDetails > * {
+    margin-bottom: 0px;
+    padding-top: 10px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-left: solid;
+    border-right: solid;
+}
+#orderDetailsFinalPara {
+    padding-bottom: 10px;
+    border-bottom: solid;
+}

@@ -1,0 +1,31 @@
+.confirmation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.confirmation-card {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center; /* Center align the text for better readability */
+}
+
+.confirmation-actions {
+  margin-top: 20px;
+}
+
+.confirmation-actions a {
+  display: inline-block; /* Make the link behave like a block element for easier styling */
+  padding: 10px 15px;
+  background-color: #007bff; /* Use a blue color for the action to stand out */
+  color: white;
+  border-radius: 4px;
+  text-decoration: none; /* Remove underline from the link */
+}
+
+.confirmation-actions a:hover {
+  background-color: #0056b3; /* Darker shade of blue on hover for feedback */
+}

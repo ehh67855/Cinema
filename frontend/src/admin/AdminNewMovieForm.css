@@ -1,0 +1,10 @@
+.newMovieForm {
+    display: flex;
+    flex-direction: column;
+    margin: 5% 21%;
+}
+
+.newMovieFormSubmitBtn {
+    width: 100px;
+    margin: auto;
+}

@@ -1,0 +1,72 @@
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  padding: 20px;
+}
+
+.signup-form {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px; /* Adjust max-width as needed */
+  overflow-y: auto; /* Enables vertical scrolling within the form if needed */
+  max-height: 90vh; /* Adjust max-height as needed */
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+  display: flex;
+  flex-direction: column;
+}
+
+#promotions {
+  display: flex;
+  justify-content: space-around;
+}
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center; /* Centers the button(s) */
+}
+
+.actions a {
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.actions a:hover {
+  background-color: #218838;
+}
+
+.login-link {
+  text-align: center; /* Centers the login link */
+  margin-top: 15px;
+}
+
+.required {
+  color : red;
+  text-align: left;
+}

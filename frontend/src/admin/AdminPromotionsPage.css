@@ -1,0 +1,10 @@
+.promotionsForm {
+    display: flex;
+    flex-direction: column;
+    margin: 5% 21%;
+}
+
+.promotionsFormSubmitBtn {
+    width: 100px;
+    margin: auto;
+}

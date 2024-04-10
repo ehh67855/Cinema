@@ -1,0 +1,10 @@
+.buttons {
+    display: flex;
+    flex-direction: column;
+    margin: 13% 30%;
+    justify-content: space-between;
+}
+
+.adminMainPageBtn {
+    margin: 10px;
+}

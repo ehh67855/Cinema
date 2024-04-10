@@ -1,0 +1,11 @@
+header, footer {
+  background-color: #34377E; /* Dark background */
+  color: #000; /* White text */
+  padding: 20px; /* Padding around the content */
+  text-align: center; /* Center the header content */
+}
+
+header h1 {
+  margin: 0; /* Remove default margin */
+  font-size: 2rem; /* Header font size */
+}
