@@ -9,3 +9,8 @@ header h1 {
   margin: 0; /* Remove default margin */
   font-size: 2rem; /* Header font size */
 }
+
+footer a {
+  font-size: 150%;
+  text-decoration: none;
+}

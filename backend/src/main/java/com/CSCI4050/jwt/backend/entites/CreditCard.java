@@ -29,4 +29,7 @@ public class CreditCard {
     
     private String billingAdress;
 
+    private String cardNumber;
+
+
 }

@@ -33,12 +33,8 @@ function EditProfileForm({userData}) {
                 isSubscribed={userData.promotionsEnabled}
             >
             </PersonalInformationForm>
-            <UpdatePasswordForm password={userData.password}></UpdatePasswordForm>
-            {userData && <UpdateAdressForm
-                // street={userData.homeAddress.street}
-                // city={userData.homeAddress.city}
-                // state={userData.homeAddress.state}
-                // zipCode={userData.homeAddress.zipcode}
+            <UpdatePasswordForm></UpdatePasswordForm>
+            {<UpdateAdressForm
                 homeAddress={userData.homeAddress}
             ></UpdateAdressForm>}
             <AddCardForm

@@ -15,10 +15,11 @@ public class MessagesController {
     public ResponseEntity<MessageDto> message() {
         return ResponseEntity.ok(new MessageDto("user's message"));
     }
-    
+
     @GetMapping("/protected/messages")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<MessageDto> protectedMessage() {
         return ResponseEntity.ok(new MessageDto("protected user's message"));
     }
+    
 }

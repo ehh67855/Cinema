@@ -16,21 +16,17 @@ public class SignUpDto {
 
     private boolean addressFieldsFilled;
 
-    @NotEmpty
     private String login;
 
     private String phoneNumber;
 
-    @NotEmpty
     private String firstName;
 
-    @NotEmpty
     private String lastName;
 
-    @NotEmpty
     private char[] password;
 
-    private boolean isSubscibed;
+    private Boolean isSubscribed;
 
     private String cardNumber;
     

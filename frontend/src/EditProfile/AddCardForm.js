@@ -1,5 +1,7 @@
 import { useState } from "react";
 import CardsContainer from "./CardsContainer";
+import { getAuthToken, getLogin } from "src/services/BackendService";
+
 
 function AddCardForm({creditCards}) {
 
@@ -8,16 +10,48 @@ function AddCardForm({creditCards}) {
     const [cardExpiryInput, setCardExpiryInput] = useState();
     const [billingAddrInput, setBillingAddrInput] = useState();
 
-    const addCard = () => {
-
-    };
+    const addCard = (e) => {
+      e.preventDefault();
+        try {
+          fetch("http://localhost:8080/add-card", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ 
+                login: getLogin(getAuthToken()), 
+                cardNumber:cardNumberInput,
+                cardType:cardTypeInput,
+                cardExpiry:cardExpiryInput,
+                billingAddr:billingAddrInput
+              })
+            })
+            .then(response => {
+              if (response.status === 200) {
+                  return response.json();
+              } else if (response.status === 401) { 
+                alert("You can only have a maximum of three cards");
+              } else {
+                  alert("Something went wrong");
+              }
+          }).then(data => {
+              if (data) {
+                  console.log("Profile updated successfully:", data);
+                  alert("Credit Card Successfully Added")
+              }
+          })
+          .catch(error => {
+              console.error("Error occurred during profile update:", error);
+          })
+      } catch (error) {
+        console.error(error);
+      }
+    }
 
     return (
         <div>
-            <h1>Add Card Information</h1>
+            <h1>Card Information</h1>
             {(typeof creditCards !== 'undefined' && creditCards.length >= 0)
             && <CardsContainer cards={creditCards}></CardsContainer>}
-            <form>
+            <form onSubmit={addCard}>
                 <label htmlFor="cardType">Card Type</label>
                 <input
                     type="text"
@@ -31,7 +65,7 @@ function AddCardForm({creditCards}) {
                     type="number"
                     inputMode='numeric'
                     id="cardNumber"
-                    onChange={(e) => setCardNumber(e.target.value)}
+                    onChange={(e) => setCardNumberInput(e.target.value)}
                     required
                 />
                 <br></br>
@@ -52,7 +86,11 @@ function AddCardForm({creditCards}) {
                     required
                 />
                 <br></br>
-                <a className="btn btn-primary" onClick={addCard()}>Add card</a>
+                <button 
+                    className="btn btn-primary"
+                    type="submit">
+                    Add Card
+                </button>            
             </form>
         </div>
     );
