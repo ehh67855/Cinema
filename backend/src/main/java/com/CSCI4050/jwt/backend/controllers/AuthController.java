@@ -22,6 +22,7 @@ import com.CSCI4050.jwt.backend.dtos.UserDto;
 import com.CSCI4050.jwt.backend.entites.User;
 import com.CSCI4050.jwt.backend.exceptions.AppException;
 import com.CSCI4050.jwt.backend.services.EmailService;
+import com.CSCI4050.jwt.backend.services.PasswordResetService;
 import com.CSCI4050.jwt.backend.services.UserService;
 
 import java.net.URI;
@@ -33,6 +34,7 @@ public class AuthController {
     private final UserService userService;
     private final EmailService emailService;
     private final UserAuthenticationProvider userAuthenticationProvider;
+    private final PasswordResetService passwordResetService;
 
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@RequestBody @Valid CredentialsDto credentialsDto) {
@@ -89,44 +91,14 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<UserDto> forgotPassword(@RequestBody @Valid SignUpDto user) {
-        return ResponseEntity.ok(userService.forgotPassword(user));
+        return ResponseEntity.ok(passwordResetService.forgotPassword(user));
     }
 
     @PostMapping("/reset-password/{token}")
     public ResponseEntity<UserDto> resetPassword(
         @PathVariable("token") String token,
         @RequestBody @Valid SignUpDto user) {
-            System.out.println(user);
-        return ResponseEntity.ok(userService.resetPassword(user,token));
+        return ResponseEntity.ok(passwordResetService.resetPassword(user,token));
     }
-
-    //  @PostMapping("/forgot-password")
-    // public ResponseEntity<?> forgotPassword(@RequestParam String email) {
-    //     User user = userService.findByLogin(email);
-    //     if (user == null) {
-    //         return ResponseEntity.notFound().build();
-    //     }
-
-    //     String token = userService.generateToken();
-    //     userService.createPasswordResetToken(user, token);
-
-    //     emailService.sendPasswordResetEmail(email, token);
-
-    //     return ResponseEntity.ok().build();
-    // }
-
-    // @PostMapping("/reset-password")
-    // public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
-    //     PasswordResetToken resetToken = userService.getPasswordResetToken(token);
-    //     if (resetToken == null || resetToken.isExpired()) {
-    //         return ResponseEntity.badRequest().build();
-    //     }
-
-    //     userService.resetPassword(resetToken.getUser(), newPassword);
-    //     userService.deletePasswordResetToken(resetToken);
-
-    //     return ResponseEntity.ok().build();
-    // }
-
 
 }
