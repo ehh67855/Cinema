@@ -44,6 +44,8 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    private final EmailService emailService;
+
     public User createUser(String firstName, String lastName, String login, String password, Role role) {
         User newUser = User.builder()
                 .firstName(firstName)
@@ -135,6 +137,12 @@ public class UserService {
         updatedUser.setLastName(user.getLastName());
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setPromotionsEnabled(user.getIsSubscribed());
+
+        emailService.sendSimpleMessage(user.getLogin(),
+            "Profile Updated",
+            "Hello" + user.getFirstName() + ", \n Your profile has been successfully updated."
+        );
+
         return userMapper.toUserDto(userRepository.save(updatedUser));
     }
 

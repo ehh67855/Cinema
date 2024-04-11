@@ -88,25 +88,15 @@ function PersonalInfo({updatePersonalInfo}) {
             <div id="promotions">
             <label>Sign Up For Promotions?</label> 
             <br />
-            <label for="Yes">Yes</label>
+            <label htmlFor="subscribe">Subscribe to promotions</label>
             <input
-                className="Promotions-Buttons"
-                type="radio"
-                id="Yes"
-                value="Yes"
-                name="promotions-choice"
-                onChange={(e) => setIsSubscribed(e.target.value)}
-            />
-            <label for="no">No</label>
-            <input
-                className="Promotions-Buttons"
-                type="radio"
-                id="No"
-                value="No"
-                name="promotions-choice"
-                onChange={(e) => setIsSubscribed(e.target.value)}
+              type="checkbox"
+              id="subscribe"
+              checked={true}
+              onChange={(e) => setIsSubscribed(e.target.checked)}
             />
             </div>
+            <br></br>
         </>
     );
 }

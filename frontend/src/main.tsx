@@ -10,6 +10,18 @@ import NoPage from './NoPage';
 import Signup from './signup/Signup';
 import EditProfile from './EditProfile/EditProfile';
 import MovieDetails from './ViewMovie/MovieDetails/MovieDetails';
+import AdminMainPage from './admin/AdminMainPage';
+import AdminPromotionsPage from './admin/AdminPromotionsPage';
+import AdminUsersPage from './admin/AdminUsersPage';
+import OrderConfirm from './CheckoutPages/OrderConfirm';
+import BookTickets from './BookTicketsPages/BookTickets';
+import TicketOrder from './BookTicketsPages/TicketOrder';
+import Checkout from './CheckoutPages/Checkout';
+import AdminMoviesPage from './admin/AdminMoviesPage';
+import EditMovie from './admin/EditMovie';
+import SignupConfirmation from './signup/SignupConfirmation';
+import ForgotPassword from './ForgotPassword/ForgotPassword';
+import PasswordReset from './ForgotPassword/PasswordReset';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,8 +32,22 @@ root.render(
       <Route path="/" element={<Layout><App /></Layout>} />
       <Route path="/login" element={<Layout><Login /></Layout>} />
       <Route path="/signup" element={<Layout><Signup/></Layout>} />
+     <Route path="/signup-confirmation" element={<Layout><SignupConfirmation /></Layout>} />
       <Route path="/edit-profile" element={<Layout><EditProfile/></Layout>} />
       <Route path="/movie/:id" element={<Layout><MovieDetails /></Layout>}/>
+      <Route path="/forgot-password" element={<Layout><ForgotPassword></ForgotPassword></Layout>}/>
+      <Route path="/password-reset" element={<Layout><PasswordReset></PasswordReset></Layout>}/>
+      <Route path="/adminMainPage" element={<Layout><AdminMainPage /></Layout>} />
+     <Route path="/manageMovies" element={<Layout><AdminMoviesPage /></Layout>} />
+     <Route path="/editMovie/:id" element={<Layout><EditMovie /></Layout>}/>
+     <Route path="/promotions" element={<Layout><AdminPromotionsPage /></Layout>} />
+     <Route path="/manageUsers" element={<Layout><AdminUsersPage /></Layout>} />
+     <Route path="/bookTickets" element={<Layout><BookTickets /></Layout>} />
+     <Route path="/ticketOrder" element={<Layout><TicketOrder /></Layout>} />
+     <Route path="/checkout" element={<Layout><Checkout /></Layout>} />
+     <Route path="/orderConfirmation" element={<Layout><OrderConfirm /></Layout>} />
+     <Route path="*" element={<Layout><NoPage /></Layout>} />
+
       <Route path="/*" element={<Layout><NoPage /></Layout>} />
     </Routes>
   </BrowserRouter>

@@ -95,13 +95,16 @@ function Signup() {
                 return response.json();
             } else if (response.status === 400) {
                 alert("Email is already in use");
-            } else {
+            } else if (response.status === 401) {
+              alert ("Could not validate user email");
+            } else{
                 alert("Something went wrong");
+                return null;
             }
         }).then(data => {
             if (data) {
                 console.log("User registered successfully:", data);
-                // Optionally, you can perform actions like redirecting the user to login page
+                window.location.href = "/singup-confirmation";
             }
         })
         .catch(error => {
@@ -110,6 +113,7 @@ function Signup() {
     } catch (error) {
       console.error(error);
     }
+
   }
 
   return (
@@ -193,26 +197,14 @@ function Signup() {
         </div>
 
         <div id="promotions">
-          <label>Sign Up For Promotions?</label> 
-          <br />
-          <label for="Yes">Yes</label>
-          <input
-            className="Promotions-Buttons"
-            type="radio"
-            id="Yes"
-            value="Yes"
-            name="promotions-choice"
-            onChange={(e) => setIsSubscribed(e.target.value)}
-          />
-          <label for="no">No</label>
-          <input
-            className="Promotions-Buttons"
-            type="radio"
-            id="No"
-            value="No"
-            name="promotions-choice"
-            onChange={(e) => setIsSubscribed(e.target.value)}
-          />
+            <br />
+            <label htmlFor="subscribe">Subscribe to promotions</label>
+            <input
+              type="checkbox"
+              id="subscribe"
+              checked={true}
+              onChange={(e) => setIsSubscribed(e.target.checked)}
+            />
         </div>
         <br />
         <h3 className="category-label">Enter Card Information (Optional)</h3>

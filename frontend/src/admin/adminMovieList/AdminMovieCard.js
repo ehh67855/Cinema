@@ -1,7 +1,5 @@
 import React from "react";
-import "../../BrowseMovie/MovieCard/MovieCard.css";
 import { Link } from "react-router-dom";
-import StarRating from "../../BrowseMovie/StarRating/StarRating";
 
 function AdminMovieCard({movie}) {
 return (

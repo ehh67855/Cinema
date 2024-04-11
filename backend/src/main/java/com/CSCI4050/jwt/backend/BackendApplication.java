@@ -24,7 +24,7 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	/*  
+	
 	@Bean
 	CommandLineRunner run(@Autowired MovieRepository movieRepo) {
 		return (args) -> {
@@ -113,5 +113,5 @@ public class BackendApplication {
 
 			movieRepo.save(movie);
 		}
-	} */
+	} 
 }
