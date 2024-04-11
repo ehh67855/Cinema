@@ -1,35 +1,64 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 
 function PasswordReset() {
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [message, setMessage] = useState('');
+  const [confirmPassword,setConfirmPassword] = useState('');
 
-  const handleSubmit = async (e) => {
+  let token = new URLSearchParams(useLocation().search).get("token");
+
+   const handleSubmit = async (e) => {
+    console.log(token);
+
     e.preventDefault();
 
-    // Example API call
-    const response = await fetch('http://localhost:8080/api/auth/reset-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, newPassword }),
-    });
-
-    if (response.ok) {
-      setMessage('Password reset successfully. Please check your email.');
-    } else {
-      setMessage('Failed to reset password. Please try again.');
+    if (newPassword !== confirmPassword) {
+      alert("Passwords do not match");
+      return null;
     }
-  };
+    try {
+      await fetch(`http://localhost:8080/reset-password/${token}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ 
+              login: email, 
+              password: newPassword
+            })
+          })
+          .then(response => {
+            if (response.status === 200) {
+                return response.json();
+            } else if (response.status === 403) {
+                alert ("Invalid token or token is not valid for given user. Request a reset password email to receive a valid token");
+            } else if (response.status === 404) {
+                alert("Email not found");
+          } else {
+                console.log(response.status);
+                alert("Something went wrong");
+                return null;
+            }
+        }).then(data => {
+            if (data) {
+              alert("Password successfully updated");
+            }
+        })
+        .catch(error => {
+            console.error("Error occurred during registration:", error);
+        })
+    } catch (error) {
+      console.error(error);
+    }
+
+  }
 
   return (
     <div>
       <h2>Reset Password</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Email:</label>
+          <label>Email:</label> <br></br>
           <input
             type="email"
             value={email}
@@ -38,7 +67,7 @@ function PasswordReset() {
           />
         </div>
         <div>
-          <label>New Password:</label>
+          <label>New Password:</label> <br></br>
           <input
             type="password"
             value={newPassword}
@@ -46,9 +75,18 @@ function PasswordReset() {
             required
           />
         </div>
-        <button type="submit">Reset Password</button>
+        <div>
+          <label>Confirm Password:</label> <br></br>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Reset Password</button> <br></br>
+        <a href="forgot-password">Request reset password email</a>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }

@@ -15,12 +15,14 @@ import com.CSCI4050.jwt.backend.dtos.UserDto;
 import com.CSCI4050.jwt.backend.entites.Adress;
 // import com.CSCI4050.jwt.backend.entites.Adress;
 import com.CSCI4050.jwt.backend.entites.CreditCard;
+import com.CSCI4050.jwt.backend.entites.PasswordResetToken;
 import com.CSCI4050.jwt.backend.entites.User;
 import com.CSCI4050.jwt.backend.enums.Role;
 import com.CSCI4050.jwt.backend.exceptions.AppException;
 import com.CSCI4050.jwt.backend.mappers.UserMapper;
 import com.CSCI4050.jwt.backend.repositories.AdressRepository;
 import com.CSCI4050.jwt.backend.repositories.CreditCardRepository;
+import com.CSCI4050.jwt.backend.repositories.PasswordResetTokenRepository;
 import com.CSCI4050.jwt.backend.repositories.UserRepository;
 
 import jakarta.validation.Valid;
@@ -29,6 +31,8 @@ import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -41,6 +45,8 @@ public class UserService {
     private final CreditCardRepository creditCardRepository;
 
     private final AdressRepository adressRepository;
+
+    private final PasswordResetTokenRepository passwordResetTokenRepository;
 
     private final UserMapper userMapper;
 
@@ -138,7 +144,8 @@ public class UserService {
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setPromotionsEnabled(user.getIsSubscribed());
 
-        emailService.sendSimpleMessage(user.getLogin(),
+        emailService.sendSimpleMessage(
+            user.getLogin(),
             "Profile Updated",
             "Hello" + user.getFirstName() + ", \n Your profile has been successfully updated."
         );
@@ -149,7 +156,6 @@ public class UserService {
     public UserDto updateHomeAdress(@Valid SignUpDto user) {
         User updatedUser = getUser(user.getLogin());
         
-
         boolean adressIsPresent = adressRepository.findById(updatedUser.getHomeAddress().getId()).isPresent();
         if (adressIsPresent) {
             Adress updatedHomeAdress = adressRepository.findById(updatedUser.getHomeAddress().getId()).get();
@@ -208,6 +214,74 @@ public class UserService {
         updatedUserCards.removeIf(card -> card.getId().equals(id));
         updatedUser.setCreditCards(updatedUserCards);
         return userMapper.toUserDto(userRepository.save(updatedUser));
+    }
+
+    public UserDto forgotPassword(@Valid SignUpDto user) {
+        User forgotUser = getUser(user.getLogin());
+        String token = emailService.generateToken();
+        createPasswordResetToken(forgotUser, token);
+        emailService.sendPasswordResetEmail(forgotUser.getLogin(), token);
+        return userMapper.toUserDto(forgotUser);
+    }
+
+    public void createPasswordResetToken(User user, String token) {
+        // Check if a token already exists for the user
+        PasswordResetToken existingToken = passwordResetTokenRepository.findByUser(user);
+        if (existingToken != null) {
+            // If a token already exists, update it with the new token and expiry date
+            existingToken.setToken(token);
+            existingToken.setExpiryDate(LocalDateTime.now().plusHours(1));
+            passwordResetTokenRepository.save(existingToken);
+        } else {
+            // If no token exists, create a new one and save it
+            PasswordResetToken newToken = new PasswordResetToken();
+            newToken.setUser(user);
+            newToken.setToken(token);
+            newToken.setExpiryDate(LocalDateTime.now().plusHours(1));
+            passwordResetTokenRepository.save(newToken);
+        }
+    }
+
+
+
+    public UserDto resetPassword(SignUpDto userDto, String token) {
+    PasswordResetToken resetToken = getPasswordResetToken(token);
+        if (resetToken == null || resetToken.isExpired()) {
+            throw new AppException("Invalid or expired token", HttpStatus.FORBIDDEN);
+        }
+
+        User user = resetToken.getUser();
+        if (!user.getLogin().equals(userDto.getLogin())) {
+            throw new AppException("Invalid token for user email", HttpStatus.FORBIDDEN);
+        }
+
+        // Assuming you have a method to properly hash the password
+        String hashedPassword = passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword()));
+
+        // Set the new password for the user
+        user.setPassword(hashedPassword);
+
+        // Save the updated user to the database
+        userRepository.save(user);
+
+        // Delete the password reset token
+        deletePasswordResetToken(resetToken);
+
+        return userMapper.toUserDto(user);
+    }
+
+
+    public PasswordResetToken getPasswordResetToken(String token) {
+        return passwordResetTokenRepository.findByToken(token);
+    }
+
+    public void deletePasswordResetToken(PasswordResetToken token) {
+        passwordResetTokenRepository.delete(token);
+    }
+
+    public void resetPassword(User user, String newPassword) {
+        user.setPassword(passwordEncoder.encode(newPassword)); 
+        userRepository.save(user);
     }
 
 }

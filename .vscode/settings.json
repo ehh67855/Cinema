@@ -1,4 +1,5 @@
 {
     "ecl.launchConfiguration": "not found",
-    "ecl.targetCluster": {}
+    "ecl.targetCluster": {},
+    "java.compile.nullAnalysis.mode": "automatic"
 }

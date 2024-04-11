@@ -28,7 +28,15 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public static String generateToken() {
+    public void sendPasswordResetEmail(String to, String token) {
+        String subject = "Password Reset Request";
+        String text = "To reset your password, use the link below:\n\n"
+                      + "http://localhost:4200/reset-password?token=" + token;
+
+        sendSimpleMessage(to, subject, text);
+    }
+
+    public String generateToken() {
         byte[] randomBytes = new byte[32];
         secureRandom.nextBytes(randomBytes);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);

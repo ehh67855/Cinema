@@ -1,5 +1,5 @@
 import React from "react";
-import {useRef, useState} from "react";
+import {useRef, useState, useEffect} from "react";
 import './BookTickets.css';
 import Seat from "./Movie-Seat-Icon.png";
 /*
@@ -9,13 +9,26 @@ import Seat from "./Movie-Seat-Icon.png";
 
 const BookTickets = () => {
 
-    let chosenSeats = useRef([]);
-    function handleSubmit() {
-        
+    const totalTicketNum = useRef(0);
+    let childTicketAmount = useRef(0);
+    let adultTicketAmount = useRef(0);
+    let seniorTicketAmount = useRef(0);
+    let seatSelection = [];
+
+    function handleAddingSeat(e) {
+        if (seatSelection.includes(e.target.id)) {
+            seatSelection.splice(seatSelection.indexOf(e.target.id), 1);
+        } else {
+            seatSelection.push(e.target.id);
+        }
+
+        for (let i = 0; i < seatSelection.length; i++) {
+            console.log(seatSelection[i]);
+        }
     }
 
-    function chooseSeat() {
-        
+    function handleSubmit() {
+
     }
 
     return (
@@ -46,42 +59,42 @@ const BookTickets = () => {
                             </select>
                         </div>
                         <div className="bkTicksFields1">
-                            <label>Choose number of tickets:</label><input type="number"/>
+                            <label>Choose number of tickets:</label><input ref={totalTicketNum} type="number" min="0" max="16"/>
                         </div>
                     </div>
                     <div className="vertLine"></div>
                     <div className="bkTicksFields2">
                         <h4>Select age per ticket</h4>
-                        <label>Child ($10):</label><input type="number"/>
-                        <label>Adult ($10):</label><input type="number"/>
-                        <label>Senior ($10):</label><input type="number"/>
+                        <label>Child ($10):</label><input type="number" min="0" max={totalTicketNum - adultTicketAmount - seniorTicketAmount} ref={childTicketAmount}/>
+                        <label>Adult ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - seniorTicketAmount} ref={adultTicketAmount}/>
+                        <label>Senior ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - adultTicketAmount} ref={seniorTicketAmount}/>
                     </div>
                 </div>
                 <h4 className="centeredH4">Select desired seats</h4>
                 <h6>(select the seats you want by clicking the seats on the image below)</h6>
                 <div class="seatSection">
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
+                    <img className="seatLayoutImg" id="Seat1" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat2" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat3" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat4" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
                 </div>
                 <div class="seatSection">
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
+                    <img className="seatLayoutImg" id="Seat5" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat6" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat7" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat8" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
                 </div>
                 <div class="seatSection">
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
+                    <img className="seatLayoutImg" id="Seat9" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat10" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat11" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat12" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
                 </div>
                 <div class="seatSection">
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
-                    <img className="seatLayoutImg" src={Seat} alt="image depicting the layout of seats in a movie theater"/>
+                    <img className="seatLayoutImg" id="Seat13" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat14" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat15" src={Seat} alt="image depicting the layout of seats in a movie theater" onClick={handleAddingSeat}/>
+                    <img className="seatLayoutImg" id="Seat16" src={Seat} alt="image depicting the layout of seats in a movie theater"onClick={handleAddingSeat}/>
                 </div>
                 
                 <div className="submitCancelBtn">

@@ -87,6 +87,19 @@ public class AuthController {
         return ResponseEntity.ok(userService.deleteCard(user, Long.valueOf(cardId)));
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<UserDto> forgotPassword(@RequestBody @Valid SignUpDto user) {
+        return ResponseEntity.ok(userService.forgotPassword(user));
+    }
+
+    @PostMapping("/reset-password/{token}")
+    public ResponseEntity<UserDto> resetPassword(
+        @PathVariable("token") String token,
+        @RequestBody @Valid SignUpDto user) {
+            System.out.println(user);
+        return ResponseEntity.ok(userService.resetPassword(user,token));
+    }
+
     //  @PostMapping("/forgot-password")
     // public ResponseEntity<?> forgotPassword(@RequestParam String email) {
     //     User user = userService.findByLogin(email);

@@ -24,7 +24,6 @@ const CardCard = ({card}) => {
               if (data) {
                   console.log("Card deleted successfully:", data);
                   window.location.reload();
-
               }
           })
           .catch(error => {
