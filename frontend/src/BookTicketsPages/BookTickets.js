@@ -21,14 +21,10 @@ const BookTickets = () => {
         } else {
             seatSelection.push(e.target.id);
         }
-
-        for (let i = 0; i < seatSelection.length; i++) {
-            console.log(seatSelection[i]);
-        }
     }
 
     function handleSubmit() {
-
+        
     }
 
     return (
@@ -41,28 +37,6 @@ const BookTickets = () => {
             <h2 id="movieTitle">[title of movie here]</h2>
             <form>
                 <div className="bkTicksAllFields">
-                    <div className="bkTicksFields1Container">
-                        <div className="bkTicksFields1">
-                            <label>Select showing date:</label>
-                            <select name="selectDate">
-                                <option value="">Choose a date</option>
-                                <option value="option1">option1</option>
-                                <option value="option2">option2</option>
-                            </select>
-                        </div>
-                        <div className="bkTicksFields1">
-                            <label>Select showing time:</label>
-                            <select name="selectTime">
-                                <option value="">Choose a time</option>
-                                <option value="option1">option1</option>
-                                <option value="option2">option2</option>
-                            </select>
-                        </div>
-                        <div className="bkTicksFields1">
-                            <label>Choose number of tickets:</label><input ref={totalTicketNum} type="number" min="0" max="16"/>
-                        </div>
-                    </div>
-                    <div className="vertLine"></div>
                     <div className="bkTicksFields2">
                         <h4>Select age per ticket</h4>
                         <label>Child ($10):</label><input type="number" min="0" max={totalTicketNum - adultTicketAmount - seniorTicketAmount} ref={childTicketAmount}/>
