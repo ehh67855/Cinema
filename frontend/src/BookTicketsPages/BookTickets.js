@@ -16,6 +16,7 @@ const BookTickets = () => {
     let seatSelection = [];
     
     let booking = {
+        bookingId: Math.floor(Math.random() * (3000)), 
         bookingChildTickets: childTicketAmount,
         bookingAdultTickets: adultTicketAmount,
         bookingSeniorTicketAmount: seniorTicketAmount,
@@ -35,10 +36,6 @@ const BookTickets = () => {
         booking.bookingAdultTickets = adultTicketAmount;
         booking.bookingSeniorTicketAmount = seniorTicketAmount;
         booking.bookingSeatSelection = seatSelection;
-    }
-
-    function generateBookingNumber() {
-
     }
 
     return (
