@@ -10,3 +10,7 @@ create database cinema; -- Creates the new database
 create user 'springuser'@'%' identified by 'password'; -- Creates the user
 grant all on cinema.* to 'springuser'@'%'; -- Gives all privileges to the new user on the newly created database
 ```
+### Install NX build tool
+```
+npm install -g nx
+```
