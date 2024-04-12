@@ -37,6 +37,10 @@ const BookTickets = () => {
         booking.bookingSeatSelection = seatSelection;
     }
 
+    function generateBookingNumber() {
+
+    }
+
     return (
         <div id="bkTicksPage">
             <div id="bkTicksHdrContainer">
@@ -48,7 +52,7 @@ const BookTickets = () => {
             <form>
                 <div className="bkTicksAllFields">
                     <div className="bkTicksFields2">
-                        <h4>Select age per ticket</h4>
+                        <h4>Select Tickets</h4>
                         <label>Child ($10):</label><input type="number" min="0" max={totalTicketNum - adultTicketAmount - seniorTicketAmount} ref={childTicketAmount}/>
                         <label>Adult ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - seniorTicketAmount} ref={adultTicketAmount}/>
                         <label>Senior ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - adultTicketAmount} ref={seniorTicketAmount}/>
