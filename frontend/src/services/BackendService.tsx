@@ -17,7 +17,11 @@ export const isAuthenticated = () => {
   return getAuthToken() !== null;
 };
 
-export const isAdmin = (token: string) => {
+export const isAdmin = (token: string | null) => {
+  if (token == null) {
+    return false;
+  }
+
     const decoded = jwtDecode<CustomJwtPayload>(token);
     return decoded.role == "ADMIN";
 }
