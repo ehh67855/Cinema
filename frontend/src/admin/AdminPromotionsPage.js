@@ -2,11 +2,18 @@ import React, { useState } from "react";
 import "./AdminPromotionsPage.css";
 
 const AdminPromotionsPage = () => {
-    const [enteredPromotionCode, setEnteredPromotionCode] = useState('');
+    const [enteredPromotionCode, setEnteredPromotionCode] = useState(0);
     const [enteredDicountPercent, setEnteredDiscountPercent] = useState(0);
 
-    const handleSubmit = async () => {
-        await fetch("localhost:8080/add-promotion", {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (enteredDicountPercent < 0 || enteredDicountPercent > 100) {
+            alert("You may only enter a discount % between 0 and 100");
+            return null;
+        }
+
+        await fetch("http://localhost:8080/add-promotion", {
             method:"POST",
             headers: {"Content-Type":"application/json"},
             body: JSON.stringify({
@@ -18,6 +25,7 @@ const AdminPromotionsPage = () => {
                 return response.json();
             }
         }).then(data => {
+            alert("Promotion added")
             console.log(data);
         }).catch(error => {
             console.log("Error adding promotion", error);
@@ -26,21 +34,23 @@ const AdminPromotionsPage = () => {
 
     return (
         <div>
-            <form className="promotionsForm" onSubmit={submitHandler}>
+            <form onSubmit={handleSubmit}>
                 <label>Promotion Code</label>
                 <input
                     id="promotionCode"
-                    type="text"
+                    type="number"
                     value={enteredPromotionCode}
-                    onChange={setEnteredPromotionCode}
-                />
+                    onChange={e => setEnteredPromotionCode(e.target.value)}
+                    required
+                /> <br></br>
                 <label>Discount %</label>
                 <input
                     id="discountPercent"
                     type="number"
                     value={enteredDicountPercent}
-                    onChange={setEnteredDiscountPercent}
-                />
+                    onChange={e => setEnteredDiscountPercent(e.target.value)}
+                    required
+                /> <br></br>
                 <button className="handleSubmit" type="submit">Add Promotion</button>
             </form>
         </div>
