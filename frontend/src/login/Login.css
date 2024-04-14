@@ -1,0 +1,13 @@
+.Login-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.Login-input-field {
+    display: flex;
+    align-items: center;
+}
+#email-label{
+    padding: 14px;
+}

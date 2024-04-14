@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import  "./Login.css"
 import { setAuthHeader } from "../services/BackendService";
 
 export function Login() {
@@ -34,13 +34,13 @@ export function Login() {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className="Login-form"onSubmit={onSubmit}>
             <h1>{errorMessage}</h1>
-            <div>
-                <label htmlFor="login">Email</label>
+            <div className="Login-input-field">
+                <label id="email-label" htmlFor="login">Email</label>
                 <input name="login" onChange={(event) => setLogin(event.target.value)}/>
             </div>
-            <div>
+            <div className="Login-input-field">
                 <label htmlFor="password">Password</label>
                 <input name="password" type="password" onChange={(event) => setPassword(event.target.value)}/>
             </div>
