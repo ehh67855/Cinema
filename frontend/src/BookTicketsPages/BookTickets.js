@@ -15,6 +15,9 @@ const BookTickets = () => {
     let seniorTicketAmount = useRef(0);
     let seatSelection = [];
     
+    /**
+     * Creates a booking object that stores the amount of child, adult, and senior tickets as well as the chosen seats and a randomly generated ID.
+     */
     let booking = {
         bookingId: Math.floor(Math.random() * (3000)), 
         bookingChildTickets: childTicketAmount,
@@ -23,14 +26,20 @@ const BookTickets = () => {
         bookingSeatSelection: seatSelection
     };
 
+    /**
+     * Adds seats to the seatSelection array and removes seats if the seat is already in the seat selection array.
+     */
     function handleAddingSeat(e) {
         if (seatSelection.includes(e.target.id)) {
             seatSelection.splice(seatSelection.indexOf(e.target.id), 1);
+            e.target.style.backgroundColor = "";
         } else {
             seatSelection.push(e.target.id);
+            e.target.style.backgroundColor = "grey";
         }
     }
 
+    /**Handles confirmation submission */
     function handleSubmit() {
         booking.bookingChildTickets = childTicketAmount;
         booking.bookingAdultTickets = adultTicketAmount;
