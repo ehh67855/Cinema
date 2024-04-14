@@ -54,11 +54,12 @@ const AdminUsersPage = () => {
             <button type="button">Add As Admin</button>
             <button type="button">Add as User</button>
             <select id="CardSelect" name="card">
+                <option value="" selected="true">Select a card:</option>
                 <option>Card 1</option>
                 <option>Card 2</option>
             </select>
             <select id="CardTypeSelect" name="cardType">
-                <option value="" selected="true">Select a card:</option>
+                <option value="" selected="true">Select a card type:</option>
                 <option value="Visa">Visa</option>
                 <option value="Mastercard">Mastercard</option>
                 <option value="Discover">Discover</option>
