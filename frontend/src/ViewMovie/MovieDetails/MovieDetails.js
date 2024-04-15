@@ -56,9 +56,9 @@ function MovieDetails() {
         <h3>Show Dates and Times</h3>
         {movie.showings.map((showing, index) => (
           <div key={index} className="showing-button">
-            <button href="">
+            <a href={`/bookTickets/${showing.id}`}>
               Book for {new Date(showing.date).toLocaleDateString()} at {showing.time}
-            </button>
+            </a>
           </div>
         ))}
       </div>

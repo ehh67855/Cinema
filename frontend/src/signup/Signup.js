@@ -104,7 +104,7 @@ function Signup() {
         }).then(data => {
             if (data) {
                 console.log("User registered successfully:", data);
-                window.location.href = "/singup-confirmation";
+                window.location.href = "/signup-confirmation";
             }
         })
         .catch(error => {
