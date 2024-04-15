@@ -28,7 +28,10 @@ public class Theatre {
     private Double seniorTicketPrice;
         
     private Double childTicketPrice;
-        
-    @Column(nullable = false)
-    private Integer roomNumber;
+
+    @Builder.Default
+    private Boolean[][] seats = {{false,false,false,false},
+                                {false,false,false,false},
+                                {false,false,false,false},
+                                {false,false,false,false}};
 }

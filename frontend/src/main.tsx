@@ -41,7 +41,7 @@ root.render(
       <Route path="/movie/:id" element={<Layout><MovieDetails /></Layout>} />
       <Route path="/forgot-password" element={<Layout><ForgotPassword/></Layout>} />
       <Route path="/reset-password" element={<Layout><PasswordReset/></Layout>} />
-      <Route path="/bookTickets" element={<Layout><BookTickets /></Layout>} />
+      <Route path="/bookTickets/:id" element={<Layout><BookTickets /></Layout>} />
       <Route path="/ticketOrder" element={<Layout><TicketOrder /></Layout>} />
       <Route path="/checkout" element={<Layout><Checkout /></Layout>} />
       <Route path="/orderConfirmation" element={<Layout><OrderConfirm /></Layout>} />

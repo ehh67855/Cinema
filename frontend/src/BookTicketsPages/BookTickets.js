@@ -2,6 +2,7 @@ import React from "react";
 import {useRef, useState, useEffect} from "react";
 import './BookTickets.css';
 import Seat from "./Movie-Seat-Icon.png";
+import { useParams } from "react-router-dom";
 /*
     Eventually, change the method to submit to use useEffect and store booking info in a booking variable (don't forget to create a submit handler)
 */
@@ -9,11 +10,20 @@ import Seat from "./Movie-Seat-Icon.png";
 
 const BookTickets = () => {
 
+    //Parameter of the movie time
+    const { id } = useParams(); 
+    const {movieTime,setMovieTime} = useState({});
+    const {movieName,setMovieName} = useState("");
+
     const totalTicketNum = useRef(0);
     let childTicketAmount = useRef(0);
     let adultTicketAmount = useRef(0);
     let seniorTicketAmount = useRef(0);
     let seatSelection = [];
+
+
+
+
     
     /**
      * Creates a booking object that stores the amount of child, adult, and senior tickets as well as the chosen seats and a randomly generated ID.
