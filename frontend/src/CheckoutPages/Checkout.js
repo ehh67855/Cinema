@@ -21,6 +21,15 @@ const Checkout = () => {
         setFinalPrice((totalTicketPrice - (totalTicketPrice * promoDiscount)) + bookingFees + salesTax)
     }, [promoDiscount])
 
+    let checkout = {
+        totalAdultTicketPrice,
+        totalSeniorTicketPrice,
+        totalChildTicketPrice,
+        bookingFees,
+        salesTax,
+        finalPrice,
+        promoDiscount,
+    }
     return (
         <div id="checkoutPage">
             <div id="checkoutHdrContainer">
