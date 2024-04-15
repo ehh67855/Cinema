@@ -42,7 +42,7 @@ function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed}) 
 
     return (
         <form>
-            <h1>Edit Peronsal Information</h1>
+            <h1>Edit Personal Information</h1>
             <label htmlFor="firstName">First Name</label>
             <input
               type="text"
