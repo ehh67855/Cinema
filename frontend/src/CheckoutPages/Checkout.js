@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import './Checkout.css';
 
 /*
@@ -6,6 +6,21 @@ import './Checkout.css';
 */
 
 const Checkout = () => {
+
+
+    let [totalSeniorTicketPrice, setTotalSeniorTicketPrice] = useState(0);
+    let [totalAdultTicketPrice, setTotalAdultTicketPrice] = useState(0);
+    let [totalChildTicketPrice, setTotalChildTicketPrice] = useState(0);
+    let totalTicketPrice = totalSeniorTicketPrice + totalAdultTicketPrice + totalChildTicketPrice;
+    let [promoDiscount, setPromoDiscount] = useState(0);
+    let [bookingFees, setBookingFees] = useState();
+    let [salesTax, setSalesTax] = useState();
+    let [finalPrice, setFinalPrice] = useState(totalTicketPrice + bookingFees + (totalTicketPrice + (totalTicketPrice * salesTax)));
+    
+    useEffect(() => {
+        setFinalPrice((totalTicketPrice - (totalTicketPrice * promoDiscount)) + bookingFees + salesTax)
+    }, [promoDiscount])
+
     return (
         <div id="checkoutPage">
             <div id="checkoutHdrContainer">
@@ -25,19 +40,20 @@ const Checkout = () => {
                             <option value="option1">option1</option>
                             <option value="option2">option2</option>
                         </select>
-                        <label>Promotion Code:</label><input/>
-                        <button id="addCardBtn">Add Card</button>
+                        <label>Promotion Code:</label>
+                        <input id="PromoInputField" placeholder="Enter Promo Code"/>
+                        <button id="addPromoBtn">Add Promo</button>
                     </div>
                 </form>
                 <div className="orderSummary">
                     <h2 className="checkoutAreaHdrs" id="orderSumHdr">Order Summary</h2>
-                    <p>Senior Tickets: $ </p>
-                    <p>Adult Tickets: $ </p>
-                    <p>Chlid Tickets: $ </p>
-                    <p>Promo Discount: % </p>
-                    <p>Booking fees: $</p>
-                    <p>Sales tax: %</p>
-                    <p id="orderSumFinalPara">Total: $ </p>
+                    <p>Senior Tickets: $ {totalSeniorTicketPrice}</p>
+                    <p>Adult Tickets: $ {totalAdultTicketPrice}</p>
+                    <p>Child Tickets: $ {totalChildTicketPrice}</p>
+                    <p>Promo Discount: % {promoDiscount}</p>
+                    <p>Booking fees: $ {bookingFees}</p>
+                    <p>Sales tax: % {salesTax}</p>
+                    <p id="orderSumFinalPara">Total: $ {finalPrice}</p>
                 </div>
             </div>
             <div className="confirmCancelBtn">
