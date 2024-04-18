@@ -31,8 +31,10 @@ const AdminUsersPage = () => {
     return (
         <>
             <div id="searchUserSection">
-                <input id="userEmailInput" className="searchUser" type="email" placeholder="Please enter a user's email address"required/>
-                <button id="searchUserButton" className="searchUser">Search</button>
+                <input id="userEmailInput" className="searchUserAction" type="email" placeholder="Please enter a user's email address"required/>
+                <button id="searchUserButton" className="actionButton">Search</button>
+                <button id="suspendUser" className="actionButton">Suspend User</button>
+                <button id="makeAdmin" className="actionButton">Make Admin</button>
             </div>
             <Signup/>
             <AdminUsersContainer users={users} />

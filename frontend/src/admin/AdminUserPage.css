@@ -1,11 +1,21 @@
 #searchUserSection {
     display: flex;
     flex-direction: column;
-
     align-items: center;
+    row-gap: 1em;
 }
 
-.searchUser {
+.actionButton {
+    text-decoration: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px 20px;
+    width: 25em;
+}
+
+.searchUserAction {
     display: inline;
-    width: 30em;
+    width: 25em;
 }
