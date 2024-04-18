@@ -1,22 +1,11 @@
-#EditUserPage{
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    width: 100%;
-    max-width: 100em; /* Adjust max-width as needed */
-    overflow-y: auto; /* Enables vertical scrolling within the form if needed */
-    max-height: 90vh; /* Adjust max-height as needed */
-    box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+#searchUserSection {
     display: flex;
     flex-direction: column;
+
+    align-items: center;
 }
 
-.InputGroup{
-    display: flex;
-    align-items: center;    
-}
-
-#ButtonGroup{
-    display: flex;
-    justify-content: center;
+.searchUser {
+    display: inline;
+    width: 30em;
 }

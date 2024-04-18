@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AdminUsersContainer from "./adminUserList/AdminUsersContainer";
-import UserInputField from "./UserInputField";
 import "./AdminUserPage.css"
-import PersonalInfo from "src/signup/PersonalInfo";
-import PersonalInformationForm from "src/EditProfile/PersonalInformationForm";
 import Signup from "src/signup/Signup";
-import EditProfile from "src/EditProfile/EditProfile";
 
 const AdminUsersPage = () => {
     const[users,setUsers] = useState([
@@ -34,6 +30,10 @@ const AdminUsersPage = () => {
 
     return (
         <>
+            <div id="searchUserSection">
+                <input id="userEmailInput" className="searchUser" type="email" placeholder="Please enter a user's email address"required/>
+                <button id="searchUserButton" className="searchUser">Search</button>
+            </div>
             <Signup/>
             <AdminUsersContainer users={users} />
         </>

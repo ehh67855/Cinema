@@ -301,13 +301,19 @@ function Signup() {
             placeholder='30604'
           />
         </div>
+        {!isAdmin(getAuthToken()) ?  
+              <><div className="actions">
+              <a className = "btn btn-primary" onClick={handleSignup}>Sign up</a>
+              </div> <div className="login-link">
+              Already registered? <a href="/login">Log in</a>
+              </div> </>
+              : 
+            <div className="actions">
+            <a className = "btn btn-primary" onClick={handleSignup}>Update User</a>
+        </div>}
 
-        <div className="actions">
-            <a className = "btn btn-primary" onClick={handleSignup}>Sign up</a>
-        </div>
-        <div className="login-link">
-          Already registered? <a href="/login">Log in</a>
-        </div>
+        
+        
         </form>
     </div>
   );
