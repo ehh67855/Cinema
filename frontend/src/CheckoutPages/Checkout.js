@@ -18,7 +18,7 @@ const Checkout = () => {
     let [finalPrice, setFinalPrice] = useState(totalTicketPrice + bookingFees + (totalTicketPrice + (totalTicketPrice * salesTax)));
     
     useEffect(() => {
-        setFinalPrice((totalTicketPrice - (totalTicketPrice * promoDiscount)) + bookingFees + salesTax)
+        setFinalPrice((totalTicketPrice - (totalTicketPrice * promoDiscount)) + bookingFees + (totalTicketPrice + (totalTicketPrice * salesTax)))
     }, [promoDiscount])
 
     let checkout = {

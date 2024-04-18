@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Signup.css'; // Assuming you'll have similar styling with possible additions
 import { useNavigate } from 'react-router-dom';
+import { getAuthToken, isAdmin, isUser } from 'src/services/BackendService';
 
 function Signup() {
   // personal info
@@ -118,8 +119,8 @@ function Signup() {
 
   return (
     <div className="signup-container">
-      <h2 id="signup-label">Sign Up</h2>
-
+      {!isAdmin(getAuthToken()) && <h2 id="signup-label">Sign Up</h2>}
+      
       <form>
       <h3 className="category-label">Personal Information</h3>
       <h6 className="required">All fields marked with an * are required</h6>
@@ -207,7 +208,7 @@ function Signup() {
             />
         </div>
         <br />
-        <h3 className="category-label">Enter Card Information (Optional)</h3>
+        {!isAdmin(getAuthToken()) ? <h3 className='category-label'>Enter Credit Card Information (Optional)</h3> : <h3 className='category-label'>Enter Credit Card Information</h3>}
 
         <div className="input-group">
           <label htmlFor="cardNumber">Card Number</label>
@@ -255,8 +256,7 @@ function Signup() {
         </div>
         <br />
         {/* Home Address */}
-        <h3 className='category-label'>Enter Home Address Information (Optional)</h3>
-
+        {!isAdmin(getAuthToken()) ? <h3 className='category-label'>Enter Home Address Information (Optional)</h3> : <h3 className='category-label'>Enter Home Address Information</h3>}
         <div className="input-group">
           <label htmlFor="street">Street</label>
           <input
