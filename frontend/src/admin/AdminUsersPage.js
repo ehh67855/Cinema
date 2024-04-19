@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AdminUsersContainer from "./adminUserList/AdminUsersContainer";
 import "./AdminUserPage.css"
 import Signup from "src/signup/Signup";
+import EditProfile from "src/EditProfile/EditProfile";
+import EditProfileForm from "src/EditProfile/EditProfileForm";
 
 const AdminUsersPage = () => {
     const[users,setUsers] = useState([
@@ -33,9 +35,13 @@ const AdminUsersPage = () => {
             <div id="searchUserSection">
                 <input id="userEmailInput" className="searchUserAction" type="email" placeholder="Please enter a user's email address"required/>
                 <button id="searchUserButton" className="actionButton">Search</button>
-                <button id="suspendUser" className="actionButton">Suspend User</button>
-                <button id="makeAdmin" className="actionButton">Make Admin</button>
+                {/* <button id="suspendUser" className="actionButton">Suspend User</button>
+                <button id="makeAdmin" className="actionButton">Make Admin</button> */}
             </div>
+            <div id="editProfileDiv">
+                <EditProfile id="editProfileComponent"/>
+            </div>
+            
             <Signup/>
             <AdminUsersContainer users={users} />
         </>

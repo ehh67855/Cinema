@@ -19,3 +19,9 @@
     display: inline;
     width: 25em;
 }
+
+#editProfileDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

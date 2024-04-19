@@ -33,7 +33,11 @@ function EditProfile() {
     if (isUser(getAuthToken())) {
       return <EditProfileForm userData={userData}></EditProfileForm>
     } else if (isAdmin(getAuthToken())) {
-      // return <AdminEditProfileForm></AdminEditProfileForm>
+      return <>
+                <input type="checkbox" id="makeAdmin" name="makeAdmin" />
+                <label for="makeAdmin">Make Admin</label>
+                <input type="checkbox" id="suspendUser" name="suspendUser" />
+                <label for="suspendUser">Suspend User</label></>
     } else {
       return <PermissionDenied></PermissionDenied>
     }
