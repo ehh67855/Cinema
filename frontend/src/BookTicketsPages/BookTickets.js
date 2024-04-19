@@ -3,6 +3,7 @@ import {useRef, useState, useEffect} from "react";
 import './BookTickets.css';
 import Seat from "./Movie-Seat-Icon.png";
 import { useParams } from "react-router-dom";
+import { fetchService } from "src/services/FetchService";
 /*
     Eventually, change the method to submit to use useEffect and store booking info in a booking variable (don't forget to create a submit handler)
 */
@@ -21,7 +22,7 @@ const BookTickets = () => {
     let seniorTicketAmount = useRef(0);
     let seatSelection = [];
 
-
+    var [bookedMovieTitle, setBookedMovieTitle] = useState("");
 
 
     
@@ -49,6 +50,12 @@ const BookTickets = () => {
         }
     }
 
+    useEffect(() => {
+        fetchService(`get-movie/?id=${id}`, (data) => {
+            setBookedMovieTitle(data.title);
+        });
+    }, []);
+
     /**Handles confirmation submission */
     function handleSubmit() {
         booking.bookingChildTickets = childTicketAmount;
@@ -64,7 +71,7 @@ const BookTickets = () => {
                 <h1 id="bkTicksHdr">Booking Tickets for:</h1>
                 {/* <img id="profileImg"/> */}
             </div>
-            <h2 id="movieTitle">[title of movie here]</h2>
+            <h2 id="movieTitle">{ bookedMovieTitle }</h2>
             <form>
                 <div className="bkTicksAllFields">
                     <div className="bkTicksFields2">
