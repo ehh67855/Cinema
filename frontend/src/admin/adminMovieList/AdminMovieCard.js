@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import StarRating from "src/moviebrowse/StarRating/StarRating";
 
 function AdminMovieCard({movie}) {
 return (

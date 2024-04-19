@@ -8,9 +8,11 @@ const AdminNewMovieForm = () => {
     const [enteredDirector, setEnteredDirector] = useState('');
     const [enteredProducer, setEnteredProducer] = useState('');
     const [enteredSynopsis, setEnteredSynopsis] = useState('');
+    const [enteredDescription, setEnteredDescription] = useState('');
     const [enteredTrailerPictureURL, setEnteredTrailerPictureURL] = useState('');
     const [enteredTrailerVideoURL, setEnteredTrailerVideoURL] = useState('');
     const [enteredRating, setEnteredRating] = useState('');
+    const [enteredNumStars, setEnteredNumStars] = useState();
     const [enteredDatetime, setEnteredDatetime] = useState('');
 
     const movieTitleChangeHandler = (event) => {
@@ -37,6 +39,10 @@ const AdminNewMovieForm = () => {
         setEnteredSynopsis(event.target.value);
     }
 
+    const descriptionChangeHandler = (event) => {
+        setEnteredDescription(event.target.value);
+    }
+
     const trailerPictureURLChangeHandler = (event) => {
         setEnteredTrailerPictureURL(event.target.value);
     }
@@ -49,6 +55,10 @@ const AdminNewMovieForm = () => {
         setEnteredRating(event.target.value);
     }
 
+    const numStarsChangeHandler = (event) => {
+        setEnteredNumStars(event.target.value);
+    }
+
     const datetimeChangeHandler = (event) => {
         setEnteredDatetime(event.target.value);
     }
@@ -56,17 +66,40 @@ const AdminNewMovieForm = () => {
     const submitHandler = (event) => {
         event.preventDefault();
         
-        const enteredMovie = {
-            title: enteredMovieTitle,
-            category: enteredCategory,
-            cast: enteredCast,
-            director: enteredDirector,
-            producer: enteredProducer,
-            synopsis: enteredSynopsis,
-            trailerPictureURL: enteredTrailerPictureURL,
-            trailerVideoURL: enteredTrailerVideoURL,
-            rating: enteredRating,
-            datetime: enteredDatetime
+        try {
+            fetch("http://localhost:8080/add-movie", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                  title: enteredMovieTitle,
+                  numStars: enteredNumStars,
+                  category: enteredCategory,
+                  cast: enteredCast,
+                  director: enteredDirector,
+                  producer: enteredProducer,
+                  synopsis: enteredSynopsis,
+                  description: enteredDescription,
+                  trailerPictureURL: enteredTrailerPictureURL,
+                  trailerVideoURL: enteredTrailerVideoURL,
+                  rating: enteredRating
+                })
+              })
+              .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert("Something went wrong");
+                }
+            }).then(data => {
+                if (data) {
+                    console.log("Movie added successfully:", data);
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred during movie addition:", error);
+            })
+        } catch (error) {
+          console.error(error);
         }
 
         setEnteredMovieTitle('');
@@ -75,6 +108,7 @@ const AdminNewMovieForm = () => {
         setEnteredDirector('');
         setEnteredProducer('');
         setEnteredSynopsis('');
+        setEnteredDescription('');
         setEnteredTrailerPictureURL('');
         setEnteredTrailerVideoURL('');
         setEnteredRating('');
@@ -125,6 +159,13 @@ const AdminNewMovieForm = () => {
             value={enteredSynopsis}
             onChange={synopsisChangeHandler}
             />
+            <label>Description</label>
+            <input
+            id="description"
+            type="text"
+            value={enteredDescription}
+            onChange={descriptionChangeHandler}
+            />
             <label>Trailer Picture URL</label>
             <input
             id="trailerPictureURL"
@@ -145,6 +186,13 @@ const AdminNewMovieForm = () => {
             type="text"
             value={enteredRating}
             onChange={ratingChangeHandler}
+            />
+            <label>Number of Stars</label>
+            <input
+            id="num_stars"
+            type="number"
+            value={enteredNumStars}
+            onChange={numStarsChangeHandler}
             />
             <label>Add a Show Date and Time</label>
             <input

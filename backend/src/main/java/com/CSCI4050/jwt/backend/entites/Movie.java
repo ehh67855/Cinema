@@ -49,7 +49,7 @@ public class Movie {
 
     private String category;
 
-    private List<String> cast = new ArrayList<>();
+    private String cast;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_id")
