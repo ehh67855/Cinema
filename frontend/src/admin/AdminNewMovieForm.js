@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AdminNewMovieForm.css"
 
 const AdminNewMovieForm = () => {
@@ -12,8 +12,21 @@ const AdminNewMovieForm = () => {
     const [enteredTrailerPictureURL, setEnteredTrailerPictureURL] = useState('');
     const [enteredTrailerVideoURL, setEnteredTrailerVideoURL] = useState('');
     const [enteredRating, setEnteredRating] = useState('');
-    const [enteredNumStars, setEnteredNumStars] = useState();
+    const [enteredNumStars, setEnteredNumStars] = useState(1);
     const [enteredDatetime, setEnteredDatetime] = useState('');
+
+    const [currentDate, setCurrentDate] = useState(new Date());
+    currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
+    useEffect(() => {
+        const timer = setInterval(() => { // Creates an interval which will update the current data every 3 seconds
+            const newCurrentDate = new Date();
+            newCurrentDate.setTime(Date.now() - (4 * 60 * 60 * 1000));
+            setCurrentDate(newCurrentDate);
+        }, 3 * 1000);
+        return () => {
+            clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
+        }
+    }, []);
 
     const movieTitleChangeHandler = (event) => {
         setEnteredMovieTitle(event.target.value);
@@ -66,6 +79,13 @@ const AdminNewMovieForm = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
+
+        if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
+            !enteredSynopsis || !enteredDescription || !enteredTrailerPictureURL || !enteredTrailerVideoURL || 
+            !enteredRating || !enteredNumStars || !enteredDatetime) {
+            alert("Please fill out all fields.");
+            return;
+        }
         
         try {
             fetch("http://localhost:8080/add-movie", {
@@ -195,6 +215,8 @@ const AdminNewMovieForm = () => {
             <input
             id="num_stars"
             type="number"
+            max={5}
+            min={1}
             value={enteredNumStars}
             onChange={numStarsChangeHandler}
             />
@@ -202,6 +224,7 @@ const AdminNewMovieForm = () => {
             <input
             id="showDateAndTime"
             type="datetime-local"
+            min={currentDate.toISOString().substring(0, 16)}
             value={enteredDatetime}
             onChange={datetimeChangeHandler}
             />
