@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import './EditProfile.css'; // Assuming you have some CSS for styling
-import CardsContainer from './CardsContainer';
+import '../EditProfile/EditProfile.css'; // Assuming you have some CSS for styling
+import CardsContainer from '../EditProfile/CardsContainer';
+import EditProfileForm from 'src/EditProfile/EditProfileForm';
 import { decodedToken, getAuthToken, getLogin, isAdmin, isAuthenticated, isUser } from 'src/services/BackendService';
-import EditProfileForm from './EditProfileForm';
 import PermissionDenied from 'src/PermissionDenied';
 
-function EditProfile() {
+function AdminEditProfile(props) {
 
   const [userData,setUserData] = useState(null);
 
@@ -56,4 +56,4 @@ function EditProfile() {
 
 }
 
-export default EditProfile;
+export default AdminEditProfile;
