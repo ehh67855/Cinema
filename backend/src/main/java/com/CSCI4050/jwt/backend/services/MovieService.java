@@ -3,6 +3,8 @@ package com.CSCI4050.jwt.backend.services;
 import java.util.Optional;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,9 +51,8 @@ public class MovieService {
 
         List<MovieTime> showings = new ArrayList<>();
         MovieTime newMovieTime = MovieTime.builder()
-        .date(movie.getDate())
-        .time(movie.getTime())
-        .theatre(movie.getTheatre())
+        .date(LocalDate.parse(movie.getDate()))
+        .time(LocalTime.parse(movie.getTime()))
         .build();
         MovieTime savedMovieTime = movieTimeRepository.save(newMovieTime);
         showings.add(savedMovieTime);

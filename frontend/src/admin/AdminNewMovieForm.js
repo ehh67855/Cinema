@@ -61,6 +61,7 @@ const AdminNewMovieForm = () => {
 
     const datetimeChangeHandler = (event) => {
         setEnteredDatetime(event.target.value);
+        //console.log(enteredDatetime.split("T")[0]);
     }
 
     const submitHandler = (event) => {
@@ -81,7 +82,9 @@ const AdminNewMovieForm = () => {
                   description: enteredDescription,
                   trailerPictureURL: enteredTrailerPictureURL,
                   trailerVideoURL: enteredTrailerVideoURL,
-                  rating: enteredRating
+                  rating: enteredRating,
+                  date: enteredDatetime.split("T")[0],
+                  time: enteredDatetime.split("T")[1]
                 })
               })
               .then(response => {
@@ -112,6 +115,7 @@ const AdminNewMovieForm = () => {
         setEnteredTrailerPictureURL('');
         setEnteredTrailerVideoURL('');
         setEnteredRating('');
+        setEnteredNumStars(0);
         setEnteredDatetime('');
     };
 

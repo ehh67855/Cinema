@@ -1,9 +1,5 @@
 package com.CSCI4050.jwt.backend.dtos;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
-import com.CSCI4050.jwt.backend.entites.Theatre;
 import com.CSCI4050.jwt.backend.enums.Rating;
 
 import lombok.AllArgsConstructor;
@@ -40,9 +36,7 @@ public class MovieDto {
 
     private Rating rating;
 
-    private LocalDate date;
+    private String date;
 
-    private LocalTime time;
-
-    private Theatre theatre;
+    private String time;
 }
