@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.CSCI4050.jwt.backend.dtos.MovieDto;
 import com.CSCI4050.jwt.backend.entites.Movie;
+import com.CSCI4050.jwt.backend.entites.MovieTime;
 import com.CSCI4050.jwt.backend.services.MovieService;
 
 @RestController
@@ -36,8 +37,8 @@ public class MovieController {
     }
 
     @GetMapping("/get-movie-time/{id}")
-    public ResponseEntity<String> getMovieTime(@PathVariable("id") String id) {
-        return ResponseEntity.ok("Not yet implimented");
+    public ResponseEntity<Optional<MovieTime>> getMovieTime(@PathVariable("id") String id) {
+        return ResponseEntity.ok(movieService.getMovieTime(Long.valueOf(id)));
     }
 
     @PostMapping("/add-movie")

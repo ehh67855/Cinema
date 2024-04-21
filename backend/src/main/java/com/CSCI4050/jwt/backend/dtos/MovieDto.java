@@ -35,4 +35,8 @@ public class MovieDto {
     private String trailerVideoURL;
 
     private Rating rating;
+
+    private String date;
+
+    private String time;
 }

@@ -13,7 +13,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -26,14 +27,19 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String bookingNumber;
+    private int numOfTickets;
 
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private List<Ticket> tickets;
+    private String movieTitle;
 
-    @ManyToOne
-    private CreditCard creditCard;
+    // @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    // private List<Ticket> tickets;
 
-    private Date bookingDate;
+    // @ManyToOne
+    // private CreditCard creditCard;
+    private String creditCardNum;
+
+    private LocalDate bookingDate;
+
+    private LocalTime bookingTime;
 
 }
