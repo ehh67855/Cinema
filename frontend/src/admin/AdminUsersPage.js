@@ -24,7 +24,7 @@ const AdminUsersPage = () => {
             })
             .then(data => {
                 setUserData(data);
-                console.log("27");
+                console.log(userData);
             })
             .catch(error => console.error(error));
     }
