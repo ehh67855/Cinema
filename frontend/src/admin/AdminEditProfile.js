@@ -7,26 +7,32 @@ import PermissionDenied from 'src/PermissionDenied';
 
 function AdminEditProfile(props) {
 
-  const [userData,setUserData] = useState(null);
-
+  const [userData,setUserData] = useState(props.userData);
     useEffect(() => {
-            const login = getLogin(getAuthToken());
-            fetch(`http://localhost:8080/get-user/${login}`, {
-                method: "GET",
-            }).then(response => {
-                if (response.status == 200) {
-                    return response.json();
-                }
-                if (!response.ok) {
-                    throw new Error('API call failed');
-                }
-            }).then(data => {
-                setUserData(data);
-                console.log(data);
-            }).catch(error => {
-                // Handle other errors
-                });
-        }, []);
+      if(props.userData != null) {
+        setUserData(props.userData);
+        console.log(userData);
+      } else {
+        const login = getLogin(getAuthToken());
+        fetch(`http://localhost:8080/get-user/${login}`, {
+            method: "GET",
+        }).then(response => {
+            if (response.status == 200) {
+              console.log("TEST");
+              console.log(props.userData);
+                return response.json();
+            }
+            if (!response.ok) {
+                throw new Error('API call failed');
+            }
+        }).then(data => {
+            setUserData(data);
+            console.log(data);
+        }).catch(error => {
+            // Handle other errors
+            });
+      }
+    }, [props]);
 
 
   const renderOptions = () => {
@@ -39,7 +45,6 @@ function AdminEditProfile(props) {
                 <input type="checkbox" id="suspendUser" name="suspendUser" />
                 <label for="suspendUser">Suspend User</label>
                 <EditProfileForm userData={userData}></EditProfileForm></>
-                
     } else {
       return <PermissionDenied></PermissionDenied>
     }
