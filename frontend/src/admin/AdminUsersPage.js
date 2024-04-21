@@ -4,7 +4,7 @@ import "./AdminUserPage.css"
 import Signup from "src/signup/Signup";
 import EditProfile from "src/EditProfile/EditProfile";
 import EditProfileForm from "src/EditProfile/EditProfileForm";
-import AdminEditProfile from "./AdminEditUser";
+import AdminEditProfile from "./AdminEditProfile";
 import { decodedToken, getAuthToken, getLogin, isAdmin, isAuthenticated, isUser } from 'src/services/BackendService';
 
 const AdminUsersPage = () => {
@@ -68,7 +68,7 @@ const AdminUsersPage = () => {
                 <button id="searchUserButton" className="actionButton" onClick={searchUser}>Search</button>
             </div>
             <div id="editProfileDiv">
-                <EditProfile id="editProfileComponent" firstName={userFirstName} isActive={userLastName} lastName={is_active} login={login} password={password} phone_number={phone_number} promotions_enabled={promotions_enabled} role={role} address_id={address}/>
+                <AdminEditProfile id="editProfileComponent" firstName={userFirstName} isActive={userLastName} lastName={is_active} login={login} password={password} phone_number={phone_number} promotions_enabled={promotions_enabled} role={role} address_id={address}/>
             </div>
             
             <Signup/>
