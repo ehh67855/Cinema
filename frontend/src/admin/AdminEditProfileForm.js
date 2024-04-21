@@ -36,9 +36,11 @@ function AdminEditProfileForm({userData}) {
             <UpdatePasswordForm></UpdatePasswordForm>
             {<UpdateAdressForm
                 homeAddress={userData.homeAddress}
+                login={userData.login}
             ></UpdateAdressForm>}
             <AddCardForm
                 creditCards={userData.creditCards}
+                login={userData.login}
             >
             </AddCardForm>
         </div>

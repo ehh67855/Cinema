@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getAuthToken, getLogin } from "src/services/BackendService";
 
 
-function UpdateAdressForm({homeAddress}) {
+function UpdateAdressForm({homeAddress, login}) {
     const [streetInput,setStreetInput] = useState(homeAddress.street);
     const [cityInput,setCityInput] = useState(homeAddress.city);
     const [stateInput,setStateInput] = useState(homeAddress.state);
@@ -15,7 +15,7 @@ const updateHomeAdress = (e) => {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ 
-                login: getLogin(getAuthToken()), 
+                login: login, 
                 street: streetInput,
                 city: cityInput,
                 state: stateInput,

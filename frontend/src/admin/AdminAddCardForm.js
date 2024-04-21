@@ -3,7 +3,7 @@ import CardsContainer from "../EditProfile/CardsContainer";
 import { getAuthToken, getLogin } from "src/services/BackendService";
 
 
-function AddCardForm({creditCards}) {
+function AddCardForm({creditCards, login}) {
 
     const [cardTypeInput,setCardTypeInput] = useState();
     const [cardNumberInput,setCardNumberInput] = useState();
@@ -17,7 +17,7 @@ function AddCardForm({creditCards}) {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ 
-                login: getLogin(getAuthToken()), 
+                login: login, 
                 cardNumber:cardNumberInput,
                 cardType:cardTypeInput,
                 cardExpiry:cardExpiryInput,
