@@ -60,7 +60,7 @@ public class Movie {
     private Rating rating;
 
     //movie_id is the name of the foreign key column in the MovieTime table that references the Movie table.
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @JoinColumn(name = "movie_id")
     private List<MovieTime> showings = new ArrayList<MovieTime>();
