@@ -1,11 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import AdminUsersContainer from "./adminUserList/AdminUsersContainer";
 import "./AdminUserPage.css"
 import Signup from "src/signup/Signup";
-import EditProfile from "src/EditProfile/EditProfile";
-import EditProfileForm from "src/EditProfile/EditProfileForm";
-import AdminEditProfile from "./AdminEditProfile";
-import { decodedToken, getAuthToken, getLogin, isAdmin, isAuthenticated, isUser } from 'src/services/BackendService';
+import AdminEditProfileForm from "./AdminEditProfileForm";
 
 const AdminUsersPage = () => {
     
@@ -37,9 +33,8 @@ const AdminUsersPage = () => {
                 <button id="searchUserButton" className="actionButton" onClick={searchUser}>Search</button>
             </div>
             <div id="editProfileDiv">
-                <AdminEditProfile id="editProfileComponent" userData={userData}/>
+                {(userData != null) ? <AdminEditProfileForm userData={userData}></AdminEditProfileForm> : null}
             </div>
-            
             <Signup/>
         </>
     );
