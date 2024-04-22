@@ -44,4 +44,8 @@ public class SignUpDto {
     
     private String zipCode;
 
+    private String role;
+
+    private String isActive;
+
 }

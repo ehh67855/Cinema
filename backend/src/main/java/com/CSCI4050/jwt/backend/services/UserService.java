@@ -18,6 +18,7 @@ import com.CSCI4050.jwt.backend.entites.CreditCard;
 import com.CSCI4050.jwt.backend.entites.PasswordResetToken;
 import com.CSCI4050.jwt.backend.entites.User;
 import com.CSCI4050.jwt.backend.enums.Role;
+import com.CSCI4050.jwt.backend.enums.TicketType;
 import com.CSCI4050.jwt.backend.exceptions.AppException;
 import com.CSCI4050.jwt.backend.mappers.UserMapper;
 import com.CSCI4050.jwt.backend.repositories.AdressRepository;
@@ -139,7 +140,8 @@ public class UserService {
         updatedUser.setLastName(user.getLastName());
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setPromotionsEnabled(user.getIsSubscribed());
-
+        updatedUser.setActive(user.getIsActive().equals("true"));
+        updatedUser.setRole(user.getRole().equals("ADMIN") ? Role.USER : Role.ADMIN);
         emailService.sendSimpleMessage(
             user.getLogin(),
             "Profile Updated",

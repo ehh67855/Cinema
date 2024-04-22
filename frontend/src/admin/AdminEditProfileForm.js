@@ -31,6 +31,8 @@ function AdminEditProfileForm({userData}) {
                 lastName={userData.lastName}
                 phoneNumber={userData.phoneNumber}
                 isSubscribed={userData.promotionsEnabled}
+                isAdmin={userData.role}
+                isActive={userData.active}
             >
             </PersonalInformationForm>
             <UpdatePasswordForm></UpdatePasswordForm>

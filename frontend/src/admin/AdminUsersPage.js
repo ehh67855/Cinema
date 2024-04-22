@@ -41,7 +41,6 @@ const AdminUsersPage = () => {
             </div>
             
             <Signup/>
-            {/* <AdminUsersContainer users={users} /> */}
         </>
     );
 }

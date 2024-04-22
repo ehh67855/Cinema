@@ -35,13 +35,8 @@ function AdminEditProfile(props) {
 
 
   const renderOptions = () => {
-      return <>
-                <input type="checkbox" id="makeAdmin" name="makeAdmin" />
-                <label for="makeAdmin">Make Admin</label>
-                <input type="checkbox" id="suspendUser" name="suspendUser" />
-                <label for="suspendUser">Suspend User</label>
-                <AdminEditProfileForm userData={userData}></AdminEditProfileForm>
-              </>
+      return <AdminEditProfileForm userData={userData}></AdminEditProfileForm>
+              
   }
 
   if (userData == null) {

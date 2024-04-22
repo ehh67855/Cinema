@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { getAuthToken, getLogin } from "src/services/BackendService";
 
-function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed, login}) {
+function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed, login, isAdmin, isActive}) {
 
     const [firstNameInput,setFirstNameInput] = useState(firstName);
     const [lastNameInput,setLastNameInput] = useState(lastName);
     const [phoneNumberInput,setPhoneNumberInput] = useState(phoneNumber);
     const [isSubscribedInput,setIsSubscribedInput] = useState(isSubscribed);
-    const [loginInput, setLoginInput] = useState(login);
-    console.log(loginInput);
+    const [adminStatus, setAdminStatus] = useState(isAdmin);
+    const [activeStatus, setActiveStatus] = useState(isActive);
+    console.log(activeStatus);
+    console.log(adminStatus);
 
     const updatePersonalInformation = () => {
         try {
@@ -20,7 +22,9 @@ function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed, l
                 phoneNumber:phoneNumberInput,
                 firstName:firstNameInput,
                 lastName:lastNameInput,
-                isSubscribed:isSubscribedInput
+                isSubscribed:isSubscribedInput,
+                role: adminStatus,
+                isActive: activeStatus
               })
             })
             .then(response => {
@@ -83,6 +87,10 @@ function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed, l
               checked={isSubscribedInput}
               onChange={(e) => setIsSubscribedInput(e.target.checked)}
             />
+            <input type="checkbox" id="makeAdmin" name="makeAdmin" onChange={(e) => {e.target.checked ? setAdminStatus("ADMIN") : setAdminStatus("USER")}}/>
+                <label for="makeAdmin">Make Admin</label>
+                <input type="checkbox" id="suspendUser" name="suspendUser" onChange={(e) => setActiveStatus(!e.target.checked)}/>
+                <label for="suspendUser">Suspend User</label>
             <br></br>
             <button 
               className="btn btn-primary"
