@@ -33,7 +33,7 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TicketType ticketType; // ADULT, CHILD
+    private TicketType ticketType; // ADULT, CHILD, SENIOR
 
     @Column(nullable = false)
     private Double price;
