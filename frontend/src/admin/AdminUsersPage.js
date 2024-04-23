@@ -13,31 +13,17 @@ const AdminUsersPage = () => {
         fetch("http://localhost:8080/get-user/" + chosenUser.current.value, {
                 method: "GET",
             }).then(response => {
-                if (response.status == 200) {
+                if(response.status == 200) {
+                    console.log("OK");
                     return response.json();
-                }
-                if (!response.ok) {
-                    throw new Error('API call failed');
+                } else if (response.status === 404) {
+                    return Promise.reject(new Error("404 Error"));
                 }
             }).then(data => {
                 setUserData(data);
-                console.log(data);
-            }).catch(error => {
-                console.error(error);
-                });
-        // fetch("http://localhost:8080/get-user/" + chosenUser.current.value, {
-        //         method: "GET",
-        //     }).then(response => {
-        //         if(response.status == 200) {
-        //             console.log("OK");
-        //             return response.json();
-        //         } else if (response.status === 404) {
-        //             return Promise.reject(new Error("404 Error"));
-        //         }
-        //     }).then(data => {
-        //         setUserData(data);
-        //         console.log(userData)})
-        //     .catch(error => console.error(error));
+                console.log(userData);
+            })
+            .catch(error => console.error(error));
     }
 
 
