@@ -89,7 +89,7 @@ function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed, l
             />
             <input type="checkbox" id="makeAdmin" name="makeAdmin" checked={adminStatus === "ADMIN"} onChange={(e) => {e.target.checked ? setAdminStatus("ADMIN") : setAdminStatus("USER")}}/>
                 <label for="makeAdmin">Make Admin</label>
-                <input type="checkbox" id="suspendUser" name="suspendUser" onChange={(e) => setActiveStatus(!e.target.checked)}/>
+                <input type="checkbox" id="suspendUser" name="suspendUser" checked={activeStatus === false} onChange={(e) => setActiveStatus(!e.target.checked)}/>
                 <label for="suspendUser">Suspend User</label>
             <br></br>
             <button 
