@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import './Checkout.css';
+import { useLocation } from "react-router-dom";
 
 /*
     Eventually, change the method to submit to use useEffect and store checkout info in a checkout variable (don't forget to create a submit handler)
 */
 
 const Checkout = () => {
-
+    //if there is an error, try removing the curly brackets around booking (this is just a comment for me - Neil)
+    const {booking} = useLocation();
 
     let [totalSeniorTicketPrice, setTotalSeniorTicketPrice] = useState(0);
     let [totalAdultTicketPrice, setTotalAdultTicketPrice] = useState(0);

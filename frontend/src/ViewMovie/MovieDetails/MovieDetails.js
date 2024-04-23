@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './MovieDetails.css';
 import MovieTrailer from '../MovieTrailer/MovieTrailer';
 
@@ -56,9 +56,9 @@ function MovieDetails() {
         <h3>Show Dates and Times</h3>
         {movie.showings.map((showing, index) => (
           <div key={index} className="showing-button">
-            <a href={`/bookTickets/${showing.id}`}>
+            <Link to={`/bookTickets/${showing.id}`} state={ movie.title }>
               Book for {new Date(showing.date).toLocaleDateString()} at {showing.time}
-            </a>
+            </Link>
           </div>
         ))}
       </div>

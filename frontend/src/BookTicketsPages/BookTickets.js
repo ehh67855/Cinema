@@ -2,7 +2,7 @@ import React from "react";
 import {useRef, useState, useEffect} from "react";
 import './BookTickets.css';
 import Seat from "./Movie-Seat-Icon.png";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { fetchService } from "src/services/FetchService";
 /*
     Eventually, change the method to submit to use useEffect and store booking info in a booking variable (don't forget to create a submit handler)
@@ -13,8 +13,9 @@ const BookTickets = () => {
 
     //Parameter of the movie time
     const { id } = useParams(); 
-    const {movieTime,setMovieTime} = useState({});
-    const {movieName,setMovieName} = useState("");
+    const [movieTime, setMovieTime] = useState("");
+    const [movieDate, setMovieDate] = useState("");
+    const [bookedMovieTitle, setBookedMovieTitle] = useState("");
 
     const totalTicketNum = useRef(0);
     let childTicketAmount = useRef(0);
@@ -22,19 +23,35 @@ const BookTickets = () => {
     let seniorTicketAmount = useRef(0);
     let seatSelection = [];
 
-    var [bookedMovieTitle, setBookedMovieTitle] = useState("");
+    const navigate = useNavigate();
+    const {state} = useLocation();
+    
 
 
     
     /**
      * Creates a booking object that stores the amount of child, adult, and senior tickets as well as the chosen seats and a randomly generated ID.
      */
-    let booking = {
-        bookingId: Math.floor(Math.random() * (3000)), 
-        bookingChildTickets: childTicketAmount,
-        bookingAdultTickets: adultTicketAmount,
-        bookingSeniorTicketAmount: seniorTicketAmount,
-        bookingSeatSelection: seatSelection
+    // let booking = { 
+    //     bookingChildTickets: childTicketAmount.current.value,
+    //     bookingAdultTickets: adultTicketAmount.current.value,
+    //     bookingSeniorTicketAmount: seniorTicketAmount.current.value,
+    //     bookingSeatSelection: seatSelection,
+    //     bookingMovieTitle: bookedMovieTitle,
+    //     bookingMovieTime: movieTime,
+    //     bookingMovieDate: movieDate
+    // };
+
+    const childTicketHandler = (e) => {
+        childTicketAmount = e.target.value;
+    };
+
+    const adultTicketHandler = (e) => {
+        adultTicketAmount = e.target.value;
+    };
+
+    const seniorTicketHandler = (e) => {
+        seniorTicketAmount = e.target.value;
     };
 
     /**
@@ -49,19 +66,37 @@ const BookTickets = () => {
             e.target.style.backgroundColor = "grey";
         }
     }
-
+   
     useEffect(() => {
-        fetchService(`get-movie/?id=${id}`, (data) => {
-            setBookedMovieTitle(data.title);
+        fetchService(`get-movie-time/${id}`, (data) => {
+            setMovieTime(data.time.toString());
+            setMovieDate(data.date.toString());
         });
+
+        setBookedMovieTitle(state);
     }, []);
 
     /**Handles confirmation submission */
     function handleSubmit() {
-        booking.bookingChildTickets = childTicketAmount;
-        booking.bookingAdultTickets = adultTicketAmount;
-        booking.bookingSeniorTicketAmount = seniorTicketAmount;
-        booking.bookingSeatSelection = seatSelection;
+        // booking.bookingChildTickets = childTicketAmount.current.value;
+        // booking.bookingAdultTickets = adultTicketAmount.current.value;
+        // booking.bookingSeniorTicketAmount = seniorTicketAmount.current.value;
+        // booking.bookingSeatSelection = seatSelection;
+
+        const booking = {
+            bookingChildTickets: childTicketAmount,
+            bookingAdultTickets: adultTicketAmount,
+            bookingSeniorTicketAmount: seniorTicketAmount,
+            bookingSeatSelection: seatSelection,
+            bookingMovieTitle: bookedMovieTitle,
+            bookingMovieTime: movieTime,
+            bookingMovieDate: movieDate
+        };
+
+        /*
+            do useNavigate stuff here (and figure out how to get the booking object above to be transfered )
+        */
+        navigate('/checkout', { state: { booking: booking } });
     }
 
     return (
@@ -76,9 +111,9 @@ const BookTickets = () => {
                 <div className="bkTicksAllFields">
                     <div className="bkTicksFields2">
                         <h4>Select Tickets</h4>
-                        <label>Child ($10):</label><input type="number" min="0" max={totalTicketNum - adultTicketAmount - seniorTicketAmount} ref={childTicketAmount}/>
-                        <label>Adult ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - seniorTicketAmount} ref={adultTicketAmount}/>
-                        <label>Senior ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - adultTicketAmount} ref={seniorTicketAmount}/>
+                        <label>Child ($10):</label><input type="number" min="0" max={totalTicketNum - adultTicketAmount - seniorTicketAmount} ref={childTicketAmount} onChange={childTicketHandler}/>
+                        <label>Adult ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - seniorTicketAmount} ref={adultTicketAmount} onChange={adultTicketHandler}/>
+                        <label>Senior ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - adultTicketAmount} ref={seniorTicketAmount} onChange={seniorTicketHandler}/>
                     </div>
                 </div>
                 <h4 className="centeredH4">Select desired seats</h4>
