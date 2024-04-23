@@ -141,7 +141,7 @@ public class UserService {
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setPromotionsEnabled(user.getIsSubscribed());
         updatedUser.setActive(user.getIsActive().equals("true"));
-        updatedUser.setRole(user.getRole().equals("ADMIN") ? Role.USER : Role.ADMIN);
+        updatedUser.setRole(user.getRole().equals("ADMIN") ? Role.ADMIN : Role.USER);
         emailService.sendSimpleMessage(
             user.getLogin(),
             "Profile Updated",

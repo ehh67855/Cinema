@@ -2,26 +2,41 @@ import React, { useState, useEffect, useRef } from "react";
 import "./AdminUserPage.css"
 import Signup from "src/signup/Signup";
 import AdminEditProfileForm from "./AdminEditProfileForm";
+import { decodedToken, getAuthToken, getLogin, isAdmin, isAuthenticated, isUser } from 'src/services/BackendService';
 
 const AdminUsersPage = () => {
     
     const chosenUser = useRef(null);
     let [userData, setUserData] = useState();
 
-    function searchUser() {
-        fetch(`http://localhost:8080/get-user/${chosenUser.current.value}`, {
+    async function searchUser() {
+        // fetch("http://localhost:8080/get-user/" + chosenUser.current.value, {
+        //         method: "GET",
+        //     }).then(response => {
+        //         if (response.status == 200) {
+        //             return response.json();
+        //         }
+        //         if (!response.ok) {
+        //             throw new Error('API call failed');
+        //         }
+        //     }).then(data => {
+        //         setUserData(data);
+        //         console.log(data);
+        //     }).catch(error => {
+        //         console.error(error);
+        //         });
+        fetch("http://localhost:8080/get-user/" + chosenUser.current.value, {
                 method: "GET",
             }).then(response => {
-                if(response.ok) {
-                    return response.json()
+                if(response.status == 200) {
+                    console.log("OK");
+                    return response.json();
                 } else if (response.status === 404) {
                     return Promise.reject(new Error("404 Error"));
                 }
-            })
-            .then(data => {
+            }).then(data => {
                 setUserData(data);
-                console.log(userData);
-            })
+                console.log(userData)})
             .catch(error => console.error(error));
     }
 
