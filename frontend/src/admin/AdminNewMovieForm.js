@@ -14,6 +14,7 @@ const AdminNewMovieForm = () => {
     const [enteredRating, setEnteredRating] = useState('');
     const [enteredNumStars, setEnteredNumStars] = useState(1);
     const [enteredDatetime, setEnteredDatetime] = useState('');
+    const [enteredNumTheatre, setEnteredNumTheatre] = useState(1);
 
     const [currentDate, setCurrentDate] = useState(new Date());
     currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
@@ -77,12 +78,16 @@ const AdminNewMovieForm = () => {
         //console.log(enteredDatetime.split("T")[0]);
     }
 
+    const numTheatreChangeHandler = (event) => {
+        setEnteredNumTheatre(event.target.value);
+    }
+
     const submitHandler = (event) => {
         event.preventDefault();
 
         if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
             !enteredSynopsis || !enteredDescription || !enteredTrailerPictureURL || !enteredTrailerVideoURL || 
-            !enteredRating || !enteredNumStars || !enteredDatetime) {
+            !enteredRating || !enteredNumStars || !enteredDatetime || !enteredNumTheatre) {
             alert("Please fill out all fields.");
             return;
         }
@@ -104,7 +109,8 @@ const AdminNewMovieForm = () => {
                   trailerVideoURL: enteredTrailerVideoURL,
                   rating: enteredRating,
                   date: enteredDatetime.split("T")[0],
-                  time: enteredDatetime.split("T")[1]
+                  time: enteredDatetime.split("T")[1],
+                  numTheatre: enteredNumTheatre
                 })
               })
               .then(response => {
@@ -227,6 +233,15 @@ const AdminNewMovieForm = () => {
             min={currentDate.toISOString().substring(0, 16)}
             value={enteredDatetime}
             onChange={datetimeChangeHandler}
+            />
+            <label>Theater Number</label>
+            <input
+            id="num_theatre"
+            type="number"
+            max={5}
+            min={1}
+            value={enteredNumTheatre}
+            onChange={numTheatreChangeHandler}
             />
             <button className="newMovieFormSubmitBtn" type="submit">Add Movie</button>
         </form>

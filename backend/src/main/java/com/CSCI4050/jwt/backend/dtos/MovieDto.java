@@ -39,4 +39,6 @@ public class MovieDto {
     private String date;
 
     private String time;
+
+    private Integer numTheatre;
 }

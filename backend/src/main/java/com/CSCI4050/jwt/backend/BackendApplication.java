@@ -37,11 +37,14 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	
+	//Only run this code block once to create 5 theatres with ids of 1 through 5 (assuming that the SQL theatre table's auto increment value is set to 1).
+	//The next time you run this backend application, comment this block out. Keep in mind that anytime you modify and save anything in the backend,
+	//this application will shutdown and run again.
+	//There's probably a better way to only make 5 theatres ever, even when the backend application is run again.
 	// @Bean
-	// CommandLineRunner run(@Autowired MovieRepository movieRepo,@Autowired TheatreRepository theatreRepository) {
+	// CommandLineRunner run(@Autowired TheatreRepository theatreRepository) {
 	// 	return (args) -> {
-	// 		createDummyMovies(movieRepo,theatreRepository); 
+	// 		createTheatres(theatreRepository);
 	// 	};
 	// } 
 	
@@ -93,16 +96,18 @@ public class BackendApplication {
 	// 		"Comedy"
 	// 	};
 
-	// 	Theatre[] theatres = new Theatre[5];
-	// 	for (int i = 0 ; i < 5 ; i++) {
-	// 		theatres[i]= Theatre.builder()
-	// 		.seniorTicketPrice(Double.valueOf(10+i))
-	// 		.adultTicketPrice(Double.valueOf(10+i))
-	// 		.childTicketPrice(Double.valueOf(10+i))
-	// 		.name("Theatre " + i)
-	// 		.build();
-	// 		theatres[i] = theatreRepository.saveAndFlush(theatres[i]); 
-	// 	}
+	public void createTheatres(TheatreRepository theatreRepository) {
+		Theatre[] theatres = new Theatre[5];
+		for (int i = 0 ; i < 5 ; i++) {
+			theatres[i]= Theatre.builder()
+			.seniorTicketPrice(Double.valueOf(10+i))
+			.adultTicketPrice(Double.valueOf(10+i))
+			.childTicketPrice(Double.valueOf(10+i))
+			.name("Theatre " + i)
+			.build();
+			theatres[i] = theatreRepository.saveAndFlush(theatres[i]); 
+		}
+	}
 
 	// 	for (int i = 0; i < 10; i++) {
 	// 		MovieTime movieTime1 = new MovieTime();
