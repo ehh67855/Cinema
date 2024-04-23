@@ -141,7 +141,7 @@ const AdminNewMovieForm = () => {
         setEnteredTrailerPictureURL('');
         setEnteredTrailerVideoURL('');
         setEnteredRating('');
-        setEnteredNumStars(0);
+        setEnteredNumStars(1);
         setEnteredDatetime('');
     };
 

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import com.CSCI4050.jwt.backend.dtos.MovieDto;
 import com.CSCI4050.jwt.backend.entites.Movie;
 import com.CSCI4050.jwt.backend.entites.MovieTime;
-import com.CSCI4050.jwt.backend.entites.Theatre;
 import com.CSCI4050.jwt.backend.repositories.MovieRepository;
 import com.CSCI4050.jwt.backend.repositories.MovieTimeRepository;
 import com.CSCI4050.jwt.backend.repositories.TheatreRepository;
@@ -63,6 +62,23 @@ public class MovieService {
         newMovie.getShowings().add(savedMovieTime);
 
         return movieRepository.save(newMovie);
+    }
+
+    public Movie editMovie(Long id, MovieDto movie) {
+        Movie currentMovie = movieRepository.findById(id).get();
+        currentMovie.setCast(movie.getCast());
+        currentMovie.setCategory(movie.getCategory());
+        currentMovie.setComingSoon(true);
+        currentMovie.setDescription(movie.getDescription());
+        currentMovie.setDirector(movie.getDirector());
+        currentMovie.setNumStars(movie.getNumStars());
+        currentMovie.setProducer(movie.getProducer());
+        currentMovie.setRating(movie.getRating());
+        currentMovie.setSynopsis(movie.getSynopsis());
+        currentMovie.setTitle(movie.getTitle());
+        currentMovie.setTrailerPictureURL(movie.getTrailerPictureURL());
+        currentMovie.setTrailerVideoURL(movie.getTrailerVideoURL());
+        return movieRepository.save(currentMovie);
     }
 
     public void deleteMovie(Long id) {

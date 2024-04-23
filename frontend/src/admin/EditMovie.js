@@ -1,40 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import "./EditMovie.css";
+import { fetchService } from "src/services/FetchService";
 
 const EditMovie = () => {
     const { id } = useParams();
-    const [movie, setMovie] = useState(null);
-  
-      const fetchMovie = async () => { //I think fetching the movie is not working, but I'm not sure why.
-          try {
-              const response = await fetch(`http://localhost:8080/api/movies/get-movie/?id=${id}`);
-              if (response.ok) {
-                  const movieData = await response.json();
-                  setMovie(movieData);
-              } else {
-              console.error('Error fetching movie: HTTP status ', response.status);
-              }
-          } catch (err) {
-              console.error('Error fetching movie:', err);
-          }
-      }
-  
-  
-      useEffect(() => {
-          fetchMovie();
-      });
 
-      const [enteredMovieTitle, setEnteredMovieTitle] = useState('');
-      const [enteredCategory, setEnteredCategory] = useState('');
-      const [enteredCast, setEnteredCast] = useState('');
-      const [enteredDirector, setEnteredDirector] = useState('');
-      const [enteredProducer, setEnteredProducer] = useState('');
-      const [enteredSynopsis, setEnteredSynopsis] = useState('');
-      const [enteredTrailerPictureURL, setEnteredTrailerPictureURL] = useState('');
-      const [enteredTrailerVideoURL, setEnteredTrailerVideoURL] = useState('');
-      const [enteredRating, setEnteredRating] = useState('');
-      const [enteredDatetime, setEnteredDatetime] = useState('');
+    const [enteredMovieTitle, setEnteredMovieTitle] = useState('');
+    const [enteredCategory, setEnteredCategory] = useState('');
+    const [enteredCast, setEnteredCast] = useState('');
+    const [enteredDirector, setEnteredDirector] = useState('');
+    const [enteredProducer, setEnteredProducer] = useState('');
+    const [enteredSynopsis, setEnteredSynopsis] = useState('');
+    const [enteredDescription, setEnteredDescription] = useState('');
+    const [enteredTrailerPictureURL, setEnteredTrailerPictureURL] = useState('');
+    const [enteredTrailerVideoURL, setEnteredTrailerVideoURL] = useState('');
+    const [enteredRating, setEnteredRating] = useState('');
+    const [enteredNumStars, setEnteredNumStars] = useState(1);
+    //const [enteredDatetime, setEnteredDatetime] = useState('');
+
+      useEffect(() => {
+        fetchService(`get-movie/?id=${id}`, (data) => {
+          setEnteredMovieTitle(data.title);
+          setEnteredCategory(data.category);
+          setEnteredCast(data.cast);
+          setEnteredDirector(data.director);
+          setEnteredProducer(data.producer);
+          setEnteredSynopsis(data.synopsis);
+          setEnteredDescription(data.description);
+          setEnteredTrailerPictureURL(data.trailerPictureURL);
+          setEnteredTrailerVideoURL(data.trailerVideoURL);
+          setEnteredRating(data.rating);
+          setEnteredNumStars(data.numStars);
+        });
+    }, []);
 
     const movieTitleChangeHandler = (event) => {
         setEnteredMovieTitle(event.target.value);
@@ -60,6 +59,10 @@ const EditMovie = () => {
         setEnteredSynopsis(event.target.value);
     }
 
+    const descriptionChangeHandler = (event) => {
+        setEnteredDescription(event.target.value);
+    }
+
     const trailerPictureURLChangeHandler = (event) => {
         setEnteredTrailerPictureURL(event.target.value);
     }
@@ -72,36 +75,60 @@ const EditMovie = () => {
         setEnteredRating(event.target.value);
     }
 
-    const datetimeChangeHandler = (event) => {
-        setEnteredDatetime(event.target.value);
+    const numStarsChangeHandler = (event) => {
+        setEnteredNumStars(event.target.value);
     }
+
+    // const datetimeChangeHandler = (event) => {
+    //     setEnteredDatetime(event.target.value);
+    // }
 
     const submitHandler = (event) => {
         event.preventDefault();
 
-        const enteredMovie = {
-            title: enteredMovieTitle,
-            category: enteredCategory,
-            cast: enteredCast,
-            director: enteredDirector,
-            producer: enteredProducer,
-            synopsis: enteredSynopsis,
-            trailerPictureURL: enteredTrailerPictureURL,
-            trailerVideoURL: enteredTrailerVideoURL,
-            rating: enteredRating,
-            datetime: enteredDatetime
+        if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
+            !enteredSynopsis || !enteredDescription || !enteredTrailerPictureURL || !enteredTrailerVideoURL || 
+            !enteredRating || !enteredNumStars) {
+            alert("Please fill out all fields.");
+            return;
         }
-
-        setEnteredMovieTitle('');
-        setEnteredCategory('');
-        setEnteredCast('');
-        setEnteredDirector('');
-        setEnteredProducer('');
-        setEnteredSynopsis('');
-        setEnteredTrailerPictureURL('');
-        setEnteredTrailerVideoURL('');
-        setEnteredRating('');
-        setEnteredDatetime('');
+        
+        try {
+            fetch(`http://localhost:8080/edit-movie/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                  title: enteredMovieTitle,
+                  numStars: enteredNumStars,
+                  category: enteredCategory,
+                  cast: enteredCast,
+                  director: enteredDirector,
+                  producer: enteredProducer,
+                  synopsis: enteredSynopsis,
+                  description: enteredDescription,
+                  trailerPictureURL: enteredTrailerPictureURL,
+                  trailerVideoURL: enteredTrailerVideoURL,
+                  rating: enteredRating
+                })
+              })
+              .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert("Something went wrong");
+                }
+            }).then(data => {
+                if (data) {
+                    console.log("Movie edited successfully:", data);
+                    alert("Movie edited successfully.");
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred during movie edit:", error);
+            })
+        } catch (error) {
+          console.error(error);
+        }
     };
 
     return (
@@ -148,6 +175,13 @@ const EditMovie = () => {
             value={enteredSynopsis}
             onChange={synopsisChangeHandler}
             />
+            <label>Description</label>
+            <input
+            id="description"
+            type="text"
+            value={enteredDescription}
+            onChange={descriptionChangeHandler}
+            />
             <label>Trailer Picture URL</label>
             <input
             id="trailerPictureURL"
@@ -169,12 +203,14 @@ const EditMovie = () => {
             value={enteredRating}
             onChange={ratingChangeHandler}
             />
-            <label>Add a Show Date and Time</label>
+            <label>Number of Stars</label>
             <input
-            id="showDateAndTime"
-            type="datetime-local"
-            value={enteredDatetime}
-            onChange={datetimeChangeHandler}
+            id="num_stars"
+            type="number"
+            max={5}
+            min={1}
+            value={enteredNumStars}
+            onChange={numStarsChangeHandler}
             />
             <button className="editMovieFormSubmitBtn" type="submit">Confirm</button>
         </form>
