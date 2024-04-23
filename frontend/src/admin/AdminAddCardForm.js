@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CardsContainer from "../EditProfile/CardsContainer";
+import CardsContainer from "./AdminCardsContainer";
 import { getAuthToken, getLogin } from "src/services/BackendService";
 
 
@@ -9,6 +9,7 @@ function AddCardForm({creditCards, login}) {
     const [cardNumberInput,setCardNumberInput] = useState();
     const [cardExpiryInput, setCardExpiryInput] = useState();
     const [billingAddrInput, setBillingAddrInput] = useState();
+    const [loginInput, setLoginInput] = useState(login);
 
     const addCard = (e) => {
       e.preventDefault();
@@ -17,7 +18,7 @@ function AddCardForm({creditCards, login}) {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ 
-                login: login, 
+                login: loginInput, 
                 cardNumber:cardNumberInput,
                 cardType:cardTypeInput,
                 cardExpiry:cardExpiryInput,
@@ -50,7 +51,7 @@ function AddCardForm({creditCards, login}) {
         <div>
             <h1>Card Information</h1>
             {(typeof creditCards !== 'undefined' && creditCards.length >= 0)
-            && <CardsContainer cards={creditCards}></CardsContainer>}
+            && <CardsContainer cards={creditCards} id={login}></CardsContainer>}
             <form onSubmit={addCard}>
                 <label htmlFor="cardType">Card Type</label>
                 <input
