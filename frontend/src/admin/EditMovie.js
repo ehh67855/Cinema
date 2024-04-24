@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "./EditMovie.css";
 import { fetchService } from "src/services/FetchService";
 
@@ -212,7 +213,10 @@ const EditMovie = () => {
             value={enteredNumStars}
             onChange={numStarsChangeHandler}
             />
-            <button className="editMovieFormSubmitBtn" type="submit">Confirm</button>
+            <div className="editMovieFormBtnsContainer">
+                <button className="editMovieFormSubmitBtn" type="submit">Confirm</button>
+                <Link to={"/manageMovies"} className="editMovieFormCancelBtn"><button className="editMovieFormCancelBtn">Cancel</button></Link>
+            </div>
         </form>
     );
 }

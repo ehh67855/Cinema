@@ -4,7 +4,16 @@
     margin: 5% 21%;
 }
 
+.editMovieFormBtnsContainer {
+    display: flex;
+    margin: auto;
+}
+
 .editMovieFormSubmitBtn {
     width: 100px;
     margin: auto;
+}
+
+.editMovieFormCancelBtn {
+    width: 100px;
 }
