@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AdminNewMovieForm from "./AdminNewMovieForm";
 import AdminMoviesContainer from "./adminMovieList/AdminMoviesContainer";
+import { Link } from "react-router-dom";
+import "./AdminMoviesPage.css"
 
 const AdminMoviesPage = () => {
     const[movies,setMovies] = useState([]);
@@ -24,9 +25,9 @@ const AdminMoviesPage = () => {
     } 
 
     return (
-        <div>
-            <AdminNewMovieForm />
+        <div className="adminMoviesPageContainer">
             <AdminMoviesContainer movies={movies}></AdminMoviesContainer>
+            <Link to={"/addMovie"} className="btnToAddNewMovieForm"><button>Add a Movie</button></Link>
         </div>
     );
 }

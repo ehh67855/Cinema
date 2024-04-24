@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./AdminNewMovieForm.css"
 
 const AdminNewMovieForm = () => {
@@ -122,6 +123,7 @@ const AdminNewMovieForm = () => {
             }).then(data => {
                 if (data) {
                     console.log("Movie added successfully:", data);
+                    alert("Movie added successfully.");
                 }
             })
             .catch(error => {
@@ -243,7 +245,10 @@ const AdminNewMovieForm = () => {
             value={enteredNumTheatre}
             onChange={numTheatreChangeHandler}
             />
-            <button className="newMovieFormSubmitBtn" type="submit">Add Movie</button>
+            <div className="newMovieFormBtnsContainer">
+                <button className="newMovieFormSubmitBtn" type="submit">Add Movie</button>
+                <Link to={"/manageMovies"} className="newMovieFormGoBackBtn"><button className="newMovieFormGoBackBtn">Go Back</button></Link>
+            </div>
         </form>
     );
 }

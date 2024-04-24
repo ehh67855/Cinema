@@ -13,6 +13,7 @@ function AdminMovieCard({movie}) {
         .then(response => {
           if (response.status === 200) {
               console.log("Movie deleted successfully.");
+              alert("Movie deleted successfully.");
           } else {
               alert("Something went wrong");
           }

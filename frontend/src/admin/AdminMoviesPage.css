@@ -1,0 +1,8 @@
+.adminMoviesPageContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.btnToAddNewMovieForm {
+    margin: auto;
+}

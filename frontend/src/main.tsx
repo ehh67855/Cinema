@@ -19,6 +19,7 @@ import TicketOrder from './BookTicketsPages/TicketOrder';
 import Checkout from './CheckoutPages/Checkout';
 import AdminMoviesPage from './admin/AdminMoviesPage';
 import EditMovie from './admin/EditMovie';
+import AdminNewMovieForm from './admin/AdminNewMovieForm';
 import SignupConfirmation from './signup/SignupConfirmation';
 import ForgotPassword from './ForgotPassword/ForgotPassword';
 import PasswordReset from './ForgotPassword/PasswordReset';
@@ -49,6 +50,7 @@ root.render(
       <Route path="/adminMainPage" element={<Layout><AdminRoute element={AdminMainPage} /></Layout>} />
       <Route path="/manageMovies" element={<Layout><AdminRoute element={AdminMoviesPage} /></Layout>} />
       <Route path="/editMovie/:id" element={<Layout><AdminRoute element={EditMovie} /></Layout>} />
+      <Route path="/addMovie" element={<Layout><AdminRoute element={AdminNewMovieForm} /></Layout>} />
       <Route path="/promotions" element={<Layout><AdminRoute element={AdminPromotionsPage} /></Layout>} />
       <Route path="/manageUsers" element={<Layout><AdminRoute element={AdminUsersPage} /></Layout>} />
     </Routes>
