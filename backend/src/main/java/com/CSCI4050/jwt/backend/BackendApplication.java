@@ -37,16 +37,22 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	//Only run this code block once to create 5 theatres with ids of 1 through 5 (assuming that the SQL theatre table's auto increment value is set to 1).
-	//The next time you run this backend application, comment this block out. Keep in mind that anytime you modify and save anything in the backend,
-	//this application will shutdown and run again.
-	//There's probably a better way to only make 5 theatres ever, even when the backend application is run again.
+	/*
+	IMPORTANT:
+	Only uncomment and run the code block below once to create the only 5 theatres you'll ever need
+	with ids of 1 through 5 (assuming that the SQL theatre table's auto increment value is set to 1).
+	Right after you start up this backend application, comment this block out.
+	Keep in mind that anytime you modify and save anything in the backend while this application is running,
+	this application will shutdown and run again.
+	There's probably a better way to only make 5 theatres ever, even when the backend application is run again
+	*/
 	// @Bean
 	// CommandLineRunner run(@Autowired TheatreRepository theatreRepository) {
 	// 	return (args) -> {
 	// 		createTheatres(theatreRepository);
 	// 	};
-	// } 
+	// }
+	//Comments above are referring to this block of code ^
 	
 	// public void createDummyMovies(MovieRepository movieRepo, TheatreRepository theatreRepository) {
 	// 	String[] movieTitles = {
