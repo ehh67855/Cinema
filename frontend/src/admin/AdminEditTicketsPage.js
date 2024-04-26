@@ -15,7 +15,8 @@ export default function AdminEditPricingPage() {
                     <label>Child Ticket price: </label>
                     <input type="number" min="0" id="childTicketPrice"></input>
                     <label>Booking Fees: </label>
-                    <input type="number" min="0" id="bookingFees"></input>
+                    <input type="number" min="0" id="bookingFees"></input> <br/>
+                    <button id="submitButton">Update Pricing</button> <br/>
                 </div>
             </form>
         </>
