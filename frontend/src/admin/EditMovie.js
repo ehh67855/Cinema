@@ -10,6 +10,7 @@ const EditMovie = () => {
     const [enteredMovieTitle, setEnteredMovieTitle] = useState('');
     const [enteredCategory, setEnteredCategory] = useState('');
     const [enteredCast, setEnteredCast] = useState('');
+    const [comingSoon, setComingSoon] = useState(false);
     const [enteredDirector, setEnteredDirector] = useState('');
     const [enteredProducer, setEnteredProducer] = useState('');
     const [enteredSynopsis, setEnteredSynopsis] = useState('');
@@ -33,6 +34,7 @@ const EditMovie = () => {
           setEnteredTrailerVideoURL(data.trailerVideoURL);
           setEnteredRating(data.rating);
           setEnteredNumStars(data.numStars);
+          setComingSoon(data.comingSoon);
         });
     }, []);
 
@@ -80,6 +82,10 @@ const EditMovie = () => {
         setEnteredNumStars(event.target.value);
     }
 
+    const comingSoonChangeHandler = (event) => {
+        setComingSoon(event.target.checked);
+    }
+
     // const datetimeChangeHandler = (event) => {
     //     setEnteredDatetime(event.target.value);
     // }
@@ -109,7 +115,8 @@ const EditMovie = () => {
                   description: enteredDescription,
                   trailerPictureURL: enteredTrailerPictureURL,
                   trailerVideoURL: enteredTrailerVideoURL,
-                  rating: enteredRating
+                  rating: enteredRating,
+                  comingSoon: comingSoon
                 })
               })
               .then(response => {
@@ -213,6 +220,15 @@ const EditMovie = () => {
             value={enteredNumStars}
             onChange={numStarsChangeHandler}
             />
+            <div>
+            <label>Coming Soon</label>
+            <input
+              type="checkbox"
+              id="comingSoon"
+              checked={comingSoon}
+              onChange={comingSoonChangeHandler}
+            />
+            </div>
             <div className="editMovieFormBtnsContainer">
                 <button className="editMovieFormSubmitBtn" type="submit">Confirm</button>
                 <Link to={"/manageMovies"} className="editMovieFormCancelBtn"><button className="editMovieFormCancelBtn">Cancel</button></Link>
