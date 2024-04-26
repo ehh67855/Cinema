@@ -42,5 +42,4 @@ public class Booking {
     private LocalDate bookingDate;
 
     private LocalTime bookingTime;
-
 }
