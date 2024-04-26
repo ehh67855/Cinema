@@ -8,14 +8,14 @@ import { fetchService } from "src/services/FetchService";
     Eventually, change the method to submit to use useEffect and store booking info in a booking variable (don't forget to create a submit handler)
 */
 
-
 const BookTickets = () => {
-
     //Parameter of the movie time
-    const { id } = useParams(); 
+    const { id } = useParams();
+
     const [movieTime, setMovieTime] = useState("");
     const [movieDate, setMovieDate] = useState("");
     const [bookedMovieTitle, setBookedMovieTitle] = useState("");
+    const [theatre, setTheatre] = useState(null);
 
     const totalTicketNum = useRef(0);
     let childTicketAmount = useRef(0);
@@ -25,22 +25,6 @@ const BookTickets = () => {
 
     const navigate = useNavigate();
     const {state} = useLocation();
-    
-
-
-    
-    /**
-     * Creates a booking object that stores the amount of child, adult, and senior tickets as well as the chosen seats and a randomly generated ID.
-     */
-    // let booking = { 
-    //     bookingChildTickets: childTicketAmount.current.value,
-    //     bookingAdultTickets: adultTicketAmount.current.value,
-    //     bookingSeniorTicketAmount: seniorTicketAmount.current.value,
-    //     bookingSeatSelection: seatSelection,
-    //     bookingMovieTitle: bookedMovieTitle,
-    //     bookingMovieTime: movieTime,
-    //     bookingMovieDate: movieDate
-    // };
 
     const childTicketHandler = (e) => {
         childTicketAmount = e.target.value;
@@ -71,6 +55,7 @@ const BookTickets = () => {
         fetchService(`get-movie-time/${id}`, (data) => {
             setMovieTime(data.time.toString());
             setMovieDate(data.date.toString());
+            setTheatre(data.theatre);
         });
 
         setBookedMovieTitle(state);
@@ -78,25 +63,19 @@ const BookTickets = () => {
 
     /**Handles confirmation submission */
     function handleSubmit() {
-        // booking.bookingChildTickets = childTicketAmount.current.value;
-        // booking.bookingAdultTickets = adultTicketAmount.current.value;
-        // booking.bookingSeniorTicketAmount = seniorTicketAmount.current.value;
-        // booking.bookingSeatSelection = seatSelection;
-
         const booking = {
             bookingChildTickets: childTicketAmount,
             bookingAdultTickets: adultTicketAmount,
-            bookingSeniorTicketAmount: seniorTicketAmount,
+            bookingSeniorTickets: seniorTicketAmount,
             bookingSeatSelection: seatSelection,
             bookingMovieTitle: bookedMovieTitle,
             bookingMovieTime: movieTime,
             bookingMovieDate: movieDate
         };
 
-        /*
-            do useNavigate stuff here (and figure out how to get the booking object above to be transfered )
-        */
-        navigate('/checkout', { state: { booking: booking } });
+        console.log("testing stuff: " + booking.bookingChildTickets);
+
+        navigate('/checkout', { state: { booking: booking, theatre: theatre } });
     }
 
     return (
