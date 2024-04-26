@@ -39,7 +39,7 @@ public class MovieService {
         Movie newMovie = Movie.builder()
         .cast(movie.getCast())
         .category(movie.getCategory())
-        .comingSoon(true)
+        .comingSoon(movie.getComingSoon())
         .description(movie.getDescription())
         .director(movie.getDirector())
         .numStars(movie.getNumStars())
@@ -68,7 +68,7 @@ public class MovieService {
         Movie currentMovie = movieRepository.findById(id).get();
         currentMovie.setCast(movie.getCast());
         currentMovie.setCategory(movie.getCategory());
-        currentMovie.setComingSoon(true);
+        currentMovie.setComingSoon(movie.getComingSoon());
         currentMovie.setDescription(movie.getDescription());
         currentMovie.setDirector(movie.getDirector());
         currentMovie.setNumStars(movie.getNumStars());

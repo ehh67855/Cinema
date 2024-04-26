@@ -6,6 +6,7 @@ const AdminNewMovieForm = () => {
     const [enteredMovieTitle, setEnteredMovieTitle] = useState('');
     const [enteredCategory, setEnteredCategory] = useState('');
     const [enteredCast, setEnteredCast] = useState('');
+    const [comingSoon, setComingSoon] = useState(false);
     const [enteredDirector, setEnteredDirector] = useState('');
     const [enteredProducer, setEnteredProducer] = useState('');
     const [enteredSynopsis, setEnteredSynopsis] = useState('');
@@ -74,6 +75,10 @@ const AdminNewMovieForm = () => {
         setEnteredNumStars(event.target.value);
     }
 
+    const comingSoonChangeHandler = (event) => {
+        setComingSoon(event.target.checked);
+    }
+
     const datetimeChangeHandler = (event) => {
         setEnteredDatetime(event.target.value);
         //console.log(enteredDatetime.split("T")[0]);
@@ -109,6 +114,7 @@ const AdminNewMovieForm = () => {
                   trailerPictureURL: enteredTrailerPictureURL,
                   trailerVideoURL: enteredTrailerVideoURL,
                   rating: enteredRating,
+                  comingSoon: comingSoon,
                   date: enteredDatetime.split("T")[0],
                   time: enteredDatetime.split("T")[1],
                   numTheatre: enteredNumTheatre
@@ -228,6 +234,15 @@ const AdminNewMovieForm = () => {
             value={enteredNumStars}
             onChange={numStarsChangeHandler}
             />
+            <div>
+            <label>Coming Soon</label>
+            <input
+              type="checkbox"
+              id="comingSoon"
+              checked={comingSoon}
+              onChange={comingSoonChangeHandler}
+            />
+            </div>
             <label>Add a Show Date and Time</label>
             <input
             id="showDateAndTime"
