@@ -309,7 +309,7 @@ function Signup() {
               </div> </>
               : 
             <div className="actions">
-            <a className = "btn btn-primary" onClick={handleSignup}>Update User</a>
+            <a className = "btn btn-primary" onClick={handleSignup}>Add User</a>
         </div>}
 
         

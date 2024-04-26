@@ -89,7 +89,7 @@ const updateHomeAdress = (e) => {
               className="btn btn-primary"
               type="submit"
             >
-              Update Home Adress
+              Update Home Address
             </button>            
           </form>
     );

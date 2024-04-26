@@ -44,14 +44,14 @@ const updateHomeAdress = (e) => {
 
     return (
       <form onSubmit={updateHomeAdress}>
-            <h1>Update Home Adress</h1>
+            <h1>Update Home Address</h1>
             <label htmlFor="street">Street</label>
             <input
               type="text"
               id="street"
               value={streetInput}
               onChange={(e) => setStreetInput(e.target.value)}
-              required
+              
             />
             <br></br>
 
@@ -61,7 +61,7 @@ const updateHomeAdress = (e) => {
               id="city"
               value={cityInput}
               onChange={(e) => setCityInput(e.target.value)}
-              required
+              
             />
             <br></br>
 
@@ -71,7 +71,7 @@ const updateHomeAdress = (e) => {
               id="state"
               value={stateInput}
               onChange={(e) => setStateInput(e.target.value)}
-              required
+              
             />
             <br></br>
             <label htmlFor="zipCode">Zip Code</label>
@@ -81,7 +81,7 @@ const updateHomeAdress = (e) => {
               id="zipCode"
               value={zipCodeInput}
               onChange={(e) => setZipCodeInput(e.target.value)}
-              required
+              
             />
             <br></br>
 
@@ -89,7 +89,7 @@ const updateHomeAdress = (e) => {
               className="btn btn-primary"
               type="submit"
             >
-              Update Home Adress
+              Update Home Address
             </button>            
           </form>
     );
