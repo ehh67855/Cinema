@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import StarRating from "src/moviebrowse/StarRating/StarRating";
 
 function AdminMovieCard({movie}) {
+  
   const deleteMovieHandler = (id) => {
+
     try {
       fetch(`http://localhost:8080/delete-movie/${id}`, {
           method: "DELETE",
@@ -14,6 +16,8 @@ function AdminMovieCard({movie}) {
           if (response.status === 200) {
               console.log("Movie deleted successfully.");
               alert("Movie deleted successfully.");
+              location.reload();
+
           } else {
               alert("Something went wrong");
           }

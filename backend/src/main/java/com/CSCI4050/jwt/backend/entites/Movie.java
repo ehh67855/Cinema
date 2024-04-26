@@ -48,7 +48,7 @@ public class Movie {
     private Integer numStars;
 
     private String category;
-
+ 
     private String cast;
 
     @OneToMany(cascade = CascadeType.ALL)
