@@ -26,8 +26,8 @@ const AdminMoviesPage = () => {
 
     return (
         <div className="adminMoviesPageContainer">
-            <AdminMoviesContainer movies={movies}></AdminMoviesContainer>
             <Link to={"/addMovie"} className="btnToAddNewMovieForm"><button>Add a Movie</button></Link>
+            <AdminMoviesContainer movies={movies}></AdminMoviesContainer>
         </div>
     );
 }

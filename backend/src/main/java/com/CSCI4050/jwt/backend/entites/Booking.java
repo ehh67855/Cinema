@@ -31,11 +31,12 @@ public class Booking {
 
     private String movieTitle;
 
-    // @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    // private List<Ticket> tickets;
-
-    // @ManyToOne
-    // private CreditCard creditCard;
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
+    
+    @ManyToOne
+    private CreditCard creditCard;
+    
     private String creditCardNum;
 
     private LocalDate bookingDate;

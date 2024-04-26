@@ -88,6 +88,12 @@ const AdminNewMovieForm = () => {
         setEnteredNumTheatre(event.target.value);
     }
 
+    const checkRating = () => {
+        const ratings = ["G", "PG", "PG-13","R"];
+        const lowerStrRating = enteredRating.toLowerCase();
+        return ratings.some(rating => rating.toLowerCase() === lowerStrRating);
+    }
+
     const submitHandler = (event) => {
         event.preventDefault();
 
@@ -97,7 +103,15 @@ const AdminNewMovieForm = () => {
             alert("Please fill out all fields.");
             return;
         }
+
+        if(!checkRating()) {
+            alert("Please enter a valid rating. G,PG,PG-13,R");
+            return;
+        }
+
         
+        console.log(enteredNumStars);
+
         try {
             fetch("http://localhost:8080/add-movie", {
                 method: "POST",

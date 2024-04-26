@@ -20,6 +20,8 @@ import com.CSCI4050.jwt.backend.entites.Movie;
 import com.CSCI4050.jwt.backend.entites.MovieTime;
 import com.CSCI4050.jwt.backend.services.MovieService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @CrossOrigin
 public class MovieController {
@@ -38,14 +40,15 @@ public class MovieController {
             .map(movie -> ResponseEntity.ok(movie))
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
+ 
     @GetMapping("/get-movie-time/{id}")
     public ResponseEntity<Optional<MovieTime>> getMovieTime(@PathVariable("id") String id) {
         return ResponseEntity.ok(movieService.getMovieTime(Long.valueOf(id)));
     }
 
     @PostMapping("/add-movie")
-    public ResponseEntity<Movie> addMovie(@RequestBody MovieDto movie) {
+    public ResponseEntity<Movie> addMovie(@RequestBody @Valid MovieDto movie) {
+        System.out.println(movie);
         return ResponseEntity.ok(movieService.addMovie(movie));
     }
 
