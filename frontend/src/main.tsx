@@ -25,6 +25,7 @@ import ForgotPassword from './ForgotPassword/ForgotPassword';
 import PasswordReset from './ForgotPassword/PasswordReset';
 import { getAuthToken, isAdmin } from './services/BackendService';
 import AdminRoute from './AdminRoute';
+import AdminEditTicketPage from './admin/AdminEditTicketsPage';
 import PermissionDenied from './PermissionDenied';
 
 const root = ReactDOM.createRoot(
@@ -53,6 +54,7 @@ root.render(
       <Route path="/addMovie" element={<Layout><AdminRoute element={AdminNewMovieForm} /></Layout>} />
       <Route path="/promotions" element={<Layout><AdminRoute element={AdminPromotionsPage} /></Layout>} />
       <Route path="/manageUsers" element={<Layout><AdminRoute element={AdminUsersPage} /></Layout>} />
+      <Route path="/editPricing" element={<Layout><AdminRoute element={AdminEditTicketPage} /></Layout>}/>
     </Routes>
   </BrowserRouter>
 );

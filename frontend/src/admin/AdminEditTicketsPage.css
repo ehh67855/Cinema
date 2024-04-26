@@ -1,0 +1,17 @@
+#editTicketsHeader{
+    display: flex;
+    justify-content: center;
+}
+
+#pricingInputForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inputFields {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
