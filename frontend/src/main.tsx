@@ -27,6 +27,7 @@ import { getAuthToken, isAdmin } from './services/BackendService';
 import AdminRoute from './AdminRoute';
 import AdminEditTicketPage from './admin/AdminEditTicketsPage';
 import PermissionDenied from './PermissionDenied';
+import BookTicketsPage from './BookTicketsPages/BookTicketsPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -44,6 +45,7 @@ root.render(
       <Route path="/forgot-password" element={<Layout><ForgotPassword/></Layout>} />
       <Route path="/reset-password" element={<Layout><PasswordReset/></Layout>} />
       <Route path="/bookTickets/:id" element={<Layout><BookTickets /></Layout>} />
+      <Route path="/bookTicketsPage/:id" element={<Layout><BookTicketsPage /></Layout>} />
       <Route path="/ticketOrder" element={<Layout><TicketOrder /></Layout>} />
       <Route path="/checkout" element={<Layout><Checkout /></Layout>} />
       <Route path="/orderConfirmation" element={<Layout><OrderConfirm /></Layout>} />

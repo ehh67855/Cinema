@@ -41,8 +41,8 @@ public class MovieController {
             .orElseGet(() -> ResponseEntity.notFound().build());
     }
  
-    @GetMapping("/get-movie-time/{id}")
-    public ResponseEntity<Optional<MovieTime>> getMovieTime(@PathVariable("id") String id) {
+    @GetMapping("/get-movie-time/")
+    public ResponseEntity<Optional<MovieTime>> getMovieTime(@RequestParam Long id) {
         return ResponseEntity.ok(movieService.getMovieTime(Long.valueOf(id)));
     }
 
