@@ -1,22 +1,22 @@
 package com.CSCI4050.jwt.backend;
 
-// import java.time.LocalDate;
-// import java.time.LocalTime;
-// import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.CommandLineRunner;
-// import java.time.LocalDate;
-// import java.time.LocalTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
-// import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 
-// import com.CSCI4050.jwt.backend.entites.Movie;
-// import com.CSCI4050.jwt.backend.entites.MovieTime;
-// import com.CSCI4050.jwt.backend.entites.Review;
+import com.CSCI4050.jwt.backend.entites.Movie;
+import com.CSCI4050.jwt.backend.entites.MovieTime;
+import com.CSCI4050.jwt.backend.entites.Review;
 import com.CSCI4050.jwt.backend.entites.Theatre;
-// import com.CSCI4050.jwt.backend.enums.Rating;
-// import com.CSCI4050.jwt.backend.repositories.MovieRepository;
+import com.CSCI4050.jwt.backend.enums.Rating;
+import com.CSCI4050.jwt.backend.repositories.MovieRepository;
 import com.CSCI4050.jwt.backend.repositories.TheatreRepository;
 
 import org.springframework.boot.CommandLineRunner;
@@ -24,11 +24,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-// import com.CSCI4050.jwt.backend.entites.Movie;
-// import com.CSCI4050.jwt.backend.entites.MovieTime;
-// import com.CSCI4050.jwt.backend.entites.Review;
-// import com.CSCI4050.jwt.backend.enums.Rating;
-// import com.CSCI4050.jwt.backend.repositories.MovieRepository;
+import com.CSCI4050.jwt.backend.entites.Movie;
+import com.CSCI4050.jwt.backend.entites.MovieTime;
+import com.CSCI4050.jwt.backend.entites.Review;
+import com.CSCI4050.jwt.backend.enums.Rating;
+import com.CSCI4050.jwt.backend.repositories.MovieRepository;
 
 
 @SpringBootApplication

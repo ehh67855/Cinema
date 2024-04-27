@@ -51,20 +51,17 @@ public class MovieService {
         .trailerVideoURL(movie.getTrailerVideoURL())
         .build();
 
-        Movie savedMovie = movieRepository.save(newMovie);
-
-        //List<MovieTime> showings = new ArrayList<>();
+        List<MovieTime> showings = new ArrayList<>();
         MovieTime newMovieTime = MovieTime.builder()
         .date(LocalDate.parse(movie.getDate()))
         .time(LocalTime.parse(movie.getTime()))
         .theatre(theatreRepository.findById(Long.valueOf(movie.getNumTheatre().toString())).get())
-        .movie(savedMovie)
         .build();
-        movieTimeRepository.save(newMovieTime);
-        //showings.add(savedMovieTime);
-        //newMovie.getShowings().add(savedMovieTime);
+        MovieTime savedMovieTime = movieTimeRepository.save(newMovieTime);
+        showings.add(savedMovieTime);
+        newMovie.getShowings().add(savedMovieTime);
 
-        return savedMovie;
+        return movieRepository.save(newMovie);
     }
 
     public Movie editMovie(Long id, MovieDto movie) {
@@ -82,21 +79,6 @@ public class MovieService {
         currentMovie.setTrailerPictureURL(movie.getTrailerPictureURL());
         currentMovie.setTrailerVideoURL(movie.getTrailerVideoURL());
         return movieRepository.save(currentMovie);
-    }
-
-    public MovieTime addMovieTime(Long id, MovieDto movie) {
-        MovieTime newMovieTime = MovieTime.builder()
-        .date(LocalDate.parse(movie.getDate()))
-        .time(LocalTime.parse(movie.getTime()))
-        .theatre(theatreRepository.findById(Long.valueOf(movie.getNumTheatre().toString())).get())
-        .build();
-
-        List<MovieTime> showings = new ArrayList<>();
-        Movie currentMovie = movieRepository.findById(id).get();
-        MovieTime savedMovieTime = movieTimeRepository.save(newMovieTime);
-        showings.add(savedMovieTime);
-        currentMovie.getShowings().add(savedMovieTime);
-        return savedMovieTime;
     }
 
     public void deleteMovie(Long id) {

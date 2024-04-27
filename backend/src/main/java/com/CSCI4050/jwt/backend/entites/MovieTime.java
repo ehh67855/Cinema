@@ -33,8 +33,4 @@ public class MovieTime {
     @ManyToOne
     @JoinColumn(name = "theatre_id")
     private Theatre theatre;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "movie_id")
-    private Movie movie;
 }

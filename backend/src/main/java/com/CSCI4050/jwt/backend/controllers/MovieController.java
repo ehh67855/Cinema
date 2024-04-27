@@ -30,7 +30,7 @@ public class MovieController {
 
     @GetMapping("/get-all-movies")
     public ResponseEntity<Iterable<Movie>> getAllMovies() {
-        return ResponseEntity.ok(movieService.getAllMovies());
+        return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
     }
 
     @GetMapping("/get-movie/")
@@ -55,11 +55,6 @@ public class MovieController {
     @PutMapping("/edit-movie/{id}")
     public ResponseEntity<Movie> editMovie(@PathVariable("id") String id, @RequestBody MovieDto movie) {
         return ResponseEntity.ok(movieService.editMovie(Long.valueOf(id), movie));
-    }
-
-    @PostMapping("/add-movie-time/{id}")
-    public ResponseEntity<MovieTime> addMovieTime(@PathVariable("id") String id, @RequestBody MovieDto movie) {
-        return ResponseEntity.ok(movieService.addMovieTime(Long.valueOf(id), movie));
     }
 
     @DeleteMapping("/delete-movie/{id}")
