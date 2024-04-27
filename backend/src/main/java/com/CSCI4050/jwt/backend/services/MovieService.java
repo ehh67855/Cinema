@@ -81,6 +81,23 @@ public class MovieService {
         return movieRepository.save(currentMovie);
     }
 
+    public MovieTime addMovieTime(Long id, MovieDto movie) {
+        MovieTime newMovieTime = MovieTime.builder()
+        .date(LocalDate.parse(movie.getDate()))
+        .time(LocalTime.parse(movie.getTime()))
+        .theatre(theatreRepository.findById(Long.valueOf(movie.getNumTheatre().toString())).get())
+        .build();
+
+        Movie currentMovie = movieRepository.findById(id).get();
+        List<MovieTime> showings = currentMovie.getShowings();
+        MovieTime savedMovieTime = movieTimeRepository.save(newMovieTime);
+        showings.add(savedMovieTime);
+        currentMovie.setShowings(showings);
+        movieRepository.save(currentMovie);
+
+        return savedMovieTime;
+    }
+
     public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
     }

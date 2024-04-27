@@ -57,6 +57,11 @@ public class MovieController {
         return ResponseEntity.ok(movieService.editMovie(Long.valueOf(id), movie));
     }
 
+    @PostMapping("/add-movie-time/{id}")
+    public ResponseEntity<MovieTime> addMovieTime(@PathVariable("id") String id, @RequestBody MovieDto movie) {
+        return ResponseEntity.ok(movieService.addMovieTime(Long.valueOf(id), movie));
+    }
+
     @DeleteMapping("/delete-movie/{id}")
     public ResponseEntity deleteMovie(@PathVariable("id") String id) {
         movieService.deleteMovie(Long.valueOf(id));
