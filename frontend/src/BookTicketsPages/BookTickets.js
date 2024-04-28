@@ -57,7 +57,6 @@ const BookTickets = () => {
             setMovieTime(data.time.toString());
             setMovieDate(data.date.toString());
             setTheatre(data.theatre);
-            console.log(movieTime)
         });
 
         setBookedMovieTitle(state);

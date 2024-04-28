@@ -7,7 +7,7 @@ const AdminMainPage = () => {
         <div className="buttons">
             <Link to={`/manageMovies`} className="adminMainPageBtn"><button>Manage Movies</button></Link>
             <Link to={`/manageUsers`} className="adminMainPageBtn"><button>Manage Users</button></Link>
-            <Link to={`/promotions`} className="adminMainPageBtn"><button>Manage Promotions</button></Link>
+            <Link to={`/promotions`} className="adminMainPageBtn"><button>Manage Promotions and fees</button></Link>
         </div>
     );
 }

@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AdminPromotionsPage.css";
+import EditPromotionsForm from "./EditPromotionsForm";
+import BookingFeeForm from "./BookingFeeForm";
 
 const AdminPromotionsPage = () => {
     const [enteredPromotionCode, setEnteredPromotionCode] = useState(0);
     const [enteredDicountPercent, setEnteredDiscountPercent] = useState(0);
+    const [promotions,setPromotions] = useState();
+
+    useEffect(()=>{
+        fetch('http://localhost:8080/get-all-promotions', {
+            method:"GET"
+        }).then(response => {
+            if(response.status == 200) {
+                return response.json();
+            }
+            throw Error("An error occured");
+        }).then(data => {
+            setPromotions(data)
+        }).catch(error => {
+            console.log(error);
+            alert("something went wrong");
+        })
+    },[]);
+
+    useEffect(() => {
+        console.log(promotions);
+    },[promotions])
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
+        
         if (enteredDicountPercent < 0 || enteredDicountPercent > 100) {
             alert("You may only enter a discount % between 0 and 100");
             return null;
@@ -23,6 +45,9 @@ const AdminPromotionsPage = () => {
         }).then(response => {
             if(response.status === 200) {
                 return response.json();
+            } else if (response.status == 409) {
+                alert("promotion code already exists");
+                throw new Error();
             }
         }).then(data => {
             alert("Promotion added")
@@ -32,8 +57,12 @@ const AdminPromotionsPage = () => {
         })
     };
 
+
+
     return (
         <div>
+            <BookingFeeForm></BookingFeeForm>
+            <h2>Create new promotion</h2>
             <form onSubmit={handleSubmit}>
                 <label>Promotion Code</label>
                 <input
@@ -53,6 +82,7 @@ const AdminPromotionsPage = () => {
                 /> <br></br>
                 <button className="handleSubmit" type="submit">Add Promotion</button>
             </form>
+            {promotions && <EditPromotionsForm promotions={promotions}></EditPromotionsForm>}
         </div>
     );
 }

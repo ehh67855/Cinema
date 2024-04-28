@@ -7,5 +7,5 @@ import com.CSCI4050.jwt.backend.entites.Promotion;
 
 @Repository
 public interface PromotionRepository extends JpaRepository<Promotion,Long> {
-
+    boolean existsByPromoCode(int promoCode); 
 }

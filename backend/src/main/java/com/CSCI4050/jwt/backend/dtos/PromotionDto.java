@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class PromotionDto {
+    String id;
     String promotionCode;
     String promotionDiscount;
 }

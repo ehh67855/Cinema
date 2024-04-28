@@ -30,7 +30,7 @@ public class Theatre {
     private Double childTicketPrice;
 
     @Builder.Default
-    private Boolean[][] seats = {{true,false,false,false},
+    private Boolean[][] seats = {{false,false,false,false},
                                 {false,false,false,false},
                                 {false,false,false,false},
                                 {false,false,false,false}};
