@@ -19,7 +19,6 @@ public class PromotionService {
     
     private final PromotionRepository promotionRepository;
 
-    private int bookingFee = 0;
 
     public Iterable<Promotion> getAllPromotions() {
         return promotionRepository.findAll();
@@ -46,7 +45,11 @@ public class PromotionService {
         storedPromotion.setDiscount(Long.valueOf(promotion.getPromotionDiscount()));
         storedPromotion.setPromoCode(Long.valueOf(promotion.getPromotionCode()));
         return promotionRepository.save(storedPromotion);
-
-
     }
+
+    public Promotion getPromotion(String promoCode) {
+        Promotion promotion = promotionRepository.findByPromoCode(Integer.valueOf(promoCode))
+        .orElseThrow(()->new AppException("Could not find promotion", HttpStatus.BAD_REQUEST));
+        return promotion;
+    }   
 }
