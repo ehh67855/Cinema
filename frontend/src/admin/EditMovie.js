@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import "./EditMovie.css";
 import { fetchService } from "src/services/FetchService";
+import AdminMovieTimesContainer from "./adminMovieTimeList/AdminMovieTimesContainer";
 
 const EditMovie = () => {
     const { id } = useParams();
@@ -19,7 +20,22 @@ const EditMovie = () => {
     const [enteredTrailerVideoURL, setEnteredTrailerVideoURL] = useState('');
     const [enteredRating, setEnteredRating] = useState('');
     const [enteredNumStars, setEnteredNumStars] = useState(1);
-    //const [enteredDatetime, setEnteredDatetime] = useState('');
+    const [enteredDatetime, setEnteredDatetime] = useState('');
+    const [enteredNumTheatre, setEnteredNumTheatre] = useState(1);
+    const [movieTimes, setMovieTimes] = useState([]);
+
+    const [currentDate, setCurrentDate] = useState(new Date());
+    currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
+    useEffect(() => {
+        const timer = setInterval(() => { // Creates an interval which will update the current data every 3 seconds
+            const newCurrentDate = new Date();
+            newCurrentDate.setTime(Date.now() - (4 * 60 * 60 * 1000));
+            setCurrentDate(newCurrentDate);
+        }, 3 * 1000);
+        return () => {
+            clearInterval(timer); // Return a funtion to clear the timer so that it will stop being called on unmount
+        }
+    }, []);
 
       useEffect(() => {
         fetchService(`get-movie/?id=${id}`, (data) => {
@@ -35,6 +51,7 @@ const EditMovie = () => {
           setEnteredRating(data.rating);
           setEnteredNumStars(data.numStars);
           setComingSoon(data.comingSoon);
+          setMovieTimes(data.showings);
         });
     }, []);
 
@@ -86,11 +103,15 @@ const EditMovie = () => {
         setComingSoon(event.target.checked);
     }
 
-    // const datetimeChangeHandler = (event) => {
-    //     setEnteredDatetime(event.target.value);
-    // }
+    const datetimeChangeHandler = (event) => {
+        setEnteredDatetime(event.target.value);
+    }
 
-    const submitHandler = (event) => {
+    const numTheatreChangeHandler = (event) => {
+        setEnteredNumTheatre(event.target.value);
+    }
+
+    const movieFormSubmitHandler = (event) => {
         event.preventDefault();
 
         if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
@@ -139,8 +160,44 @@ const EditMovie = () => {
         }
     };
 
+    const movieTimeFormSubmitHandler = (event) => {
+        event.preventDefault();
+        
+        try {
+            fetch(`http://localhost:8080/add-movie-time/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    date: enteredDatetime.split("T")[0],
+                    time: enteredDatetime.split("T")[1],
+                    numTheatre: enteredNumTheatre
+                })
+              })
+              .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert("Something went wrong");
+                }
+            }).then(data => {
+                if (data) {
+                    console.log("Movie time added successfully:", data);
+                    alert("Movie time added successfully.");
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred during movie time addition:", error);
+            })
+        } catch (error) {
+          console.error(error);
+        }
+
+        setEnteredDatetime('');
+    };
+
     return (
-        <form className="editMovieForm" onSubmit={submitHandler}>
+        <div>
+        <form className="editMovieForm" onSubmit={movieFormSubmitHandler}>
             <label>Movie Title</label>
             <input
             id="movieTitle"
@@ -234,6 +291,31 @@ const EditMovie = () => {
                 <Link to={"/manageMovies"} className="editMovieFormCancelBtn"><button className="editMovieFormCancelBtn">Cancel</button></Link>
             </div>
         </form>
+        <form className="addNewMovieTimeForm" onSubmit={movieTimeFormSubmitHandler}>
+            <label>Add a Show Date and Time</label>
+            <input
+            id="showDateAndTime"
+            type="datetime-local"
+            min={currentDate.toISOString().substring(0, 16)}
+            required
+            value={enteredDatetime}
+            onChange={datetimeChangeHandler}
+            />
+            <label>Theater Number</label>
+            <input
+            id="num_theatre"
+            type="number"
+            max={5}
+            min={1}
+            required
+            value={enteredNumTheatre}
+            onChange={numTheatreChangeHandler}
+            />
+            <button type="submit">Add Showing</button>
+        </form>
+        <h5 className="movieTimeListHeader">Showings</h5>
+        <AdminMovieTimesContainer movieTimes={movieTimes}/>
+        </div>
     );
 }
 

@@ -1,0 +1,10 @@
+.movieTimeCard {
+    display: flex;
+    border-radius: 1px;
+    justify-content: space-evenly;
+}
+
+.movieTimeDeleteButton {
+    height: 45px;
+    margin: auto;
+}
