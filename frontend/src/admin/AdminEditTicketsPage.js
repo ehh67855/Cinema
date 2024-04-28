@@ -6,7 +6,6 @@ export default function AdminEditPricingPage() {
     let seniorTicketPrice = useRef();
     let adultTicketPrice = useRef();
     let childTicketPrice = useRef();
-    let bookingFees = useRef();
     let theaterSelection = useRef(1);
 
     useEffect(() => {
@@ -74,8 +73,7 @@ export default function AdminEditPricingPage() {
                     <input type="number" min="0" id="adultTicketPrice" ref={adultTicketPrice} onChange={(e) => adultTicketPrice.current = e.target.value}></input>
                     <label for="childTicketPrice">Child Ticket price: </label>
                     <input type="number" min="0" id="childTicketPrice" ref={childTicketPrice} onChange={(e) => childTicketPrice.current = e.target.value}></input>
-                    <label for="bookingFees">Booking Fees: </label>
-                    <input type="number" min="0" id="bookingFees" ref={bookingFees}></input> <br/>
+
                     <button id="submitButton" onClick={handleUpdatePricing}>Update Pricing</button> <br/>
                 </div>
             </form>
