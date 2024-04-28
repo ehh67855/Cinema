@@ -3,31 +3,31 @@ import "./AdminMovieTimeCard.css";
 
 function AdminMovieTimeCard({movieTime}) {
   
-//   const deleteMovieHandler = (id) => {
+  const deleteMovieTimeHandler = (id) => {
 
-//     try {
-//       fetch(`http://localhost:8080/delete-movie/${id}`, {
-//           method: "DELETE",
-//           headers: { "Content-Type": "application/json" }
-//           }
-//         )
-//         .then(response => {
-//           if (response.status === 200) {
-//               console.log("Movie deleted successfully.");
-//               alert("Movie deleted successfully.");
-//               location.reload();
+    try {
+      fetch(`http://localhost:8080/delete-movie-time/${id}`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" }
+          }
+        )
+        .then(response => {
+          if (response.status === 200) {
+              console.log("Movie Time deleted successfully.");
+              alert("Movie Time deleted successfully.");
+              location.reload();
 
-//           } else {
-//               alert("Something went wrong");
-//           }
-//       })
-//       .catch(error => {
-//           console.error("Error occurred during movie deletion:", error);
-//       })
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
+          } else {
+              alert("Something went wrong");
+          }
+      })
+      .catch(error => {
+          console.error("Error occurred during movie time deletion:", error);
+      })
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
 return (
     <div className="movieTimeCard">
@@ -36,7 +36,7 @@ return (
             <p>Time: {movieTime.time}</p> <br/>
             <p>Theater Number: {movieTime.theatre.id}</p> <br/>
         </div>
-        <button className="movieTimeDeleteButton">Delete</button>
+        <button className="movieTimeDeleteButton" type="button" onClick={() => deleteMovieTimeHandler(movieTime.id)}>Delete</button>
     </div>
   );
 

@@ -101,4 +101,8 @@ public class MovieService {
     public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
     }
+
+    public void deleteMovieTime(Long id) {
+        movieTimeRepository.deleteById(id);
+    }
 }
