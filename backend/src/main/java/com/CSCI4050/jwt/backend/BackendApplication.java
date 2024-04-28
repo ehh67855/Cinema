@@ -47,12 +47,11 @@ public class BackendApplication {
 	There's probably a better way to only make 5 theatres ever, even when the backend application is run again
 	*/
 	// @Bean
-	// CommandLineRunner run(@Autowired TheatreRepository theatreRepository) {
+	// CommandLineRunner run(@Autowired MovieRepository movieRepo,@Autowired TheatreRepository theatreRepository) {
 	// 	return (args) -> {
-	// 		createTheatres(theatreRepository);
+	// 		createDummyMovies(movieRepo,theatreRepository);
 	// 	};
 	// }
-	//Comments above are referring to this block of code ^
 	
 	// public void createDummyMovies(MovieRepository movieRepo, TheatreRepository theatreRepository) {
 	// 	String[] movieTitles = {
@@ -102,18 +101,17 @@ public class BackendApplication {
 	// 		"Comedy"
 	// 	};
 
-	public void createTheatres(TheatreRepository theatreRepository) {
-		Theatre[] theatres = new Theatre[5];
-		for (int i = 0 ; i < 5 ; i++) {
-			theatres[i]= Theatre.builder()
-			.seniorTicketPrice(Double.valueOf(10+i))
-			.adultTicketPrice(Double.valueOf(10+i))
-			.childTicketPrice(Double.valueOf(10+i))
-			.name("Theatre " + i)
-			.build();
-			theatres[i] = theatreRepository.saveAndFlush(theatres[i]); 
-		}
-	}
+	// 	Theatre[] theatres = new Theatre[5];
+	// 	for (int i = 0 ; i < 5 ; i++) {
+	// 		theatres[i]= Theatre.builder()
+	// 		.seniorTicketPrice(Double.valueOf(10+i))
+	// 		.adultTicketPrice(Double.valueOf(10+i))
+	// 		.childTicketPrice(Double.valueOf(10+i))
+	// 		.name("Theatre " + i)
+	// 		.build();
+	// 		theatres[i] = theatreRepository.saveAndFlush(theatres[i]); 
+	// 	}
+	
 
 	// 	for (int i = 0; i < 10; i++) {
 	// 		MovieTime movieTime1 = new MovieTime();

@@ -7,7 +7,7 @@ import PermissionDenied from 'src/PermissionDenied';
 
 function EditProfile() {
 
-  const [userData,setUserData] = useState(null);
+  const [userData,setUserData] = useState({});
 
     useEffect(() => {
             const login = getLogin(getAuthToken());

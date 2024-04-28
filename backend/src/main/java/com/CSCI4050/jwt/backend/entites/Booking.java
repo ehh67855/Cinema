@@ -27,19 +27,10 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int numOfTickets;
-
-    private String movieTitle;
-
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private List<Ticket> tickets;
     
     @ManyToOne
     private CreditCard creditCard;
     
-    private String creditCardNum;
-
-    private LocalDate bookingDate;
-
-    private LocalTime bookingTime;
 }

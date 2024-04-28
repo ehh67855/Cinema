@@ -12,88 +12,116 @@ const BookTickets = () => {
     //Parameter of the movie time
     const { id } = useParams();
 
-    const [movieTime, setMovieTime] = useState("");
-    const [movieDate, setMovieDate] = useState("");
-    const [bookedMovieTitle, setBookedMovieTitle] = useState("");
-    const [theatre, setTheatre] = useState(null);
-
-    const totalTicketNum = useRef(0);
-    let childTicketAmount = useRef(0);
-    let adultTicketAmount = useRef(0);
-    let seniorTicketAmount = useRef(0);
-    let seatSelection = [];
-
     const navigate = useNavigate();
     const {state} = useLocation();
 
-    const childTicketHandler = (e) => {
-        childTicketAmount = e.target.value;
-    };
+    const [movieTime, setMovieTime] = useState("");
+    const [childInput,setchildInput] = useState(0);
+    const [adultInput,setAdultInput] = useState(0);
+    const [seniorInput,setSeniorInput] = useState(0);
+    const [bookedMovieTitle, setBookedMovieTitle] = useState("");
 
-    const adultTicketHandler = (e) => {
-        adultTicketAmount = e.target.value;
-    };
 
-    const seniorTicketHandler = (e) => {
-        seniorTicketAmount = e.target.value;
-    };
+    let seatSelection = [];
+
 
     /**
      * Adds seats to the seatSelection array and removes seats if the seat is already in the seat selection array.
      */
     function handleAddingSeat(e) {
-        if (seatSelection.includes(e.target.id)) {
-            seatSelection.splice(seatSelection.indexOf(e.target.id), 1);
+        // Extracting the numerical part from the id (e.g., "Seat1" becomes "1")
+        const seatNumber = e.target.id.replace('Seat', '');
+        
+        if(movieTime.theatre.seats[Math.floor(seatNumber / 4)][seatNumber % 4]) {
+            alert("Seat available");
+            return;
+        }
+    
+        console.log(seatSelection.includes(seatNumber));
+    
+        if (seatSelection.includes(seatNumber)) {
+            seatSelection.splice(seatSelection.indexOf(seatNumber), 1);
             e.target.style.backgroundColor = "";
         } else {
-            seatSelection.push(e.target.id);
+            seatSelection.push(seatNumber);
             e.target.style.backgroundColor = "grey";
         }
         console.log(seatSelection);
     }
+    
    
     useEffect(() => {
-        fetchService(`get-movie-time/${id}`, (data) => {
-            setMovieTime(data.time.toString());
-            setMovieDate(data.date.toString());
-            setTheatre(data.theatre);
+        fetch(`http://localhost:8080/get-movie-time/?id=${id}`, {
+            method: "GET",
+        }).then(response => {
+            if (response.status == 200) {
+                return response.json();
+            }
+            if (!response.ok) {
+                throw new Error('API call failed');
+            }
+        }).then(data => {
+            setMovieTime(data);
+            console.log("movie time",movieTime);
+        }).catch(error => {
+            // Handle other errors
         });
-
         setBookedMovieTitle(state);
+            
     }, []);
 
+    useEffect(()=>console.log(movieTime),);
+
     /**Handles confirmation submission */
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault();
+
+        if (childInput + seniorInput + adultInput <= 0) {
+            alert("Must select at least one ticket");
+            return;
+        }
+
         const booking = {
-            bookingChildTickets: childTicketAmount,
-            bookingAdultTickets: adultTicketAmount,
-            bookingSeniorTickets: seniorTicketAmount,
-            bookingSeatSelection: seatSelection,
-            bookingMovieTitle: bookedMovieTitle,
-            bookingMovieTime: movieTime,
-            bookingMovieDate: movieDate
-        };
-
-        console.log("testing stuff: " + booking.bookingChildTickets);
-
-        navigate('/checkout', { state: { booking: booking, theatre: theatre } });
+            movieTime: movieTime,
+            childInput:childInput,
+            adultInput:adultInput,
+            seniorInput:seniorInput,
+            seatSelection:seatSelection,
+            movieTitle: bookedMovieTitle
+        }
+        navigate('/checkout', { state: { booking: booking } });
     }
 
     return (
         <div id="bkTicksPage">
             <div id="bkTicksHdrContainer">
                 {/* <div id="emptySpace"></div> */}
-                <h1 id="bkTicksHdr">Booking Tickets for:</h1>
+                <h1 id="bkTicksHdr">Booking Tickets for {bookedMovieTitle} at {movieTime.time}</h1>
                 {/* <img id="profileImg"/> */}
+
             </div>
-            <h2 id="movieTitle">{ bookedMovieTitle }</h2>
             <form>
                 <div className="bkTicksAllFields">
                     <div className="bkTicksFields2">
                         <h4>Select Tickets</h4>
-                        <label>Child ($10):</label><input type="number" min="0" max={totalTicketNum - adultTicketAmount - seniorTicketAmount} ref={childTicketAmount} onChange={childTicketHandler}/>
-                        <label>Adult ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - seniorTicketAmount} ref={adultTicketAmount} onChange={adultTicketHandler}/>
-                        <label>Senior ($10):</label><input type="number" min="0" max={totalTicketNum - childTicketAmount - adultTicketAmount} ref={seniorTicketAmount} onChange={seniorTicketHandler}/>
+                        <label>Child (${movieTime.childTicketPrice}):</label>
+                        <input 
+                            type="number" 
+                            min="0" 
+                            value={childInput} 
+                            onChange={e=>setchildInput(e.target.value)}/>
+                        <label>Adult (${movieTime.adultTicketPrice}):</label>
+                        <input 
+                            type="number" 
+                            min="0" 
+                            value={adultInput} 
+                            onChange={e=>setAdultInput(e.target.value)}/>
+                        <label>Senior (${movieTime.seniorTicketPrice}):</label>
+                        <input 
+                            type="number" 
+                            min="0" 
+                            value={seniorInput} 
+                            onChange={e=>setSeniorInput(e.target.value)}/>
                     </div>
                 </div>
                 <h4 className="centeredH4">Select desired seats</h4>

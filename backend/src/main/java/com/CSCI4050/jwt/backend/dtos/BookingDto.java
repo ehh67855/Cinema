@@ -2,6 +2,9 @@ package com.CSCI4050.jwt.backend.dtos;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+
+import com.CSCI4050.jwt.backend.entites.MovieTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +16,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class BookingDto {
-    private int numOfTickets;
+    private Long numChildTickets;
+
+    private Long numAdultTickets;
+
+    private Long numSeniorTickets;
 
     private String movieTitle;
 
-    private Long creditCardId;
+    private String creditCardId;
 
-    private String creditCardNum;
+    private MovieTime movieTime;
 
-    private LocalDate bookingDate;
+    private String login;
 
-    private LocalTime bookingTime;
+    private List<String> seatSelection;
 }

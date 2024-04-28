@@ -48,5 +48,10 @@ public class PromotionController {
         bookingFee = Integer.valueOf(enteredBookingFee);
         return ResponseEntity.ok(bookingFee);
     }
+
+    @GetMapping("/get-promotion")
+    public ResponseEntity<Promotion> getPromotion(@RequestParam("promoCode") String promoCode) {
+        return ResponseEntity.ok(promotionService.getPromotion(promoCode));
+    }
     
 }

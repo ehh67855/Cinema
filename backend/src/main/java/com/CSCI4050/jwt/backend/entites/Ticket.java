@@ -46,9 +46,6 @@ public class Ticket {
     @JoinColumn(name = "user_id")
     private User userAccount;
 
-    @Column(nullable = false)
-    private String seat; //e.g A10
-
     @ManyToOne
     @JoinColumn(name = "booking_id")
     private Booking booking; 

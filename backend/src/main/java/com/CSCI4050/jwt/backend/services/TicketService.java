@@ -22,7 +22,6 @@ public class TicketService {
         .ticketType(ticket.getTicketType())
         .price(ticket.getPrice())
         .userAccount(ticket.getUserAccount())
-        .seat(ticket.getSeat())
         .booking(ticket.getBooking())
         .build();
         return ticketRepository.save(newTicket);
