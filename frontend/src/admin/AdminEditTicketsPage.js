@@ -30,7 +30,7 @@ export default function AdminEditPricingPage() {
 
     function handleUpdatePricing(e) {
         e.preventDefault();
-        fetch("http://localhost:8080/get-theatre/" + theaterSelection.current.value, {
+        fetch("http://localhost:8080/edit-theatre/" + theaterSelection.current.value, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
