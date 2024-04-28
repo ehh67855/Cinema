@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import com.CSCI4050.jwt.backend.dtos.BookingDto;
 import com.CSCI4050.jwt.backend.entites.Booking;
 import com.CSCI4050.jwt.backend.repositories.BookingRepository;
+import com.CSCI4050.jwt.backend.repositories.CreditCardRepository;
 
 @Service
 public class BookingService {
     @Autowired BookingRepository bookingRepository;
+    @Autowired CreditCardRepository creditCardRepository;
 
     public Optional<Booking> getBooking(Long id) {
         return bookingRepository.findById(id);
@@ -21,6 +23,7 @@ public class BookingService {
         Booking newBooking = Booking.builder()
         .numOfTickets(booking.getNumOfTickets())
         .movieTitle(booking.getMovieTitle())
+        .creditCard(creditCardRepository.findById(booking.getCreditCardId()).get())
         .creditCardNum(booking.getCreditCardNum())
         .bookingDate(booking.getBookingDate())
         .bookingTime(booking.getBookingTime())

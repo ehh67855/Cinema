@@ -17,6 +17,8 @@ public class BookingDto {
 
     private String movieTitle;
 
+    private Long creditCardId;
+
     private String creditCardNum;
 
     private LocalDate bookingDate;
