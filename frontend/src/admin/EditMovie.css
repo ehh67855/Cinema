@@ -17,3 +17,7 @@
 .editMovieFormCancelBtn {
     width: 100px;
 }
+
+.movieTimeListHeader {
+    text-align: center;
+}

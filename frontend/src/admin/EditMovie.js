@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import "./EditMovie.css";
 import { fetchService } from "src/services/FetchService";
+import AdminMovieTimesContainer from "./adminMovieTimeList/AdminMovieTimesContainer";
 
 const EditMovie = () => {
     const { id } = useParams();
@@ -21,6 +22,7 @@ const EditMovie = () => {
     const [enteredNumStars, setEnteredNumStars] = useState(1);
     const [enteredDatetime, setEnteredDatetime] = useState('');
     const [enteredNumTheatre, setEnteredNumTheatre] = useState(1);
+    const [movieTimes, setMovieTimes] = useState([]);
 
     const [currentDate, setCurrentDate] = useState(new Date());
     currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
@@ -49,6 +51,7 @@ const EditMovie = () => {
           setEnteredRating(data.rating);
           setEnteredNumStars(data.numStars);
           setComingSoon(data.comingSoon);
+          setMovieTimes(data.showings);
         });
     }, []);
 
@@ -310,6 +313,8 @@ const EditMovie = () => {
             />
             <button type="submit">Add Showing</button>
         </form>
+        <h5 className="movieTimeListHeader">Showings</h5>
+        <AdminMovieTimesContainer movieTimes={movieTimes}/>
         </div>
     );
 }
