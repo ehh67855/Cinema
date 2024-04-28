@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import com.CSCI4050.jwt.backend.dtos.MovieDto;
 import com.CSCI4050.jwt.backend.entites.Movie;
 import com.CSCI4050.jwt.backend.entites.MovieTime;
+import com.CSCI4050.jwt.backend.entites.Review;
 import com.CSCI4050.jwt.backend.repositories.MovieRepository;
 import com.CSCI4050.jwt.backend.repositories.MovieTimeRepository;
 import com.CSCI4050.jwt.backend.repositories.TheatreRepository;
+import com.CSCI4050.jwt.backend.repositories.ReviewRepository;
 
 @Service
 public class MovieService {
@@ -22,6 +24,7 @@ public class MovieService {
     @Autowired MovieRepository movieRepository;
     @Autowired MovieTimeRepository movieTimeRepository;
     @Autowired TheatreRepository theatreRepository;
+    @Autowired ReviewRepository reviewRepository;
 
     public Iterable<Movie> getAllMovies() {
         return movieRepository.findAll();
@@ -60,6 +63,14 @@ public class MovieService {
         MovieTime savedMovieTime = movieTimeRepository.save(newMovieTime);
         showings.add(savedMovieTime);
         newMovie.getShowings().add(savedMovieTime);
+
+        Review newReview = Review.builder()
+        .rating(movie.getNumStars())
+        .author("admin")
+        .reviewContent(movie.getReview())
+        .build();
+        Review savedReview = reviewRepository.save(newReview);
+        newMovie.getReviews().add(savedReview);
 
         return movieRepository.save(newMovie);
     }
