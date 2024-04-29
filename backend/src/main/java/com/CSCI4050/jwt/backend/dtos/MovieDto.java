@@ -41,4 +41,6 @@ public class MovieDto {
     private String time;
 
     private Integer numTheatre;
+
+    private String review;
 }

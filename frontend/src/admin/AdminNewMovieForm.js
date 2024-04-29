@@ -17,6 +17,7 @@ const AdminNewMovieForm = () => {
     const [enteredNumStars, setEnteredNumStars] = useState(1);
     const [enteredDatetime, setEnteredDatetime] = useState('');
     const [enteredNumTheatre, setEnteredNumTheatre] = useState(1);
+    const [enteredReview, setEnteredReview] = useState('');
 
     const [currentDate, setCurrentDate] = useState(new Date());
     currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
@@ -88,6 +89,10 @@ const AdminNewMovieForm = () => {
         setEnteredNumTheatre(event.target.value);
     }
 
+    const reviewChangeHandler = (event) => {
+        setEnteredReview(event.target.value);
+    }
+
     const checkRating = () => {
         const ratings = ["G", "PG", "PG-13","R"];
         const lowerStrRating = enteredRating.toLowerCase();
@@ -99,7 +104,7 @@ const AdminNewMovieForm = () => {
 
         if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
             !enteredSynopsis || !enteredDescription || !enteredTrailerPictureURL || !enteredTrailerVideoURL || 
-            !enteredRating || !enteredNumStars || !enteredDatetime || !enteredNumTheatre) {
+            !enteredRating || !enteredNumStars || !enteredDatetime || !enteredNumTheatre || !enteredReview) {
             alert("Please fill out all fields.");
             return;
         }
@@ -131,7 +136,8 @@ const AdminNewMovieForm = () => {
                   comingSoon: comingSoon,
                   date: enteredDatetime.split("T")[0],
                   time: enteredDatetime.split("T")[1],
-                  numTheatre: enteredNumTheatre
+                  numTheatre: enteredNumTheatre,
+                  review: enteredReview
                 })
               })
               .then(response => {
@@ -247,6 +253,13 @@ const AdminNewMovieForm = () => {
             min={1}
             value={enteredNumStars}
             onChange={numStarsChangeHandler}
+            />
+            <label>Write a Review</label>
+            <input
+            id="review"
+            type="text"
+            value={enteredReview}
+            onChange={reviewChangeHandler}
             />
             <div>
             <label>Coming Soon</label>
