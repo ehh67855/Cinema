@@ -23,6 +23,9 @@ const EditMovie = () => {
     const [enteredDatetime, setEnteredDatetime] = useState('');
     const [enteredNumTheatre, setEnteredNumTheatre] = useState(1);
     const [movieTimes, setMovieTimes] = useState([]);
+    const [enteredReview, setEnteredReview] = useState('');
+    const [enteredReviewNumStars, setEnteredReviewNumStars] = useState(1);
+    const [enteredReviewAuthor, setEnteredReviewAuthor] = useState('');
 
     const [currentDate, setCurrentDate] = useState(new Date());
     currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
@@ -111,13 +114,25 @@ const EditMovie = () => {
         setEnteredNumTheatre(event.target.value);
     }
 
+    const reviewChangeHandler = (event) => {
+        setEnteredReview(event.target.value);
+    }
+
+    const reviewNumStarsChangeHandler = (event) => {
+        setEnteredReviewNumStars(event.target.value);
+    }
+
+    const reviewAuthorChangeHandler = (event) => {
+        setEnteredReviewAuthor(event.target.value);
+    }
+
     const movieFormSubmitHandler = (event) => {
         event.preventDefault();
 
         if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
             !enteredSynopsis || !enteredDescription || !enteredTrailerPictureURL || !enteredTrailerVideoURL || 
             !enteredRating || !enteredNumStars) {
-            alert("Please fill out all fields.");
+            alert("Please fill out all movie fields.");
             return;
         }
         
@@ -162,6 +177,11 @@ const EditMovie = () => {
 
     const movieTimeFormSubmitHandler = (event) => {
         event.preventDefault();
+
+        if (!enteredDatetime || !enteredNumTheatre) {
+            alert("Please fill out all showing fields.");
+            return;
+        }
         
         try {
             fetch(`http://localhost:8080/add-movie-time/${id}`, {
@@ -182,7 +202,7 @@ const EditMovie = () => {
             }).then(data => {
                 if (data) {
                     console.log("Movie time added successfully:", data);
-                    alert("Movie time added successfully.");
+                    alert("Movie showing added successfully.");
                 }
             })
             .catch(error => {
@@ -193,6 +213,49 @@ const EditMovie = () => {
         }
 
         setEnteredDatetime('');
+        setEnteredNumTheatre(1);
+    };
+
+    const reviewFormSubmitHandler = (event) => {
+        event.preventDefault();
+
+        if (!enteredReview || !enteredReviewNumStars || !enteredReviewAuthor) {
+            alert("Please fill out all review fields.");
+            return;
+        }
+        
+        try {
+            fetch(`http://localhost:8080/add-movie-review/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    review: enteredReview,
+                    reviewNumStars: enteredReviewNumStars,
+                    reviewAuthor: enteredReviewAuthor
+                })
+              })
+              .then(response => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    alert("Something went wrong");
+                }
+            }).then(data => {
+                if (data) {
+                    console.log("Movie review added successfully:", data);
+                    alert("Movie review added successfully.");
+                }
+            })
+            .catch(error => {
+                console.error("Error occurred during movie review addition:", error);
+            })
+        } catch (error) {
+          console.error(error);
+        }
+
+        setEnteredReview('');
+        setEnteredReviewNumStars(1);
+        setEnteredReviewAuthor('');
     };
 
     return (
@@ -277,7 +340,7 @@ const EditMovie = () => {
             value={enteredNumStars}
             onChange={numStarsChangeHandler}
             />
-            <div>
+            <div className="comingSoonInput">
             <label>Coming Soon</label>
             <input
               type="checkbox"
@@ -290,6 +353,32 @@ const EditMovie = () => {
                 <button className="editMovieFormSubmitBtn" type="submit">Confirm</button>
                 <Link to={"/manageMovies"} className="editMovieFormCancelBtn"><button className="editMovieFormCancelBtn">Cancel</button></Link>
             </div>
+        </form>
+        <form className="addNewReviewForm" onSubmit={reviewFormSubmitHandler}>
+        <label>Write a Review</label>
+            <input
+            id="review"
+            type="text"
+            value={enteredReview}
+            onChange={reviewChangeHandler}
+            />
+            <label>Number of Stars for Review</label>
+            <input
+            id="num_review_stars"
+            type="number"
+            max={5}
+            min={1}
+            value={enteredReviewNumStars}
+            onChange={reviewNumStarsChangeHandler}
+            />
+            <label>Review Author</label>
+            <input
+            id="reviewAuthor"
+            type="text"
+            value={enteredReviewAuthor}
+            onChange={reviewAuthorChangeHandler}
+            />
+            <button type="submit">Add Review</button>
         </form>
         <form className="addNewMovieTimeForm" onSubmit={movieTimeFormSubmitHandler}>
             <label>Add a Show Date and Time</label>

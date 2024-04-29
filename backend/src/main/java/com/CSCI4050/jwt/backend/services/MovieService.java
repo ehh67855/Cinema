@@ -109,6 +109,23 @@ public class MovieService {
         return savedMovieTime;
     }
 
+    public Review addMovieReview(Long id, MovieDto movie) {
+        Review newReview = Review.builder()
+        .reviewContent(movie.getReview())
+        .rating(movie.getReviewNumStars())
+        .author(movie.getReviewAuthor())
+        .build();
+        Review savedReview = reviewRepository.save(newReview);
+
+        Movie currentMovie = movieRepository.findById(id).get();
+        List<Review> reviews = currentMovie.getReviews();
+        reviews.add(savedReview);
+        currentMovie.setReviews(reviews);
+        movieRepository.save(currentMovie);
+
+        return savedReview;
+    }
+
     public void deleteMovie(Long id) {
         movieRepository.deleteById(id);
     }

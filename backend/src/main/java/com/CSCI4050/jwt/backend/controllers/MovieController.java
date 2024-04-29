@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.CSCI4050.jwt.backend.dtos.MovieDto;
 import com.CSCI4050.jwt.backend.entites.Movie;
 import com.CSCI4050.jwt.backend.entites.MovieTime;
+import com.CSCI4050.jwt.backend.entites.Review;
 import com.CSCI4050.jwt.backend.services.MovieService;
 
 import jakarta.validation.Valid;
@@ -60,6 +61,11 @@ public class MovieController {
     @PostMapping("/add-movie-time/{id}")
     public ResponseEntity<MovieTime> addMovieTime(@PathVariable("id") String id, @RequestBody MovieDto movie) {
         return ResponseEntity.ok(movieService.addMovieTime(Long.valueOf(id), movie));
+    }
+
+    @PostMapping("/add-movie-review/{id}")
+    public ResponseEntity<Review> addMovieReview(@PathVariable("id") String id, @RequestBody MovieDto movie) {
+        return ResponseEntity.ok(movieService.addMovieReview(Long.valueOf(id), movie));
     }
 
     @DeleteMapping("/delete-movie/{id}")
