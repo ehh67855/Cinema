@@ -45,4 +45,6 @@ public class MovieDto {
     private String review;
 
     private Integer reviewNumStars;
+
+    private String reviewAuthor;
 }

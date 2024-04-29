@@ -66,7 +66,7 @@ public class MovieService {
 
         Review newReview = Review.builder()
         .rating(movie.getReviewNumStars())
-        .author("admin")
+        .author(movie.getReviewAuthor())
         .reviewContent(movie.getReview())
         .build();
         Review savedReview = reviewRepository.save(newReview);
