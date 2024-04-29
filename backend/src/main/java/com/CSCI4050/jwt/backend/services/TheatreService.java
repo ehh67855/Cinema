@@ -22,7 +22,6 @@ public class TheatreService {
         currentTheatre.setSeniorTicketPrice(theatre.getSeniorTicketPrice());
         currentTheatre.setAdultTicketPrice(theatre.getAdultTicketPrice());
         currentTheatre.setChildTicketPrice(theatre.getChildTicketPrice());
-        currentTheatre.setSeats(theatre.getSeats());
 
         return theatreRepository.save(currentTheatre);
     };

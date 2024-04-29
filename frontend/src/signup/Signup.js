@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Signup.css'; // Assuming you'll have similar styling with possible additions
 import { useNavigate } from 'react-router-dom';
-import { getAuthToken, isAdmin, isUser } from 'src/services/BackendService';
+import { getAuthToken, getLogin, isAdmin, isUser } from 'src/services/BackendService';
 
 function Signup() {
   // personal info
@@ -105,7 +105,11 @@ function Signup() {
         }).then(data => {
             if (data) {
                 console.log("User registered successfully:", data);
-                window.location.href = "/signup-confirmation";
+                if (isAdmin(getAuthToken())) {
+                  alert("User has been created")
+                } else {
+                  window.location.href = "/signup-confirmation";
+                }
             }
         })
         .catch(error => {
