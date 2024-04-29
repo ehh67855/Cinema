@@ -19,9 +19,10 @@ export default function AdminEditPricingPage() {
             })
         }).then(response => {
             if (response.status === 200) {
-                console.log("OK");
+                alert("Ticket Prices Successfully Updated!");
                 return response.json();
-            } else if (response.status === 404) {
+            } else {
+                alert("Something went wrong!");
                 return Promise.reject(new Error("404 Error"));
             }
         }).then(data => {
