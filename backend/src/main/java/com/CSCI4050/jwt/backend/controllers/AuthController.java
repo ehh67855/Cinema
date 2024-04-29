@@ -60,6 +60,7 @@ public class AuthController {
 
     @GetMapping("/get-user/{login}")
     public ResponseEntity<User> getUser(@PathVariable String login) {
+        System.out.println("hello");
         return ResponseEntity.ok(userService.getUser(login));
     }
 

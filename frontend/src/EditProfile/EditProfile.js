@@ -7,7 +7,7 @@ import PermissionDenied from 'src/PermissionDenied';
 
 function EditProfile() {
 
-  const [userData,setUserData] = useState({});
+  const [userData,setUserData] = useState();
 
     useEffect(() => {
             const login = getLogin(getAuthToken());
@@ -28,10 +28,13 @@ function EditProfile() {
                 });
         }, []);
 
+        useEffect(() => {
+          console.log(userData);
+      }, [userData]);
 
   const renderOptions = () => {
     if (isUser(getAuthToken())) {
-      return <EditProfileForm userData={userData}></EditProfileForm>
+      return userData&&<EditProfileForm userData={userData}></EditProfileForm>
     } else if (isAdmin(getAuthToken())) {
       return <>
                 <input type="checkbox" id="makeAdmin" name="makeAdmin" />
@@ -45,7 +48,7 @@ function EditProfile() {
     }
   }
 
-  if (userData == null) {
+  if (userData == null || userData=={}) {
     return null;
   }
 
