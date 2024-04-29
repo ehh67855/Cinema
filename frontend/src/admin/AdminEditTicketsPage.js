@@ -1,42 +1,21 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./AdminEditTicketsPage.css";
 
 export default function AdminEditPricingPage() {
     
-    let seniorTicketPrice = useRef();
-    let adultTicketPrice = useRef();
-    let childTicketPrice = useRef();
-    let theaterSelection = useRef(1);
+    const [seniorTicketPrice, setSeniorTicketPrice] = useState();
+    const [adultTicketPrice, setAdultTicketPrice] = useState();
+    const [childTicketPrice, setChildTicketPrice] = useState();
+    const [theaterSelection, setTheaterSelection] = useState(1);
 
-    useEffect(() => {
-        fetch("http://localhost:8080/get-theatre/" + theaterSelection.current.value, {
-            method: "GET",
-        }).then(response => {
-            if (response.status === 200) {
-                console.log("OK");
-                return response.json();
-            } else if (response.status === 404) {
-                return Promise.reject(new Error("404 Error"));
-            }
-        }).then(data => {
-            seniorTicketPrice.current = data.seniorTicketPrice;
-            adultTicketPrice.current = data.adultTicketPrice;
-            childTicketPrice.current = data.childTicketPrice;
-        }).catch(error => {
-            console.error(error);
-        });
-    })
-
-    function handleUpdatePricing(e) {
-        e.preventDefault();
-        fetch("http://localhost:8080/edit-theatre/" + theaterSelection.current.value, {
+    function handleUpdatePricing() {
+        fetch("http://localhost:8080/edit-theatre/" + theaterSelection, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                id: theaterSelection.current.value,
-                adultTicketPrice: adultTicketPrice.current.value,
-                seniorTicketPrice: seniorTicketPrice.current.value,
-                childTicketPrice: childTicketPrice.current.value
+                adultTicketPrice: adultTicketPrice,
+                seniorTicketPrice: seniorTicketPrice,
+                childTicketPrice: childTicketPrice
             })
         }).then(response => {
             if (response.status === 200) {
@@ -52,6 +31,7 @@ export default function AdminEditPricingPage() {
         });
     }
 
+
     return (
         <>
             <div id="editTicketsHeader">
@@ -60,7 +40,7 @@ export default function AdminEditPricingPage() {
             <form id="pricingInputForm">
                 <div className="inputFields">
                     <label for="theaterSelector">Theater</label>
-                    <select name="theaterSelector" id="theaterSelector" ref={theaterSelection} onChange={(e) => theaterSelection.current = e.target.value}>
+                    <select name="theaterSelector" id="theaterSelector" onChange={(e) => setTheaterSelection(e.target.value)}>
                         <option value="1" selected>Theater 1</option>
                         <option value="2">Theater 2</option>
                         <option value="3">Theater 3</option>
@@ -68,11 +48,11 @@ export default function AdminEditPricingPage() {
                         <option value="5">Theater 5</option>
                     </select>
                     <label for="seniorTicketPrice">Senior Ticket Price: </label>
-                    <input type="number" min="0" id="seniorTicketPrice" required ref={seniorTicketPrice} onChange={(e) => seniorTicketPrice.current = e.target.value} value={seniorTicketPrice.current}></input>
+                    <input type="number" min="0" id="seniorTicketPrice" required onChange={(e) => setSeniorTicketPrice(e.target.value)}></input>
                     <label for="adultTicketPrice">Adult Ticket Price: </label>
-                    <input type="number" min="0" id="adultTicketPrice" value={adultTicketPrice.current} ref={adultTicketPrice} onChange={(e) => adultTicketPrice.current = e.target.value} required></input>
+                    <input type="number" min="0" id="adultTicketPrice" onChange={(e) => setAdultTicketPrice(e.target.value)} required></input>
                     <label for="childTicketPrice" required>Child Ticket price: </label>
-                    <input type="number" min="0" id="childTicketPrice" required value={childTicketPrice.current} ref={childTicketPrice} onChange={(e) => childTicketPrice.current = e.target.value}></input>
+                    <input type="number" min="0" id="childTicketPrice" required onChange={(e) => setChildTicketPrice(e.target.value)}></input>
 
                     <button id="submitButton" onClick={handleUpdatePricing}>Update Pricing</button> <br/>
                 </div>
