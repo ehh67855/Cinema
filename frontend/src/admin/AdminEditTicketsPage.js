@@ -48,11 +48,11 @@ export default function AdminEditPricingPage() {
                         <option value="5">Theater 5</option>
                     </select>
                     <label for="seniorTicketPrice">Senior Ticket Price: </label>
-                    <input type="number" min="0" id="seniorTicketPrice" required onChange={(e) => setSeniorTicketPrice(e.target.value)}></input>
+                    <input type="number" min="1" id="seniorTicketPrice" required onChange={(e) => setSeniorTicketPrice(e.target.value)}></input>
                     <label for="adultTicketPrice">Adult Ticket Price: </label>
-                    <input type="number" min="0" id="adultTicketPrice" onChange={(e) => setAdultTicketPrice(e.target.value)} required></input>
+                    <input type="number" min="1" id="adultTicketPrice" onChange={(e) => setAdultTicketPrice(e.target.value)} required></input>
                     <label for="childTicketPrice" required>Child Ticket price: </label>
-                    <input type="number" min="0" id="childTicketPrice" required onChange={(e) => setChildTicketPrice(e.target.value)}></input>
+                    <input type="number" min="1" id="childTicketPrice" required onChange={(e) => setChildTicketPrice(e.target.value)}></input>
 
                     <button id="submitButton" onClick={handleUpdatePricing}>Update Pricing</button> <br/>
                 </div>
