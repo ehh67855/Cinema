@@ -9,7 +9,8 @@ export default function AdminEditPricingPage() {
     const [theaterSelection, setTheaterSelection] = useState(1);
 
     function handleUpdatePricing() {
-        fetch("http://localhost:8080/edit-theatre/" + theaterSelection, {
+        if (seniorTicketPrice > 0 && adultTicketPrice > 0 && childTicketPrice > 0) {
+            fetch("http://localhost:8080/edit-theatre/" + theaterSelection, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -17,19 +18,23 @@ export default function AdminEditPricingPage() {
                 seniorTicketPrice: seniorTicketPrice,
                 childTicketPrice: childTicketPrice
             })
-        }).then(response => {
-            if (response.status === 200) {
-                alert("Ticket Prices Successfully Updated!");
-                return response.json();
-            } else {
-                alert("Something went wrong!");
-                return Promise.reject(new Error("404 Error"));
-            }
-        }).then(data => {
-            console.log(data);
-        }).catch(error => {
-            console.error(error);
-        });
+            }).then(response => {
+                if (response.status === 200) {
+                    alert("Ticket Prices Successfully Updated!");
+                    return response.json();
+                } else {
+                    alert("Something went wrong!");
+                    return Promise.reject(new Error("404 Error"));
+                }
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.error(error);
+            });
+        } else {
+            alert("Ticket prices must be greater thatn $0!");
+        }
+        
     }
 
 
