@@ -6,7 +6,6 @@ export default function AdminEditPricingPage() {
     let seniorTicketPrice = useRef();
     let adultTicketPrice = useRef();
     let childTicketPrice = useRef();
-    let bookingFees = useRef();
     let theaterSelection = useRef(1);
 
     useEffect(() => {
@@ -69,13 +68,11 @@ export default function AdminEditPricingPage() {
                         <option value="5">Theater 5</option>
                     </select>
                     <label for="seniorTicketPrice">Senior Ticket Price: </label>
-                    <input type="number" min="0" id="seniorTicketPrice" ref={seniorTicketPrice} onChange={(e) => seniorTicketPrice.current = e.target.value}></input>
+                    <input type="number" min="0" id="seniorTicketPrice" required ref={seniorTicketPrice} onChange={(e) => seniorTicketPrice.current = e.target.value} value={seniorTicketPrice.current}></input>
                     <label for="adultTicketPrice">Adult Ticket Price: </label>
-                    <input type="number" min="0" id="adultTicketPrice" ref={adultTicketPrice} onChange={(e) => adultTicketPrice.current = e.target.value}></input>
-                    <label for="childTicketPrice">Child Ticket price: </label>
-                    <label for="bookingFees">Booking Fees: </label>
-                    <input type="number" min="0" id="bookingFees" ref={bookingFees}></input> <br/>
-                    <input type="number" min="0" id="childTicketPrice" ref={childTicketPrice} onChange={(e) => childTicketPrice.current = e.target.value}></input>
+                    <input type="number" min="0" id="adultTicketPrice" value={adultTicketPrice.current} ref={adultTicketPrice} onChange={(e) => adultTicketPrice.current = e.target.value} required></input>
+                    <label for="childTicketPrice" required>Child Ticket price: </label>
+                    <input type="number" min="0" id="childTicketPrice" required value={childTicketPrice.current} ref={childTicketPrice} onChange={(e) => childTicketPrice.current = e.target.value}></input>
 
                     <button id="submitButton" onClick={handleUpdatePricing}>Update Pricing</button> <br/>
                 </div>

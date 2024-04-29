@@ -19,7 +19,9 @@ public class TheatreService {
 
     public Theatre editTheatre(Long id, TheatreDto theatre) {
         Theatre currentTheatre = theatreRepository.findById(id).get();
-
+        currentTheatre.setSeniorTicketPrice(theatre.getSeniorTicketPrice());
+        currentTheatre.setAdultTicketPrice(theatre.getAdultTicketPrice());
+        currentTheatre.setChildTicketPrice(theatre.getChildTicketPrice());
         currentTheatre.setSeats(theatre.getSeats());
 
         return theatreRepository.save(currentTheatre);

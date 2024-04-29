@@ -10,5 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class TheatreDto {
+    private double seniorTicketPrice;
+    private double adultTicketPrice;
+    private double childTicketPrice;
     private Boolean[][] seats;
 }
