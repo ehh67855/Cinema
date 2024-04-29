@@ -51,7 +51,7 @@ public class Movie {
  
     private String cast;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     @JoinColumn(name = "movie_id")
     private List<Review> reviews = new ArrayList<Review>();

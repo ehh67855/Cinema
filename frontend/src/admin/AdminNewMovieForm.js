@@ -18,6 +18,7 @@ const AdminNewMovieForm = () => {
     const [enteredDatetime, setEnteredDatetime] = useState('');
     const [enteredNumTheatre, setEnteredNumTheatre] = useState(1);
     const [enteredReview, setEnteredReview] = useState('');
+    const [enteredReviewNumStars, setEnteredReviewNumStars] = useState(1);
 
     const [currentDate, setCurrentDate] = useState(new Date());
     currentDate.setTime(Date.now() - (4 * 60 * 60 * 1000)); //(4 * 60 * 60 * 1000) milliseconds removed to account for our timezone
@@ -93,6 +94,10 @@ const AdminNewMovieForm = () => {
         setEnteredReview(event.target.value);
     }
 
+    const reviewNumStarsChangeHandler = (event) => {
+        setEnteredReviewNumStars(event.target.value);
+    }
+
     const checkRating = () => {
         const ratings = ["G", "PG", "PG-13","R"];
         const lowerStrRating = enteredRating.toLowerCase();
@@ -104,7 +109,8 @@ const AdminNewMovieForm = () => {
 
         if (!enteredMovieTitle || !enteredCategory || !enteredCast || !enteredDirector || !enteredProducer || 
             !enteredSynopsis || !enteredDescription || !enteredTrailerPictureURL || !enteredTrailerVideoURL || 
-            !enteredRating || !enteredNumStars || !enteredDatetime || !enteredNumTheatre || !enteredReview) {
+            !enteredRating || !enteredNumStars || !enteredDatetime || !enteredNumTheatre || !enteredReview ||
+            !enteredReviewNumStars) {
             alert("Please fill out all fields.");
             return;
         }
@@ -137,7 +143,8 @@ const AdminNewMovieForm = () => {
                   date: enteredDatetime.split("T")[0],
                   time: enteredDatetime.split("T")[1],
                   numTheatre: enteredNumTheatre,
-                  review: enteredReview
+                  review: enteredReview,
+                  reviewNumStars: enteredReviewNumStars
                 })
               })
               .then(response => {
@@ -171,6 +178,9 @@ const AdminNewMovieForm = () => {
         setEnteredRating('');
         setEnteredNumStars(1);
         setEnteredDatetime('');
+        setEnteredNumTheatre(1);
+        setEnteredReview('');
+        setEnteredReviewNumStars(1);
     };
 
     return (
@@ -260,6 +270,15 @@ const AdminNewMovieForm = () => {
             type="text"
             value={enteredReview}
             onChange={reviewChangeHandler}
+            />
+            <label>Number of Stars for Review</label>
+            <input
+            id="num_review_stars"
+            type="number"
+            max={5}
+            min={1}
+            value={enteredReviewNumStars}
+            onChange={reviewNumStarsChangeHandler}
             />
             <div>
             <label>Coming Soon</label>

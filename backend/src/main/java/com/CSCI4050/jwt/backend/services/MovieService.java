@@ -65,7 +65,7 @@ public class MovieService {
         newMovie.getShowings().add(savedMovieTime);
 
         Review newReview = Review.builder()
-        .rating(movie.getNumStars())
+        .rating(movie.getReviewNumStars())
         .author("admin")
         .reviewContent(movie.getReview())
         .build();

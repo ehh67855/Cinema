@@ -43,4 +43,6 @@ public class MovieDto {
     private Integer numTheatre;
 
     private String review;
+
+    private Integer reviewNumStars;
 }
