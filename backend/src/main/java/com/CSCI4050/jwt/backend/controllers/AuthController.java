@@ -26,6 +26,7 @@ import com.CSCI4050.jwt.backend.services.PasswordResetService;
 import com.CSCI4050.jwt.backend.services.UserService;
 
 import java.net.URI;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -96,15 +97,17 @@ public class AuthController {
         return ResponseEntity.ok(passwordResetService.resetPassword(user,token));
     }
     
-    @GetMapping("/activate-account/{token}")
-    public ResponseEntity<String> activateAccount(@PathVariable String token) {
+    @PostMapping("/activate-account")
+    public ResponseEntity<String> activateAccount(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
         boolean activated = userService.activateAccount(token);
         if (activated) {
             return ResponseEntity.ok("Account activated successfully.");
         } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid or expired activation token.");
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Activation failed.");
         }
     }
+    
 
     
 

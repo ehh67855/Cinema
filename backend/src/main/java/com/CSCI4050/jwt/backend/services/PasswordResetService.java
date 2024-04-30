@@ -66,8 +66,6 @@ public class PasswordResetService {
         }
     }
 
-
-
     public UserDto resetPassword(SignUpDto userDto, String token) {
     PasswordResetToken resetToken = getPasswordResetToken(token);
         if (resetToken == null || resetToken.isExpired()) {

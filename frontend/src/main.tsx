@@ -42,7 +42,7 @@ root.render(
       <Route path="/login" element={<Layout><Login /></Layout>} />
       <Route path="/signup" element={<Layout><Signup/></Layout>} />
       <Route path="/signup-confirmation" element={<Layout><SignupConfirmation /></Layout>} />
-      <Route path="/activate-account/:token" element={<ActivateAccount />} />
+      <Route path="/activate-account" element={<ActivateAccount />} />
       <Route path="/edit-profile" element={<Layout><UserRoute element={EditProfile}/></Layout>} />
       <Route path="/movie/:id" element={<Layout><UserRoute element={MovieDetails} /></Layout>} />
       <Route path="/forgot-password" element={<Layout><ForgotPassword/></Layout>} />
