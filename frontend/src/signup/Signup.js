@@ -207,7 +207,7 @@ function Signup() {
             <input
               type="checkbox"
               id="subscribe"
-              checked={true}
+              checked={isSubscribed}
               onChange={(e) => setIsSubscribed(e.target.checked)}
             />
         </div>

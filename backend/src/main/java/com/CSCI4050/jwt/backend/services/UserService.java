@@ -91,6 +91,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
         user.setActive(false);
         user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setPromotionsEnabled(userDto.getIsSubscribed());
 
         User savedUser = userRepository.save(user);
 
