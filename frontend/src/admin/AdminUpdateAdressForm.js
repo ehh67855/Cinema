@@ -10,36 +10,41 @@ function UpdateAdressForm({homeAddress, login}) {
 
 const updateHomeAdress = (e) => {
         e.preventDefault();
-        try {
-          fetch("http://localhost:8080/update-home-adress", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ 
-                login: login, 
-                street: streetInput,
-                city: cityInput,
-                state: stateInput,
-                zipCode: zipCodeInput
+        if (streetInput !== "" && cityInput !== "" && stateInput !== "" && zipCodeInput !== "") {
+            try {
+              fetch("http://localhost:8080/update-home-adress", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ 
+                    login: login, 
+                    street: streetInput,
+                    city: cityInput,
+                    state: stateInput,
+                    zipCode: zipCodeInput
+                  })
+                })
+                .then(response => {
+                  if (response.status === 200) {
+                      return response.json();
+                  } else {
+                      alert("Something went wrong");
+                  }
+              }).then(data => {
+                  if (data) {
+                      console.log("Profile updated successfully:", data);
+                      alert("Address successfully changed");
+                  }
               })
-            })
-            .then(response => {
-              if (response.status === 200) {
-                  return response.json();
-              } else {
-                  alert("Something went wrong");
-              }
-          }).then(data => {
-              if (data) {
-                  console.log("Profile updated successfully:", data);
-                  alert("Address successfully changed");
-              }
-          })
-          .catch(error => {
-              console.error("Error occurred during profile update:", error);
-          })
-      } catch (error) {
-        console.error(error);
-      }
+              .catch(error => {
+                  console.error("Error occurred during profile update:", error);
+              })
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          alert("Can't submit an incomplete address!");
+        }
+        
     }
 
     return (
