@@ -33,4 +33,5 @@ public class Booking {
     @ManyToOne
     private CreditCard creditCard;
     
+    private String movieTitle;
 }

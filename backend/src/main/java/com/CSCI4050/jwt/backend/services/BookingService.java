@@ -66,11 +66,27 @@ public class BookingService {
             tickets.add(ticket);
         }
 
+        Boolean[][] currentSeats = booking.getMovieTime().getTheatre().getSeats();
+        List<String> seatSelection = booking.getSeatSelection();
+        Integer seatCount = 1;
+        for (int i = 0; i < currentSeats.length; i++) {
+            for (int j = 0; j < currentSeats[i].length; j++) {
+                for (int k = 0; k < seatSelection.size(); k++) {
+                    if (seatSelection.get(k) == seatCount.toString()) {
+                        currentSeats[i][j] = true;
+                    }
+                }
+                seatCount++;
+            }
+        }
+        booking.getMovieTime().getTheatre().setSeats(currentSeats);
+
         CreditCard creditCard = creditCardRepository.findById(Long.valueOf(booking.getCreditCardId()))
         .orElseThrow(()->new AppException("Could not find credit Card", HttpStatus.BAD_REQUEST));
 
         newBooking.setCreditCard(creditCard);
         newBooking.setTickets(tickets);
+        newBooking.setMovieTitle(booking.getMovieTitle());
         emailService.sendSimpleMessage(booking.getLogin(), "Successful booking", "You booking has been successfully saved. Enjoy your movie.");
         return bookingRepository.save(newBooking);
 
