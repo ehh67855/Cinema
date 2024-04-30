@@ -26,6 +26,10 @@ public class BookingService {
     @Autowired UserService userService;
     @Autowired EmailService emailService;
 
+    public Iterable<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
+
     public Optional<Booking> getBooking(Long id) {
         return bookingRepository.findById(id);
     }
