@@ -28,6 +28,8 @@ import AdminRoute from './AdminRoute';
 import AdminEditTicketPage from './admin/AdminEditTicketsPage';
 import PermissionDenied from './PermissionDenied';
 import BookTicketsPage from './BookTicketsPages/BookTicketsPage';
+import UserRoute from './UserRoute';
+import ActivateAccount from './signup/ActivateAccount';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -40,15 +42,15 @@ root.render(
       <Route path="/login" element={<Layout><Login /></Layout>} />
       <Route path="/signup" element={<Layout><Signup/></Layout>} />
       <Route path="/signup-confirmation" element={<Layout><SignupConfirmation /></Layout>} />
-      <Route path="/edit-profile" element={<Layout><EditProfile/></Layout>} />
-      <Route path="/movie/:id" element={<Layout><MovieDetails /></Layout>} />
+      <Route path="/activate-account/:token" element={<ActivateAccount />} />
+      <Route path="/edit-profile" element={<Layout><UserRoute element={EditProfile}/></Layout>} />
+      <Route path="/movie/:id" element={<Layout><UserRoute element={MovieDetails} /></Layout>} />
       <Route path="/forgot-password" element={<Layout><ForgotPassword/></Layout>} />
       <Route path="/reset-password" element={<Layout><PasswordReset/></Layout>} />
-      <Route path="/bookTickets/:id" element={<Layout><BookTickets /></Layout>} />
-      <Route path="/bookTicketsPage/:id" element={<Layout><BookTicketsPage /></Layout>} />
-      <Route path="/ticketOrder" element={<Layout><TicketOrder /></Layout>} />
-      <Route path="/checkout" element={<Layout><Checkout /></Layout>} />
-      <Route path="/orderConfirmation" element={<Layout><OrderConfirm /></Layout>} />
+      <Route path="/bookTickets/:id" element={<Layout><UserRoute element={BookTickets} /></Layout>} />
+      <Route path="/ticketOrder" element={<Layout><UserRoute element={TicketOrder} /></Layout>} />
+      <Route path="/checkout" element={<Layout><UserRoute element={Checkout} /></Layout>} />
+      <Route path="/orderConfirmation" element={<Layout><UserRoute element={OrderConfirm} /></Layout>} />
       <Route path="*" element={<Layout><NoPage /></Layout>} />
       <Route path="/adminMainPage" element={<Layout><AdminRoute element={AdminMainPage} /></Layout>} />
       <Route path="/manageMovies" element={<Layout><AdminRoute element={AdminMoviesPage} /></Layout>} />

@@ -54,7 +54,8 @@ function MovieBrowse(isAuthenticated) {
         (searchShowingInput === null 
             || searchShowingInput === '' 
             || movie.showings.some(showing => showing.date === searchShowingInput)
-        )
+        )   
+
     );
 
     const renderMovies = () => {

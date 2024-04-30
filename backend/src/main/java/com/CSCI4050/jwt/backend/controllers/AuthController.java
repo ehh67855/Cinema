@@ -44,17 +44,11 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody @Valid SignUpDto user) {
-        UserDto createdUser = userService.register(user);
-        try {
-            emailService.sendSimpleMessage(
-            user.getLogin(), 
-            "Confirmation - Account Creation", 
-            "Hello " + user.getFirstName() + "\n Your account has succesfully been created.\n You may now login and start booking movies.");
-        } catch(Exception e) {
-            throw new AppException("Could not validate user email", HttpStatus.UNAUTHORIZED);
-        }
-        createdUser.setToken(userAuthenticationProvider.createToken(createdUser));
+    public ResponseEntity<UserDto> register(@RequestBody @Valid SignUpDto userDto) {
+        UserDto createdUser = userService.register(userDto);
+        String token = emailService.generateToken(); // Reuse your token generation logic
+        userService.createActivationToken(userService.getUser(userDto.getLogin()), token);
+        userService.sendActivationEmail(userDto.getLogin(), token);
         return ResponseEntity.created(URI.create("/users/" + createdUser.getId())).body(createdUser);
     }
 
@@ -101,5 +95,17 @@ public class AuthController {
         @RequestBody @Valid SignUpDto user) {
         return ResponseEntity.ok(passwordResetService.resetPassword(user,token));
     }
+    
+    @GetMapping("/activate-account/{token}")
+    public ResponseEntity<String> activateAccount(@PathVariable String token) {
+        boolean activated = userService.activateAccount(token);
+        if (activated) {
+            return ResponseEntity.ok("Account activated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid or expired activation token.");
+        }
+    }
+
+    
 
 }

@@ -5,8 +5,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.CSCI4050.jwt.backend.entites.User;
+import com.CSCI4050.jwt.backend.repositories.UserRepository;
+
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.Iterator;
+import java.util.List;
 
 
 
@@ -15,6 +20,8 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired UserRepository userRepository;
 
 
     private static final SecureRandom secureRandom = new SecureRandom();
@@ -40,5 +47,12 @@ public class EmailService {
         byte[] randomBytes = new byte[32];
         secureRandom.nextBytes(randomBytes);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(randomBytes);
+    }
+
+    public void sendMessageToAllUsers(String subject, String text) {
+        List<User> users = userRepository.findByPromotionsEnabledTrue();
+        for(User user : users) {
+            sendSimpleMessage(user.getLogin(), subject, text);
+        }
     }
 }

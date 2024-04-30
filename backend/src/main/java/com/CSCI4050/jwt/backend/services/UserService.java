@@ -12,6 +12,7 @@ import com.CSCI4050.jwt.backend.dtos.CredentialsDto;
 import com.CSCI4050.jwt.backend.dtos.SignUpDto;
 import com.CSCI4050.jwt.backend.dtos.UpdatePasswordDto;
 import com.CSCI4050.jwt.backend.dtos.UserDto;
+import com.CSCI4050.jwt.backend.entites.ActivationToken;
 import com.CSCI4050.jwt.backend.entites.Adress;
 // import com.CSCI4050.jwt.backend.entites.Adress;
 import com.CSCI4050.jwt.backend.entites.CreditCard;
@@ -21,6 +22,7 @@ import com.CSCI4050.jwt.backend.enums.Role;
 import com.CSCI4050.jwt.backend.enums.TicketType;
 import com.CSCI4050.jwt.backend.exceptions.AppException;
 import com.CSCI4050.jwt.backend.mappers.UserMapper;
+import com.CSCI4050.jwt.backend.repositories.ActivationTokenRepository;
 import com.CSCI4050.jwt.backend.repositories.AdressRepository;
 import com.CSCI4050.jwt.backend.repositories.CreditCardRepository;
 import com.CSCI4050.jwt.backend.repositories.PasswordResetTokenRepository;
@@ -29,6 +31,7 @@ import com.CSCI4050.jwt.backend.repositories.UserRepository;
 import jakarta.validation.Valid;
 
 import java.nio.CharBuffer;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +52,8 @@ public class UserService {
 
     private final EmailService emailService;
 
+    private final ActivationTokenRepository activationTokenRepository;
+
     public User createUser(String firstName, String lastName, String login, String password, Role role) {
         User newUser = User.builder()
                 .firstName(firstName)
@@ -64,9 +69,13 @@ public class UserService {
         User user = userRepository.findByLogin(credentialsDto.getLogin())
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
                         
+        if (!user.isActive()) {
+            throw new AppException("User account has been suspended",HttpStatus.FORBIDDEN);
+        }
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getPassword())) {
             return userMapper.toUserDto(user);
         }
+
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
 
@@ -80,7 +89,7 @@ public class UserService {
         User user = userMapper.signUpToUser(userDto);
         user.setRole(Role.USER);
         user.setPassword(passwordEncoder.encode(CharBuffer.wrap(userDto.getPassword())));
-        user.setActive(true);
+        user.setActive(false);
         user.setPhoneNumber(userDto.getPhoneNumber());
 
         User savedUser = userRepository.save(user);
@@ -140,12 +149,14 @@ public class UserService {
         updatedUser.setLastName(user.getLastName());
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setPromotionsEnabled(user.getIsSubscribed());
-        updatedUser.setActive(user.getIsActive().equals("true"));
-        updatedUser.setRole(user.getRole().equals("ADMIN") ? Role.ADMIN : Role.USER);
+        if(user.getIsActive()!= null)
+            updatedUser.setActive(user.getIsActive().equals("true"));
+        if(user.getRole()!=null)
+            updatedUser.setRole(user.getRole().equals("ADMIN") ? Role.ADMIN : Role.USER);
         emailService.sendSimpleMessage(
             user.getLogin(),
             "Profile Updated",
-            "Hello" + user.getFirstName() + ", \n Your profile has been successfully updated."
+            "Hello " + user.getFirstName() + ", \n Your profile has been successfully updated."
         );
 
         return userMapper.toUserDto(userRepository.save(updatedUser));
@@ -214,5 +225,29 @@ public class UserService {
         return userMapper.toUserDto(userRepository.save(updatedUser));
     }
 
+    public void createActivationToken(User user, String token) {
+        ActivationToken newToken = new ActivationToken();
+        newToken.setUser(user);
+        newToken.setToken(token);
+        newToken.setExpiryDate(LocalDateTime.now().plusDays(1)); // Expires in 1 day
+        activationTokenRepository.save(newToken);
+    }
+
+    public void sendActivationEmail(String email, String token) {
+        String activationLink = "http://localhost:4200/activate-account/" + token;
+        emailService.sendSimpleMessage(email, "Activate Your Account", "Please click on the following link to activate your account: " + activationLink);
+    }
+
+    public boolean activateAccount(String token) {
+        ActivationToken activationToken = activationTokenRepository.findByToken(token);
+        if (activationToken != null && !activationToken.isExpired()) {
+            User user = activationToken.getUser();
+            user.setActive(true);
+            userRepository.save(user);
+            activationTokenRepository.delete(activationToken); 
+            return true;
+        }
+        return false;
+    }
 
 }

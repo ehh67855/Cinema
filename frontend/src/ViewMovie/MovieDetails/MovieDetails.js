@@ -54,10 +54,11 @@ function MovieDetails() {
     </div>
       <div className="showings">
         <h3>Show Dates and Times</h3>
+        <p3>(UTC)</p3>
         {movie.showings.map((showing, index) => (
           <div key={index} className="showing-button">
             <Link to={`/bookTickets/${showing.id}`} state={ movie.title }>
-              Book for {new Date(showing.date).toLocaleDateString()} at {showing.time}
+              Book for {new Date(showing.date).toLocaleDateString()} at {showing.time} PM 
             </Link>
           </div>
         ))}

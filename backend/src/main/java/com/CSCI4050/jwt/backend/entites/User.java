@@ -47,7 +47,7 @@ public class User {
     private String password;
 
     @Builder.Default
-    private boolean isActive = true;
+    private boolean isActive = false;
 
     private String phoneNumber;
 

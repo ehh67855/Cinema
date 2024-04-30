@@ -67,7 +67,6 @@ const Checkout = () => {
     };
 
     const handleSubmit = () => {
-        console.log("selectedCard",selectedCard);
         fetch(`http://localhost:8080/add-booking`, {
             method:"POST",
             headers: {"Content-Type":"application/json"},
@@ -91,8 +90,6 @@ const Checkout = () => {
         }).catch(error => {
             console.log("Error sending booking", error);
         })
-
-        // window.location.href = "/orderConfirmation";
     };
 
     return (

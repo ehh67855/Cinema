@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class PromotionService {
     
     private final PromotionRepository promotionRepository;
+    private final EmailService emailService;
 
 
     public Iterable<Promotion> getAllPromotions() {
@@ -32,6 +33,9 @@ public class PromotionService {
         .discount(Long.valueOf(promotion.getPromotionDiscount()))
         .promoCode(Long.valueOf(promotion.getPromotionCode()))
         .build();
+
+        emailService.sendMessageToAllUsers("Promotion has been added", "Hello,\nA promotion has been added. Use code " + promotion.getPromotionCode() + " for a " + promotion.getPromotionDiscount() + " percent discount");
+
         return promotionRepository.save(newPromotion);
         
     }
@@ -44,6 +48,9 @@ public class PromotionService {
             .orElseThrow( () -> new AppException("Promo not found", HttpStatus.BAD_REQUEST));
         storedPromotion.setDiscount(Long.valueOf(promotion.getPromotionDiscount()));
         storedPromotion.setPromoCode(Long.valueOf(promotion.getPromotionCode()));
+
+        emailService.sendMessageToAllUsers("Promotion has been updated", "Hello,\nA promotion has been updated. Now, use code " + promotion.getPromotionCode() + " for a " + promotion.getPromotionDiscount() + " percent discount");
+
         return promotionRepository.save(storedPromotion);
     }
 

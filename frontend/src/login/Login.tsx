@@ -20,6 +20,8 @@ export function Login() {
                 setErrorMessage("Email not found");
             } else if (response.status == 400) {
                 setErrorMessage("Invalid password");
+            } else if (response.status==403) {
+                setErrorMessage("Your account is inactive");
             }
         }).then(data => {
             if (data !== null) {

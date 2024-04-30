@@ -31,12 +31,7 @@ const BookTickets = () => {
     function handleAddingSeat(e) {
         // Extracting the numerical part from the id (e.g., "Seat1" becomes "1")
         const seatNumber = e.target.id.replace('Seat', '');
-        
-        if(movieTime.theatre.seats[Math.floor(seatNumber / 4)][seatNumber % 4]) {
-            alert("Seat available");
-            return;
-        }
-    
+
         console.log(seatSelection.includes(seatNumber));
     
         if (seatSelection.includes(seatNumber)) {
