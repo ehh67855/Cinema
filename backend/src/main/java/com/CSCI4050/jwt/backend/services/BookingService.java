@@ -30,6 +30,10 @@ public class BookingService {
         return bookingRepository.findAll();
     }
 
+    public Iterable<Booking> getAllUserBookings(String login) {
+        return bookingRepository.findByLogin(login);
+    }
+
     public Optional<Booking> getBooking(Long id) {
         return bookingRepository.findById(id);
     }
@@ -87,6 +91,7 @@ public class BookingService {
         newBooking.setCreditCard(creditCard);
         newBooking.setTickets(tickets);
         newBooking.setMovieTitle(booking.getMovieTitle());
+        newBooking.setLogin(booking.getLogin());
         emailService.sendSimpleMessage(booking.getLogin(), "Successful booking", "You booking has been successfully saved. Enjoy your movie.");
         return bookingRepository.save(newBooking);
 

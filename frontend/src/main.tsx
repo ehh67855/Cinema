@@ -30,6 +30,7 @@ import PermissionDenied from './PermissionDenied';
 import BookTicketsPage from './BookTicketsPages/BookTicketsPage';
 import UserRoute from './UserRoute';
 import ActivateAccount from './signup/ActivateAccount';
+import BookingHistoryPage from './BookingHistory/BookingHistoryPage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -51,6 +52,7 @@ root.render(
       <Route path="/ticketOrder" element={<Layout><UserRoute element={TicketOrder} /></Layout>} />
       <Route path="/checkout" element={<Layout><UserRoute element={Checkout} /></Layout>} />
       <Route path="/orderConfirmation" element={<Layout><UserRoute element={OrderConfirm} /></Layout>} />
+      <Route path="/bookingHistory" element={<Layout><UserRoute element={BookingHistoryPage} /></Layout>} />
       <Route path="*" element={<Layout><NoPage /></Layout>} />
       <Route path="/adminMainPage" element={<Layout><AdminRoute element={AdminMainPage} /></Layout>} />
       <Route path="/manageMovies" element={<Layout><AdminRoute element={AdminMoviesPage} /></Layout>} />

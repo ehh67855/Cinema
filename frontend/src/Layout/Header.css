@@ -22,7 +22,7 @@ header a:hover {
   text-decoration: underline; /* Adds underline on hover, remove this line if no hover effect is desired */
 }
 
-#login, #signup, #edit-profile {
+#login, #signup, #edit-profile, #booking-history {
     float: right;
     padding-left: 10px;
 }

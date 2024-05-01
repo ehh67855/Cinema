@@ -16,6 +16,7 @@ function Header() {
             return <div className="profile-links">
                 <a id = "logout" onClick={logout} href="/">Logout</a>
                 <a id = "edit-profile" href="/edit-profile">Edit Profile</a>
+                <Link id="booking-history" to={"/bookingHistory"}>Booking History</Link>
             </div>;
         }
     };

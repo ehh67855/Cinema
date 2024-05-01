@@ -34,4 +34,6 @@ public class Booking {
     private CreditCard creditCard;
     
     private String movieTitle;
+
+    private String login;
 }
