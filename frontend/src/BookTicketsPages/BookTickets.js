@@ -20,6 +20,9 @@ const BookTickets = () => {
     const [adultInput,setAdultInput] = useState(0);
     const [seniorInput,setSeniorInput] = useState(0);
     const [bookedMovieTitle, setBookedMovieTitle] = useState("");
+    const [childPrice, setChildPrice] = useState();
+    const [adultPrice, setAdultPrice] = useState();
+    const [seniorPrice, setSeniorPrice] = useState();
 
 
     let seatSelection = [];
@@ -57,12 +60,15 @@ const BookTickets = () => {
             }
         }).then(data => {
             setMovieTime(data);
+            setChildPrice(data.theatre.childTicketPrice);
+            setAdultPrice(data.theatre.adultTicketPrice);
+            setSeniorPrice(data.theatre.seniorTicketPrice);
             console.log("movie time",movieTime);
         }).catch(error => {
             // Handle other errors
         });
         setBookedMovieTitle(state);
-            
+
     }, []);
 
     useEffect(()=>console.log(movieTime),);
@@ -99,19 +105,19 @@ const BookTickets = () => {
                 <div className="bkTicksAllFields">
                     <div className="bkTicksFields2">
                         <h4>Select Tickets</h4>
-                        <label>Child (${movieTime.childTicketPrice}):</label>
+                        <label>Child (${childPrice}):</label>
                         <input 
                             type="number" 
                             min="0" 
                             value={childInput} 
                             onChange={e=>setchildInput(e.target.value)}/>
-                        <label>Adult (${movieTime.adultTicketPrice}):</label>
+                        <label>Adult (${adultPrice}):</label>
                         <input 
                             type="number" 
                             min="0" 
                             value={adultInput} 
                             onChange={e=>setAdultInput(e.target.value)}/>
-                        <label>Senior (${movieTime.seniorTicketPrice}):</label>
+                        <label>Senior (${seniorPrice}):</label>
                         <input 
                             type="number" 
                             min="0" 
