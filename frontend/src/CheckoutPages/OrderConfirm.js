@@ -1,7 +1,12 @@
 import React from "react";
 import './OrderConfirm.css';
+import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const OrderConfirm = () => {
+    const location = useLocation();
+    const orderInfo = location.state.orderInfo;
+
     return (
         <div id="orderConfirmPage">
             <div id="orderConfirmHdrContainer">
@@ -15,22 +20,24 @@ const OrderConfirm = () => {
                     <h2>Thank You</h2>
                     <h5>A receipt has been sent to your email.</h5>
                     <h5>Your booking number is:</h5>
-                    <h5>A123</h5>
+                    <h5>{orderInfo.bookingId}</h5>
                 </div>
             </div>
             <div id="orderDetailsContainer">
                 <div id="orderDetails">
                     <h2 id="orderDetailsHdr">Order Details</h2>
-                    <p>Senior Tickets: $ </p>
-                    <p>Adult Tickets: $ </p>
-                    <p>Chlid Tickets: $ </p>
-                    <p>Promo Discount: % </p>
-                    <p>Booking fees: </p>
-                    <p>Tax: % </p>
-                    <p id="orderDetailsFinalPara">Total: $ </p>
+                    <p>Senior Tickets: $ {orderInfo.seniorTicketCost}</p>
+                    <p>Adult Tickets: $ {orderInfo.adultTicketCost}</p>
+                    <p>Chlid Tickets: $ {orderInfo.childTicketCost}</p>
+                    <p>Promo Discount: % {orderInfo.discount}</p>
+                    <p>Booking fees: {orderInfo.bookingFee}</p>
+                    <p>Tax: % 7</p>
+                    <p id="orderDetailsFinalPara">Total: $ {orderInfo.finalPrice}</p>
                 </div>
             </div>
-            <button>Return to Home Page</button>
+            <Link to={"/"}>
+                <button>Return to Home Page</button>
+            </Link>
         </div>
     )
 }

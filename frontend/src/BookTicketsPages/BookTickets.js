@@ -4,6 +4,7 @@ import './BookTickets.css';
 import Seat from "./Movie-Seat-Icon.png";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { fetchService } from "src/services/FetchService";
+import { Link } from "react-router-dom";
 /*
     Eventually, change the method to submit to use useEffect and store booking info in a booking variable (don't forget to create a submit handler)
 */
@@ -154,7 +155,9 @@ const BookTickets = () => {
                 
                 <div className="submitCancelBtn">
                     <input type="submit" value="Submit" onClick={handleSubmit}></input>
-                    <input type="button" value="Cancel"></input>
+                    <Link to={"/"}>
+                        <input type="button" value="Cancel"></input>
+                    </Link>
                 </div>
             </form>            
         </div>
