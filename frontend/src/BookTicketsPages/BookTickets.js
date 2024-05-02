@@ -24,31 +24,35 @@ const BookTickets = () => {
     const [childPrice, setChildPrice] = useState();
     const [adultPrice, setAdultPrice] = useState();
     const [seniorPrice, setSeniorPrice] = useState();
+    const [seatSelection, setSeatSelection] = useState([]);
+    const [updatedSeats,setUpdatedSeats] = useState([])
 
+    const handleAddingSeat = (e) => {
+        const seatId = e.target.id.replace('Seat', '');
+        const row = Math.floor((seatId - 1) / 4);
+        const col = (seatId - 1) % 4;
 
-    let seatSelection = [];
-
-
-    /**
-     * Adds seats to the seatSelection array and removes seats if the seat is already in the seat selection array.
-     */
-    function handleAddingSeat(e) {
-        // Extracting the numerical part from the id (e.g., "Seat1" becomes "1")
-        const seatNumber = e.target.id.replace('Seat', '');
-
-        console.log(seatSelection.includes(seatNumber));
-    
-        if (seatSelection.includes(seatNumber)) {
-            seatSelection.splice(seatSelection.indexOf(seatNumber), 1);
-            e.target.style.backgroundColor = "";
-        } else {
-            seatSelection.push(seatNumber);
-            e.target.style.backgroundColor = "grey";
+        if (movieTime.theatre && movieTime.theatre.seats[row][col]) {
+            alert('This seat is already booked.');
+            return;
         }
-        console.log(seatSelection);
-    }
+
+        updatedSeats[row][col] = true;
+        console.log(updatedSeats)
+
+        setSeatSelection(prev => {
+            const isSelected = prev.includes(seatId);
+            if (isSelected) {
+                e.target.style.backgroundColor = "";
+                return prev.filter(s => s !== seatId);
+            } else {
+                e.target.style.backgroundColor = "grey";
+                return [...prev, seatId];
+            }
+        });
+    };
+
     
-   
     useEffect(() => {
         fetch(`http://localhost:8080/get-movie-time/?id=${id}`, {
             method: "GET",
@@ -60,19 +64,22 @@ const BookTickets = () => {
                 throw new Error('API call failed');
             }
         }).then(data => {
+            setUpdatedSeats(data.theatre.seats.map(row=>row.slice()))
             setMovieTime(data);
             setChildPrice(data.theatre.childTicketPrice);
             setAdultPrice(data.theatre.adultTicketPrice);
             setSeniorPrice(data.theatre.seniorTicketPrice);
-            console.log("movie time",movieTime);
+            setBookedMovieTitle(state);
         }).catch(error => {
             // Handle other errors
         });
-        setBookedMovieTitle(state);
 
     }, []);
 
-    useEffect(()=>console.log(movieTime),);
+    useEffect(()=>{
+        console.log(movieTime)
+        console.log(updatedSeats)
+    },);
 
     /**Handles confirmation submission */
     function handleSubmit(e) {
@@ -83,19 +90,23 @@ const BookTickets = () => {
             return;
         }
 
+        var updatedMovieTime = movieTime;
+        updatedMovieTime.theatre.seats = updatedSeats
+        console.log(updatedMovieTime)
+        
+
         const booking = {
-            movieTime: movieTime,
+            movieTime: updatedMovieTime,
             childInput:childInput,
             adultInput:adultInput,
             seniorInput:seniorInput,
-            seatSelection:seatSelection,
             movieTitle: bookedMovieTitle
         }
         navigate('/checkout', { state: { booking: booking } });
     }
 
     return (
-        <div id="bkTicksPage">
+        movieTime && <div id="bkTicksPage">
             <div id="bkTicksHdrContainer">
                 {/* <div id="emptySpace"></div> */}
                 <h1 id="bkTicksHdr">Booking Tickets for {bookedMovieTitle} at {movieTime.time}</h1>
@@ -126,38 +137,28 @@ const BookTickets = () => {
                             onChange={e=>setSeniorInput(e.target.value)}/>
                     </div>
                 </div>
-                <h4 className="centeredH4">Select desired seats</h4>
-                <h6>(select the seats you want by clicking the seats on the image below)</h6>
-                <div class="seatSection">
-                    <img className="seatLayoutImg" id="Seat1" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat2" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat3" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat4" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                </div>
-                <div class="seatSection">
-                    <img className="seatLayoutImg" id="Seat5" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat6" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat7" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat8" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                </div>
-                <div class="seatSection">
-                    <img className="seatLayoutImg" id="Seat9" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat10" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat11" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat12" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                </div>
-                <div class="seatSection">
-                    <img className="seatLayoutImg" id="Seat13" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat14" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat15" src={Seat} alt="Image of a seat" onClick={handleAddingSeat}/>
-                    <img className="seatLayoutImg" id="Seat16" src={Seat} alt="Image of a seat"onClick={handleAddingSeat}/>
-                </div>
-                
+                <h4>Select desired seats</h4>
+                {Array.from({ length: 4 }, (_, rowIndex) => (
+                    <div className="seatSection" key={rowIndex}>
+                        {Array.from({ length: 4 }, (_, colIndex) => {
+                            const seatId = rowIndex * 4 + colIndex + 1;
+                            return (
+                                <img 
+                                key={seatId} 
+                                className="seatLayoutImg" 
+                                id={`Seat${seatId}`} 
+                                src={Seat} 
+                                alt="Seat" 
+                                onClick={handleAddingSeat} 
+                                style={{ backgroundColor: movieTime.theatre.seats[rowIndex][colIndex] ? "red" : "transparent" }}
+                                />
+                            );
+                        })}
+                    </div>
+                ))}
                 <div className="submitCancelBtn">
-                    <input type="submit" value="Submit" onClick={handleSubmit}></input>
-                    <Link to={"/"}>
-                        <input type="button" value="Cancel"></input>
-                    </Link>
+                <input type="submit" value="Submit" onClick={handleSubmit}></input>
+                    <Link to="/"><input type="button" value="Cancel" /></Link>
                 </div>
             </form>            
         </div>

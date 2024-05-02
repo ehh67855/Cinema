@@ -16,6 +16,7 @@ import com.CSCI4050.jwt.backend.enums.TicketType;
 import com.CSCI4050.jwt.backend.exceptions.AppException;
 import com.CSCI4050.jwt.backend.repositories.BookingRepository;
 import com.CSCI4050.jwt.backend.repositories.CreditCardRepository;
+import com.CSCI4050.jwt.backend.repositories.TheatreRepository;
 
 import jakarta.validation.Valid;
 
@@ -25,6 +26,7 @@ public class BookingService {
     @Autowired CreditCardRepository creditCardRepository;
     @Autowired UserService userService;
     @Autowired EmailService emailService;
+    @Autowired TheatreRepository theatreRepository;
 
     public Iterable<Booking> getAllBookings() {
         return bookingRepository.findAll();
@@ -39,8 +41,10 @@ public class BookingService {
     }
 
     public Booking addBooking(@Valid BookingDto booking) {
-        System.out.println(booking);
+        System.out.println(booking.getMovieTime().getTheatre());
         Booking newBooking = new Booking();
+
+        theatreRepository.save(booking.getMovieTime().getTheatre());
         
         List<Ticket> tickets = new ArrayList<>();
         for (int i = 0 ; i < Long.valueOf(booking.getNumChildTickets());i++) {
@@ -70,20 +74,9 @@ public class BookingService {
             tickets.add(ticket);
         }
 
-        Boolean[][] currentSeats = booking.getMovieTime().getTheatre().getSeats();
-        List<String> seatSelection = booking.getSeatSelection();
-        Integer seatCount = 1;
-        for (int i = 0; i < currentSeats.length; i++) {
-            for (int j = 0; j < currentSeats[i].length; j++) {
-                for (int k = 0; k < seatSelection.size(); k++) {
-                    if (seatSelection.get(k) == seatCount.toString()) {
-                        currentSeats[i][j] = true;
-                    }
-                }
-                seatCount++;
-            }
-        }
-        booking.getMovieTime().getTheatre().setSeats(currentSeats);
+        
+        System.out.println(booking);
+
 
         CreditCard creditCard = creditCardRepository.findById(Long.valueOf(booking.getCreditCardId()))
         .orElseThrow(()->new AppException("Could not find credit Card", HttpStatus.BAD_REQUEST));
@@ -92,7 +85,7 @@ public class BookingService {
         newBooking.setTickets(tickets);
         newBooking.setMovieTitle(booking.getMovieTitle());
         newBooking.setLogin(booking.getLogin());
-        emailService.sendSimpleMessage(booking.getLogin(), "Successful booking", "You booking has been successfully saved. Enjoy your movie.");
+        emailService.sendSimpleMessage(booking.getLogin(), "Successful booking", "Your booking has been successfully saved. Enjoy your movie.");
         return bookingRepository.save(newBooking);
 
     }

@@ -30,5 +30,4 @@ public class BookingDto {
 
     private String login;
 
-    private List<String> seatSelection;
 }

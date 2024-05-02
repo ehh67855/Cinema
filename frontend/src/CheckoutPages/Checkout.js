@@ -81,7 +81,6 @@ const Checkout = () => {
                 numSeniorTickets:booking.seniorInput,
                 movieTitle:booking.movieTitle,
                 creditCardId:selectedCard.id,
-                seatSelection:booking.seatSelection,
                 login:getLogin(getAuthToken())
             })
         }).then(response => {
@@ -118,10 +117,10 @@ const Checkout = () => {
             </div>
             <div className="checkoutArea">
                 <form id="formSection">
-                    {/* <div className="shippingSection">
+                    <div className="shippingSection">
                         <h2 className="checkoutAreaHdrs">Shipping Address</h2>
                         <label>Address:</label><input value={userData.homeAddress ? `${userData.homeAddress.street}, ${userData.homeAddress.city}, ${userData.homeAddress.state} ${userData.homeAddress.zipcode}` : 'No Address'}/>
-                    </div> */}
+                    </div>
                     <div className="paymentSection">
                         <h2 className="checkoutAreaHdrs">Payment</h2>
                         <label>Card:</label>

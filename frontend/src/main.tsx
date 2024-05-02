@@ -27,7 +27,6 @@ import { getAuthToken, isAdmin } from './services/BackendService';
 import AdminRoute from './AdminRoute';
 import AdminEditTicketPage from './admin/AdminEditTicketsPage';
 import PermissionDenied from './PermissionDenied';
-import BookTicketsPage from './BookTicketsPages/BookTicketsPage';
 import UserRoute from './UserRoute';
 import ActivateAccount from './signup/ActivateAccount';
 import BookingHistoryPage from './BookingHistory/BookingHistoryPage';
