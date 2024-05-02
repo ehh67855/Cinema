@@ -1,15 +1,4 @@
-.promotionsForm {
-    display: flex;
-    flex-direction: column;
-    margin: 5% 21%;
-}
-
-.promotionsFormSubmitBtn {
-    width: 100px;
-    margin: auto;
-}
-
-#adminPromoPgDiv {
+#addCardFormDiv {
     display: flex;
     flex-direction: column;
     margin: 40px 0;
@@ -18,7 +7,7 @@
     margin-right: auto;
 }
 
-#adminPromoPgForm {
+#addCardForm {
     display: flex;
     flex-direction: column;
     margin: 40px 0;

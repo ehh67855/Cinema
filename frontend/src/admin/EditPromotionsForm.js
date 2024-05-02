@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import "./EditPromotionsForm.css"
 
 const EditPromotionsForm = ({ promotions }) => {
 
@@ -44,14 +45,14 @@ const EditPromotionsForm = ({ promotions }) => {
  
 
     return (
-        <div>
+        <div id='editPromoDiv'>
             <h2>Edit Promotions</h2>
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Discount Code</th>
-                        <th>Discount %</th>
+                        <th className='tableHeadField'>ID</th>
+                        <th className='tableHeadField'>Discount Code</th>
+                        <th className='tableHeadField'>Discount %</th>
                     </tr>
                 </thead>
                 <tbody>

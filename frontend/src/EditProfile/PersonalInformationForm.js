@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./PersonalInformationForm.css";
 import { getAuthToken, getLogin } from "src/services/BackendService";
 
 function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed}) {
@@ -41,7 +42,7 @@ function PersonalInformationForm({firstName,lastName,phoneNumber,isSubscribed}) 
     }
 
     return (
-        <form>
+        <form id="personalInfoForm">
             <h1>Edit Personal Information</h1>
             <label htmlFor="firstName">First Name</label>
             <input
