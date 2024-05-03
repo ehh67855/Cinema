@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { getAuthToken, getLogin } from "src/services/BackendService";
-import "./UpdatePasswordForm.css";
 
 
 function UpdatePasswordForm() {
@@ -45,7 +44,7 @@ function UpdatePasswordForm() {
     };
 
     return (
-        <form id="updatePassForm" onSubmit={updatePassword}>
+        <form onSubmit={updatePassword}>
             <h1>Update Password</h1>
             <label htmlFor="password">New Password</label>
             <input

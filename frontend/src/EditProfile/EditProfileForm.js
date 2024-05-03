@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./EditProfileForm.css";
 import CardsContainer from "./CardsContainer";
 import PersonalInformationForm from "./PersonalInformationForm";
 import UpdatePasswordForm from "./UpdatePasswordForm";
@@ -10,7 +9,7 @@ function EditProfileForm({userData}) {
     
 
     return (
-        <div id="editProfileFormDiv">
+        <div>
             <PersonalInformationForm 
                 firstName={userData.firstName}
                 lastName={userData.lastName}

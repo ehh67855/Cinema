@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import "./BookingFeeForm.css"
 
 const BookingFeeForm = () => {
 
@@ -45,9 +44,9 @@ const BookingFeeForm = () => {
 
 
      return (
-        <div id="bkingFeeDiv">
+        <div>
             <h2>Set booking fee</h2>
-            <form id="bkingFeeForm" onSubmit={handleBookingFeeSubmit}>
+            <form onSubmit={handleBookingFeeSubmit}>
                 <label>Booking Fee ($)</label>
                 <input
                     id="promotionCode"

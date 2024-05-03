@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { getAuthToken, getLogin } from "src/services/BackendService";
-import "./UpdateAdressForm.css"
 
 
 function UpdateAdressForm({homeAddress}) {
@@ -44,8 +43,8 @@ const updateHomeAdress = (e) => {
     }
 
     return (
-      <form id="updateAdrForm" onSubmit={updateHomeAdress}>
-            <h1>Update Home Address</h1>
+      <form onSubmit={updateHomeAdress}>
+            <h1>Update Home Adress</h1>
             <label htmlFor="street">Street</label>
             <input
               type="text"

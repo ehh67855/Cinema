@@ -60,10 +60,10 @@ const AdminPromotionsPage = () => {
 
 
     return (
-        <div id="adminPromoPgDiv">
+        <div>
             <BookingFeeForm></BookingFeeForm>
             <h2>Create new promotion</h2>
-            <form id="adminPromoPgForm" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label>Promotion Code</label>
                 <input
                     id="promotionCode"

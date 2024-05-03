@@ -8,21 +8,3 @@
     width: 100px;
     margin: auto;
 }
-
-#adminPromoPgDiv {
-    display: flex;
-    flex-direction: column;
-    margin: 40px 0;
-    width: 350px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#adminPromoPgForm {
-    display: flex;
-    flex-direction: column;
-    margin: 40px 0;
-    width: 350px;
-    margin-left: auto;
-    margin-right: auto;
-}

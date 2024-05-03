@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./PromotionForm.css"
 
 const PromotionForm = ({setDiscount,promotionsEnabled}) => {
 
@@ -31,7 +30,7 @@ const PromotionForm = ({setDiscount,promotionsEnabled}) => {
     };
 
     return (
-        <form id="promoForm">
+        <form>
             <label>Promotion Code:</label>
             <input 
                 id="PromoInputField" 

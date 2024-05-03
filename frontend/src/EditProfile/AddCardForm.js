@@ -1,7 +1,6 @@
 import { useState } from "react";
 import CardsContainer from "./CardsContainer";
 import { getAuthToken, getLogin } from "src/services/BackendService";
-import "./AddCardForm.css"
 
 
 function AddCardForm({creditCards}) {
@@ -48,11 +47,11 @@ function AddCardForm({creditCards}) {
     }
 
     return (
-        <div id="addCardFormDiv">
+        <div>
             <h1>Card Information</h1>
             {(typeof creditCards !== 'undefined' && creditCards.length >= 0)
             && <CardsContainer cards={creditCards}></CardsContainer>}
-            <form id="addCardForm" onSubmit={addCard}>
+            <form onSubmit={addCard}>
                 <label htmlFor="cardType">Card Type</label>
                 <input
                     type="text"
