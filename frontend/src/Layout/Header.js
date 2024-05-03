@@ -3,6 +3,7 @@ import './Layout.css'
 import { Link } from "react-router-dom";
 
 import './Header.css';
+import { getAuthToken, isUser } from "src/services/BackendService";
 
 function Header() {
 
@@ -16,7 +17,7 @@ function Header() {
             return <div className="profile-links">
                 <a id = "logout" onClick={logout} href="/">Logout</a>
                 <a id = "edit-profile" href="/edit-profile">Edit Profile</a>
-                <Link id="booking-history" to={"/bookingHistory"}>Booking History</Link>
+                {isUser(getAuthToken()) && <Link id="booking-history" to={"/bookingHistory"}>Booking History</Link>}
             </div>;
         }
     };

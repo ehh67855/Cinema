@@ -85,6 +85,14 @@ const BookTickets = () => {
     function handleSubmit(e) {
         e.preventDefault();
 
+        const totalTickets = parseInt(childInput) + parseInt(adultInput) + parseInt(seniorInput);
+
+        // Check if the number of selected seats matches the number of tickets
+        if (totalTickets !== seatSelection.length) {
+            alert(`The number of selected seats (${seatSelection.length}) does not match the total number of tickets (${totalTickets}). Please adjust your selection.`);
+            return; // Stop further execution if there is a mismatch
+        }
+
         if (childInput + seniorInput + adultInput <= 0) {
             alert("Must select at least one ticket");
             return;

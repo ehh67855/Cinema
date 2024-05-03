@@ -69,6 +69,11 @@ const Checkout = () => {
     };
 
     const handleSubmit = () => {
+        if (!selectedCard || !selectedCard.id) {
+            alert("Please select a credit card to proceed.");
+            return; 
+        }
+    
 
         console.log("selectedCard",selectedCard);
         fetch(`http://localhost:8080/add-booking`, {
@@ -143,8 +148,7 @@ const Checkout = () => {
                     <p>Promo Discount: % {discount}</p>
                     <p>Booking fees: $ {bookingFee}</p>
                     <p>Sales tax: % 7</p>
-                    <p id="orderSumFinalPara">Total: $ {(seniorTicketCost+adultTicketCost+childTicketCost+bookingFee)*(1-(discount/100))*(1.07)}</p>
-                </div>
+                    <p id="orderSumFinalPara">Total: $ {((seniorTicketCost + adultTicketCost + childTicketCost + bookingFee) * (1 - (discount / 100)) * 1.07).toFixed(2)}</p>                </div>
             </div>
             <div className="confirmCancelBtn">
                 <a onClick={handleSubmit} className="btn btn-primary">Confirm</a>
